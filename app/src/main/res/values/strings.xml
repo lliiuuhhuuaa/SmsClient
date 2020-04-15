@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">六画短信</string>
+    <string name="title_home">数据统计</string>
+    <string name="title_person">个人中心</string>
+    <string name="title_record">日志记录</string>
+    <string name="order">账单</string>
+    <string name="balance">余额</string>
+    <string name="default_nickname">默认昵称</string>
+    <string name="default_phone">18888888888</string>
+    <string name="set">设置</string>
+    <string name="send_set">短信设置</string>
+    <string name="safe_set">安全设置</string>
+    <string name="system_set">系统设置</string>
+    <string name="help">帮助与反馈</string>
+    <string name="about">关于六画短信</string>
+</resources>
