@@ -3,6 +3,7 @@ package com.lh.sms.client;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.lh.sms.client.framing.ObjectFactory;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -21,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
+        init();
+    }
+    /**
+     * @do 初始化
+     * @author liuhua
+     * @date 2020/4/21 8:14 PM
+     */
+    private void init() {
+        ObjectFactory.push(this);
     }
 
 }

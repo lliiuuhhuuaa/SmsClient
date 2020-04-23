@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:orientation="horizontal"
-            android:padding="20dp">
+            android:padding="20dp"
+            android:id="@+id/person_user_info">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -34,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:text="@string/default_nickname"
+                    android:text="点我登陆"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -43,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:text="@string/default_phone"
+                    android:text="发验证码不求人,赶快来体验"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -78,6 +79,7 @@
 
                 <!--        账单-->
                 <LinearLayout
+                    android:id="@+id/person_bill_menu_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/person_menu_item"
@@ -101,7 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="5dp"
                             android:text="@string/order"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -112,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:gravity="end"
-                        android:paddingTop="3dp">
+                        android:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -132,7 +134,8 @@
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:id="@+id/person_balance_menu_item">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -147,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="5dp"
                             android:text="@string/balance"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -158,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:gravity="end"
-                        android:paddingTop="3dp">
+                        android:paddingTop="5dp">
 
 
                         <LinearLayout
@@ -194,6 +197,7 @@
                     android:background="@color/colorLine" />
                 <!--短信设置-->
                 <LinearLayout
+                    android:id="@+id/person_sms_config_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/person_menu_item"
@@ -217,7 +221,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="5dp"
                             android:text="@string/send_set"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -228,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:gravity="end"
-                        android:paddingTop="3dp">
+                        android:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -263,7 +267,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="5dp"
                             android:text="@string/safe_set"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -274,7 +278,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:gravity="end"
-                        android:paddingTop="3dp">
+                        android:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -309,7 +313,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="5dp"
                             android:text="@string/system_set"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -320,7 +324,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:gravity="end"
-                        android:paddingTop="3dp">
+                        android:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -360,7 +364,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="5dp"
                             android:text="@string/help"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -371,7 +375,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:gravity="end"
-                        android:paddingTop="3dp">
+                        android:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -406,7 +410,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
-                            android:paddingTop="3dp"
+                            android:paddingTop="5dp"
                             android:text="@string/about"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -417,13 +421,45 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:gravity="end"
-                        android:paddingTop="3dp">
+                        android:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
                             android:src="@drawable/ic_right_grey_24dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!--        关于-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/person_menu_item"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="15dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="15dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_exit_32dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="5dp"
+                            android:text="@string/exit"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                 </LinearLayout>

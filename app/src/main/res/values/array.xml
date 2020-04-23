@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="person_balance_transaction_record_spinner">
+        <item value="">全部</item>
+        <item value="minus">支出</item>
+        <item value="plus">收入</item>
+    </string-array>
+</resources>

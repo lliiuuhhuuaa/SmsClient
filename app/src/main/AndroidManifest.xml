@@ -18,6 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.person.balance.PersonBalanceTransactionRecord"/>
+        <activity android:name=".ui.person.balance.PersonBalance"/>
+        <activity android:name=".ui.person.bill.PersonBillRecord"/>
+        <activity android:name=".ui.person.sms.PersonSmsConfig"/>
+        <activity android:name=".ui.person.user.PersonLogin"/>
+        <activity android:name=".ui.person.user.PersonRegister1"/>
+        <activity android:name=".ui.person.user.PersonRegister2"/>
     </application>
 
 </manifest>

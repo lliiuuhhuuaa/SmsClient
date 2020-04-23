@@ -4,13 +4,34 @@
     <string name="title_person">个人中心</string>
     <string name="title_record">日志记录</string>
     <string name="order">账单</string>
-    <string name="balance">余额</string>
     <string name="default_nickname">默认昵称</string>
     <string name="default_phone">18888888888</string>
     <string name="set">设置</string>
-    <string name="send_set">短信设置</string>
+    <string name="send_set">短信服务配置</string>
     <string name="safe_set">安全设置</string>
     <string name="system_set">系统设置</string>
     <string name="help">帮助与反馈</string>
     <string name="about">关于六画短信</string>
+    <string name="title_activity_person_balance">PersonBalance</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="transaction_record">交易记录</string>
+    <string name="balance">余额</string>
+    <string name="balance_yuan">余额(元)</string>
+    <string name="money_0">0.00</string>
+    <string name="withdraw">提现</string>
+    <string name="recharge">充值</string>
+    <string name="money_detail">金额明细</string>
+    <string name="bill">账单</string>
+    <string name="exit">退出</string>
+    <string name="account">账号</string>
+    <string name="password">密码</string>
+    <string name="login">登陆</string>
+    <string name="SMS_SEND_TEXT">重新发送验证码(%d秒)</string>
 </resources>

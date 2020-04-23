@@ -31,6 +31,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
 }
 
@@ -46,10 +50,15 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.68'
     implementation 'com.bandyer:socket.io-client:1.0.9'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
-    implementation group: 'me.weyye.hipermission',name:'library',version:'1.0.7'
+    implementation group: 'me.weyye.hipermission', name: 'library', version: '1.0.7'
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
+    /*上拉下拉刷新插件-start*/
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0'
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.0'
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.0'
+    /*上拉下拉刷新插件-end*/
 }
