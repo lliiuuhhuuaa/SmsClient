@@ -67,12 +67,12 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:textSize="22sp"
+                    android:textSize="24sp"
                     android:background="@drawable/edit_style"
                     android:textCursorDrawable="@null"
                     android:paddingLeft="20dp"
                     android:paddingBottom="1dp"
-                    android:hint="手机号"
+                    android:hint="用户名/手机号"
                     android:id="@+id/account"/>
             </LinearLayout>
             <LinearLayout
@@ -98,7 +98,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:maxLength="11"
-                    android:textSize="22sp"
+                    android:textSize="24sp"
                     android:background="@drawable/edit_style"
                     android:paddingLeft="20dp"
                     android:paddingBottom="1dp"
@@ -115,9 +115,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
-                    android:background="@color/primary_tran_5"
+                    android:background="@color/colorPrimary"
                     android:textColor="@color/colorWhite"
                     android:tag="0"
+                    android:enabled="false"
                     android:text="登陆"/>
             </LinearLayout>
             <LinearLayout

@@ -2,21 +2,32 @@ package com.lh.sms.client.ui.person.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
+import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.constant.DataConstant;
+import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.constant.ApiConstant;
+import com.lh.sms.client.framing.entity.HttpAsynResult;
+import com.lh.sms.client.framing.entity.HttpResult;
+import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
+import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.enums.YesNoEnum;
-import com.lh.sms.client.ui.person.balance.PersonBalanceTransactionRecord;
+import com.lh.sms.client.framing.handle.HandleMsg;
+import com.lh.sms.client.framing.util.HttpClientUtil;
+import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
+import com.lh.sms.client.ui.util.UiUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.FormBody;
 
 public class PersonLogin extends AppCompatActivity {
 
@@ -26,6 +37,8 @@ public class PersonLogin extends AppCompatActivity {
         setContentView(R.layout.activity_person_login);
         //绑定事件
         bindEvent();
+        //等下好关闭
+        ObjectFactory.push(this);
     }
     /**
      * @do 绑定事件
@@ -38,7 +51,13 @@ public class PersonLogin extends AppCompatActivity {
         });
         //去注册
         findViewById(R.id.person_login_register).setOnClickListener(v->{
-            Intent intent=new Intent(this, PersonRegister1.class);
+            Intent intent=new Intent(this, PersonRegister.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+        //找回密码
+        findViewById(R.id.person_login_forget).setOnClickListener(v->{
+            Intent intent=new Intent(this, PersonFindPass.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
@@ -46,7 +65,8 @@ public class PersonLogin extends AppCompatActivity {
         EditText accountEdit = findViewById(R.id.account);
         EditText passwordEdit = findViewById(R.id.password);
         Button login = findViewById(R.id.person_login_button);
-        boolean[] pass = new boolean[]{false,false};
+        boolean[] pass = new boolean[]{StringUtils.isNotBlank(accountEdit.getText().toString()),StringUtils.isNotBlank(passwordEdit.getText().toString())};
+        UiUtil.buttonEnable(login,pass[0]&&pass[1]);
         accountEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,13 +81,7 @@ public class PersonLogin extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 pass[0] = StringUtils.isNotBlank(accountEdit.getText().toString());
-                if(pass[0]&&pass[1]) {
-                    login.setBackgroundResource(R.color.colorPrimary);
-                    login.setTag(YesNoEnum.YES.getValue());
-                }else{
-                    login.setBackgroundResource(R.color.primary_tran_5);
-                    login.setTag(YesNoEnum.NO.getValue());
-                }
+                UiUtil.buttonEnable(login,pass[0]&&pass[1]);
             }
         });
         passwordEdit.addTextChangedListener(new TextWatcher() {
@@ -84,15 +98,22 @@ public class PersonLogin extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 pass[1] = StringUtils.isNotBlank(passwordEdit.getText().toString());
-                if(pass[0]&&pass[1]) {
-                    login.setBackgroundResource(R.color.colorPrimary);
-                    login.setTag(YesNoEnum.YES.getValue());
-                }else{
-                    login.setBackgroundResource(R.color.primary_tran_5);
-                    login.setTag(YesNoEnum.NO.getValue());
-                }
+                UiUtil.buttonEnable(login,pass[0]&&pass[1]);
             }
         });
+        login.setOnClickListener(v->{
+            FormBody param = new FormBody.Builder().add("account",accountEdit.getText().toString() )
+                    .add("password",passwordEdit.getText().toString()).build();
+            HttpClientUtil.post(ApiConstant.USER_LOGIN, param,
+                    new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).context(PersonLogin.this).login(false)) {
+                        @Override
+                        public void callback(HttpResult httpResult) {
+                            SqlData sqlData = ObjectFactory.get(SqlData.class);
+                            sqlData.saveObject(DataConstant.KEY_USER_TK,httpResult.getData());
+                            sqlData.saveObject(DataConstant.KEY_IS_LOGIN,YesNoEnum.YES.getValue());
+                            finish();
+                        }
+                    });
+        });
     }
-
 }

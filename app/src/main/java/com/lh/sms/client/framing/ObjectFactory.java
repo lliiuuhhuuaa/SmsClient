@@ -1,7 +1,11 @@
 package com.lh.sms.client.framing;
 
+import com.lh.sms.client.ui.person.user.PersonLogin;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ObjectFactory {
     //存入对象
@@ -43,5 +47,16 @@ public class ObjectFactory {
      */
     public static void remove(Class clazz){
         classObjectMap.remove(clazz);
+    }
+    /**
+     * @do 关闭activity
+     * @author liuhua
+     * @date 2020/4/26 9:59 PM
+     */
+    public static void finish(Class<? extends AppCompatActivity> activityClass) {
+        AppCompatActivity appCompatActivity = (AppCompatActivity) classObjectMap.remove(activityClass);
+        if(appCompatActivity!=null){
+            appCompatActivity.finish();
+        }
     }
 }

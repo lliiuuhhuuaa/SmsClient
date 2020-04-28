@@ -5,6 +5,7 @@
     <color name="colorAccent">#FFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorLine">#eeeeee</color>
+    <color name="colorCCC">#cccccc</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLink">#23beff</color>
     <color name="colorSecondTitle">#999999</color>

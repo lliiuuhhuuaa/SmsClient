@@ -1,15 +1,23 @@
 package com.lh.sms.client.framing.handle;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.lh.sms.client.MainActivity;
+import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 
 import java.lang.reflect.Method;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class HandleMsg extends Handler {
-    public String METHOD_KEY = "method";
+    private final static String TAG = "HandleMsg";
+    public static final String METHOD_KEY = "method";
     public HandleMsg() {
         super();
     }
@@ -17,8 +25,8 @@ public class HandleMsg extends Handler {
     @Override
     public void handleMessage(final Message message) {
         super.handleMessage(message);
+        //回调指定类方法
         if(message.what == HandleMsgTypeEnum.CALL_BACK.getValue()){
-            //回调指定类方法
             Bundle data = message.getData();
             String methodName = data.getString("method");
             Object[] objects= (Object[]) message.obj;
@@ -40,6 +48,37 @@ public class HandleMsg extends Handler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return;
+        }
+        //弹消息提示框
+        if(message.what==HandleMsgTypeEnum.ALERT_MSG.getValue()){
+            Bundle data = message.getData();
+            new SweetAlertDialog((Context) message.obj, data.getInt("type"))
+                    .setTitleText(data.getString("title"))
+                    .setContentText(data.getString("msg"))
+                    .setConfirmText("我知道了")
+                    .show();
+            return;
+        }
+        //弹自定义提示框
+        if(message.what==HandleMsgTypeEnum.ALERT_SWEET.getValue()){
+            ((SweetAlertDialog)message.obj).show();
+            return;
+        }
+        //关闭弹框
+        if(message.what==HandleMsgTypeEnum.CLOSE_ALERT.getValue()){
+            try {
+                ((SweetAlertDialog) message.obj).cancel();
+            }catch (Exception e){
+                Log.d(TAG, "handleMessage: "+e.getMessage());
+            }
+            return;
+        }
+        //弹系统提示
+        if(message.what==HandleMsgTypeEnum.ALERT_TOAST.getValue()){
+            Bundle data = message.getData();
+            Toast.makeText((Context) message.obj,data.getString("msg"),data.getInt("length")).show();
+            return;
         }
     }
 }

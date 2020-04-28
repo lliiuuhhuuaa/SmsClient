@@ -30,7 +30,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/person_menu_item"
             android:orientation="horizontal">
             <TextView
@@ -54,10 +54,12 @@
                 android:tag="all"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
             <ListView
-                android:layout_width="wrap_content"
+                android:id="@+id/person_sms_config_list"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 

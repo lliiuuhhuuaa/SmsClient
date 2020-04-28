@@ -34,4 +34,8 @@
     <string name="password">密码</string>
     <string name="login">登陆</string>
     <string name="SMS_SEND_TEXT">重新发送验证码(%d秒)</string>
+    <string name="pass_format">密码长度必须6-20位</string>
+    <string name="default_money">0.000元</string>
+    <string name="click_login">点我登陆</string>
+    <string name="click_login_notice">免费发验证码不求人,赶快来体验</string>
 </resources>

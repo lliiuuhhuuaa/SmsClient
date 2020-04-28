@@ -17,4 +17,10 @@ public class UiConstant {
     public static final String SMS_SEND_TEXT = "重新发送验证码(%d秒)";
 
     public static final String SMS_RE_SEND_TEXT = "点击重新发送验证码";
+    /**
+     * 快速点击限制时间
+     */
+    public static final String TIME_QUICK_TAP = "time_quick_tap";
+    public static final String NO_READ_PHONE_STATE_PERMISSION = "无法获取本机电话卡信息,因为没有读取电话卡信息权限";
+    public static final String NO_CHECK_PHONE_INFO = "没有检测到本机有效电话卡信息,请检查是否已插好电话卡";
 }
