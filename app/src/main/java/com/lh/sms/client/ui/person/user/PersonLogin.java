@@ -2,26 +2,20 @@ package com.lh.sms.client.ui.person.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
-import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
-import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
-import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.enums.YesNoEnum;
-import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
-import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
 import com.lh.sms.client.ui.util.UiUtil;
 
 import org.apache.commons.lang3.StringUtils;

@@ -32,6 +32,9 @@
         <activity android:name=".ui.person.user.VerifySmsCode" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.user.PersonFindPass" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.user.ConfigPassword" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.sms.PersonSmsConfigDetail" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.msg.PersonUserMsg" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.msg.PersonUserMsgDetail" android:launchMode="singleTask"/>
     </application>
 
 </manifest>

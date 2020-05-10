@@ -1,14 +1,13 @@
 package com.lh.sms.client;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lh.sms.client.config.service.ConfigService;
-import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.AlertUtil;
@@ -20,7 +19,6 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import me.weyye.hipermission.HiPermission;
 import me.weyye.hipermission.PermissionCallback;

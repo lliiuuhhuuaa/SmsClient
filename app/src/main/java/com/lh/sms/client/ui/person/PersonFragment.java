@@ -14,14 +14,13 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.fastjson.JSONObject;
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
-import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
-import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
@@ -30,15 +29,12 @@ import com.lh.sms.client.ui.constant.UiConstant;
 import com.lh.sms.client.ui.person.balance.PersonBalance;
 import com.lh.sms.client.ui.person.bill.PersonBillRecord;
 import com.lh.sms.client.ui.person.sms.PersonSmsConfig;
-import com.lh.sms.client.ui.person.user.ConfigPassword;
 import com.lh.sms.client.ui.person.user.PersonLogin;
-import com.lh.sms.client.ui.person.user.PersonRegister;
-import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
+import com.lh.sms.client.ui.person.msg.PersonUserMsg;
 import com.lh.sms.client.work.user.entity.UserInfo;
 import com.lh.sms.client.work.user.service.UserService;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class PersonFragment extends Fragment {
     private View root;
@@ -87,6 +83,11 @@ public class PersonFragment extends Fragment {
                 intent = new Intent(root.getContext(), PersonSmsConfig.class);
             }
 
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+        root.findViewById(R.id.person_user_msg).setOnClickListener(v->{
+            Intent intent = new Intent(root.getContext(), PersonUserMsg.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });

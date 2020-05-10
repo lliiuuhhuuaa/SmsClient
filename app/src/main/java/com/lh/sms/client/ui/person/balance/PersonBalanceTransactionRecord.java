@@ -9,6 +9,11 @@ import com.lh.sms.client.R;
 import com.lh.sms.client.ui.dialog.person.balance.SelectDialog;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PersonBalanceTransactionRecord extends AppCompatActivity {
@@ -22,7 +27,11 @@ public class PersonBalanceTransactionRecord extends AppCompatActivity {
         setContentView(R.layout.activity_person_balance_transaction_record);
         //绑定事件
         bindEvent();
-        selectDialog = new SelectDialog(this);
+        List<String[]> param = new ArrayList<>();
+        param.add(new String[]{"全部",""});
+        param.add(new String[]{"收入","plus"});
+        param.add(new String[]{"支出","minus"});
+        selectDialog = new SelectDialog(this,param);
     }
     /**
      * @do 绑定事件

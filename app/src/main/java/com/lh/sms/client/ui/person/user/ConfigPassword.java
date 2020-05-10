@@ -2,26 +2,19 @@ package com.lh.sms.client.ui.person.user;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
-import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
@@ -31,18 +24,15 @@ import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
-import com.lh.sms.client.ui.constant.UiConstant;
 import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
 import com.lh.sms.client.ui.util.UiUtil;
 
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
 import okhttp3.FormBody;
 
 public class ConfigPassword extends AppCompatActivity {

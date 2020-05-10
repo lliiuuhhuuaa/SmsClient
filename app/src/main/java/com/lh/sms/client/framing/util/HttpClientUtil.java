@@ -3,7 +3,7 @@ package com.lh.sms.client.framing.util;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.SystemConstant;
@@ -311,8 +311,12 @@ public class HttpClientUtil {
                     httpResult.setMsg(response.message());
                     callback.callback(httpResult);
                 }
-                //转为返回对象
-                httpResult = JSONObject.parseObject(response.body().string(), HttpResult.class);
+                try {
+                    //转为返回对象
+                    httpResult = JSONObject.parseObject(response.body().string(), HttpResult.class);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if(callback.getConfig().isOnlyOk()&&(httpResult==null||!ResultCodeEnum.OK.getValue().equals(httpResult.getCode()))){
                     //这里处理多种结果
                     if(callback.getConfig().isAlertError()) {

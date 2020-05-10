@@ -1,19 +1,13 @@
 package com.lh.sms.client.work.user.service;
 
 import android.os.Message;
-import android.view.View;
-import android.widget.TextView;
 
-import com.lh.sms.client.MainActivity;
-import com.lh.sms.client.R;
-import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
-import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.ui.person.PersonFragment;
-import com.lh.sms.client.ui.person.user.ConfigPassword;
 import com.lh.sms.client.work.user.entity.UserInfo;
 
 public class UserService {

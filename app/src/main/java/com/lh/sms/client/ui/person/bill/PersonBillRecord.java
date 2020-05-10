@@ -6,14 +6,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lh.sms.client.R;
-import com.lh.sms.client.ui.dialog.person.bill.SelectTypeDialog;
+import com.lh.sms.client.ui.dialog.person.balance.SelectDialog;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PersonBillRecord extends AppCompatActivity {
     //选择类型弹窗
-    SelectTypeDialog selectTypeDialog = null;
+    SelectDialog selectDialog = null;
     private static final String TAG = "PersonBillRecord";
 
     @Override
@@ -22,7 +25,11 @@ public class PersonBillRecord extends AppCompatActivity {
         setContentView(R.layout.activity_person_bill_record);
         //绑定事件
         bindEvent();
-        selectTypeDialog = new SelectTypeDialog(this);
+        List<String[]> param = new ArrayList<>();
+        param.add(new String[]{"全部",""});
+        param.add(new String[]{"收入","plus"});
+        param.add(new String[]{"支出","minus"});
+        selectDialog = new SelectDialog(this,param);
     }
     /**
      * @do 绑定事件
@@ -43,7 +50,7 @@ public class PersonBillRecord extends AppCompatActivity {
         });
         //打开选择
         findViewById(R.id.person_bill_record_select_type).setOnClickListener(v->{
-            selectTypeDialog.show();
+            selectDialog.show();
         });
     }
 
@@ -58,6 +65,6 @@ public class PersonBillRecord extends AppCompatActivity {
         String type = (String) view.getTag();
         viewById.setTag(type);
         Log.d(TAG, "searchByType: "+type);
-        selectTypeDialog.cancel();
+        selectDialog.cancel();
     }
 }

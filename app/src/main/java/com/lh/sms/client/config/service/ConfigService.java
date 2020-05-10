@@ -2,8 +2,9 @@ package com.lh.sms.client.config.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.lh.sms.client.data.SqlData;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.util.HttpClientUtil;
@@ -20,7 +21,7 @@ public class ConfigService {
      * @date 2020/4/25 4:25 PM
      */
     public void updateConfig(){
-        HttpClientUtil.post("/show/config/listConfig",
+        HttpClientUtil.post(ApiConstant.CONFIG_LIST,
                 new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).alertError(false).animation(false)) {
             @Override
             public void callback(HttpResult httpResult) {
