@@ -6,6 +6,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,9 +27,11 @@ import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
 import com.lh.sms.client.ui.constant.UiConstant;
+import com.lh.sms.client.ui.person.app.PersonAppConfig;
 import com.lh.sms.client.ui.person.balance.PersonBalance;
 import com.lh.sms.client.ui.person.bill.PersonBillRecord;
 import com.lh.sms.client.ui.person.sms.PersonSmsConfig;
+import com.lh.sms.client.ui.person.template.PersonTemplateConfig;
 import com.lh.sms.client.ui.person.user.PersonLogin;
 import com.lh.sms.client.ui.person.msg.PersonUserMsg;
 import com.lh.sms.client.work.user.entity.UserInfo;
@@ -86,8 +89,21 @@ public class PersonFragment extends Fragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
+        //消息
         root.findViewById(R.id.person_user_msg).setOnClickListener(v->{
             Intent intent = new Intent(root.getContext(), PersonUserMsg.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+        //应用设置
+        root.findViewById(R.id.person_app_config).setOnClickListener(v->{
+            Intent intent = new Intent(root.getContext(), PersonAppConfig.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+        //模板设置
+        root.findViewById(R.id.person_template_config).setOnClickListener(v->{
+            Intent intent = new Intent(root.getContext(), PersonTemplateConfig.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
@@ -110,6 +126,8 @@ public class PersonFragment extends Fragment {
             showUserInfo();
             //获取用户余额
             showUserBalance();
+            //显示未读
+            showUnRead();
             //30秒只请求一次
             Intent intent = ObjectFactory.get(MainActivity.class).getIntent();
             long time = intent.getLongExtra(UiConstant.TIME_QUICK_TAP, 0);
@@ -146,7 +164,7 @@ public class PersonFragment extends Fragment {
                         if(balance==null){
                             return;
                         }
-                        sqlData.saveObject(DataConstant.KYE_USER_BALANCE,balance);
+                        sqlData.saveObject(DataConstant.KEY_USER_BALANCE,balance);
                         HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
                         Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
                         message.obj = new Object[]{PersonFragment.this};
@@ -154,6 +172,22 @@ public class PersonFragment extends Fragment {
                         handleMessage.sendMessage(message);
                     }
                 });
+                HttpClientUtil.post(ApiConstant.MSG_UN_READ_COUNT,
+                        new HttpAsynResult(HttpAsynResult.Config.builder().context(ObjectFactory.get(MainActivity.class)).onlyOk(true).alertError(false).animation(false)) {
+                            @Override
+                            public void callback(HttpResult httpResult) {
+                                Integer count = (Integer)httpResult.getData();
+                                if(count==null){
+                                    count = 0;
+                                }
+                                sqlData.saveObject(DataConstant.KEY_MSG_UN_READ_COUNT,count);
+                                HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                                Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                                message.obj = new Object[]{PersonFragment.this};
+                                message.getData().putString(HandleMsg.METHOD_KEY, "showUnRead");
+                                handleMessage.sendMessage(message);
+                            }
+                        });
             });
         }else{
             clearUserInfo();
@@ -188,6 +222,25 @@ public class PersonFragment extends Fragment {
         }
     }
     /**
+     * @do 显示未读消息数
+     * @author liuhua
+     * @date 2020/4/26 10:55 PM
+     */
+    public void showUnRead(){
+        SqlData sqlData = ObjectFactory.get(SqlData.class);
+        Integer count = sqlData.getObject(DataConstant.KEY_MSG_UN_READ_COUNT,Integer.class);
+        TextView textView = root.findViewById(R.id.person_user_msg_un_read);
+        if(count==null||count<1){
+            textView.setVisibility(View.INVISIBLE);
+        }else{
+            if(count>99){
+                count=99;
+            }
+            textView.setText(count.toString());
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+    /**
      * @do 显示用户余额
      * @author liuhua
      * @date 2020/4/26 10:55 PM
@@ -195,7 +248,7 @@ public class PersonFragment extends Fragment {
     public void showUserBalance(){
         SqlData sqlData = ObjectFactory.get(SqlData.class);
         //获取用户余额
-        BigDecimal balance = sqlData.getObject(DataConstant.KYE_USER_BALANCE,BigDecimal.class);
+        BigDecimal balance = sqlData.getObject(DataConstant.KEY_USER_BALANCE,BigDecimal.class);
         if(balance!=null) {
             TextView textView = root.findViewById(R.id.person_user_balance);
             textView.setText(balance.toString());

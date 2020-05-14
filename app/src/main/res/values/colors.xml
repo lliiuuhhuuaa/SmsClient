@@ -12,4 +12,5 @@
     <color name="colorMoneyRed">#ff6666</color>
     <color name="colorMoneyBlack">#222222</color>
     <color name="primary_tran_5">#5523beff</color>
+    <color name="colorOk">#83B252</color>
 </resources>

@@ -7,6 +7,9 @@ public enum TablesEnum {
     OBJECT_DATA("object_data","create table if not exists object_data (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
     SM_LIST("sm_list","create table if not exists sm_list (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
     MSG_LIST("msg_list","create table if not exists msg_list (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
+    LOG_LIST("log_list","create table if not exists log_list (`id` integer primary key autoincrement,`text` varchar not null,`level` integer not null,`time` integer not null)"),
+    APP_LIST("app_list","create table if not exists app_list (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
+    TEMPLATE_LIST("template_list","create table if not exists template_list (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
     ;
     private String table;
     private String sql;

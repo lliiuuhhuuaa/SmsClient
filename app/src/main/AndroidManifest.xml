@@ -35,6 +35,12 @@
         <activity android:name=".ui.person.sms.PersonSmsConfigDetail" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.msg.PersonUserMsg" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.msg.PersonUserMsgDetail" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.app.PersonAppConfig" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.app.PersonAppConfigDetailAdd" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.app.PersonAppConfigDetail" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.template.PersonTemplateConfig" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.template.PersonTemplateConfigDetail" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.template.PersonTemplateConfigDetailAdd" android:launchMode="singleTask"/>
     </application>
 
 </manifest>

@@ -50,7 +50,6 @@ public class SqlData {
         //初始化数据表
         for (TablesEnum tablesEnum : TablesEnum.values()) {
             database.execSQL(tablesEnum.getSql());
-            //deleteAll(tablesEnum.getTable());
         }
 
     }
@@ -58,9 +57,12 @@ public class SqlData {
     private void initData(){
         //保存服务器请求地址
         saveObject(DataConstant.KEY_SERVICE_URL,"http://192.168.1.5:11010/sms/api");
+        saveObject(DataConstant.KEY_SOCKET_DOMAIN,"http://192.168.1.5:3148");
         //保存三方资源请求地址
         String threeServiceUrl = "https://lh-sms.oss-cn-chengdu.aliyuncs.com";
         saveObject("storage_domain",threeServiceUrl);
+        //清除sessionID
+        deleteObject(DataConstant.SESSION_ID);
     }
     /**
      * @do 保存对象
@@ -213,5 +215,25 @@ public class SqlData {
      */
     public void deleteAll(String table) {
         database.execSQL("delete from "+table);
+    }
+    /**
+     * @do 删除所有缓存数据
+     * @author liuhua
+     * @date 2020/5/11 7:58 PM
+     */
+    public void deleteAll() {
+        for (TablesEnum tablesEnum : TablesEnum.values()) {
+            deleteAll(tablesEnum.getTable());
+        }
+        //重新初始化数据
+        initData();
+    }
+    /**
+     * @do 获取sql连接
+     * @author liuhua
+     * @date 2020/5/12 1:54 PM
+     */
+    public SQLiteDatabase getDatabase() {
+        return database;
     }
 }

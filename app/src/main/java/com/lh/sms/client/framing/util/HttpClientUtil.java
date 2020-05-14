@@ -1,5 +1,6 @@
 package com.lh.sms.client.framing.util;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
@@ -10,9 +11,12 @@ import com.lh.sms.client.framing.constant.SystemConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.ResultCodeEnum;
+import com.lh.sms.client.ui.person.msg.PersonUserMsg;
+import com.lh.sms.client.ui.person.user.PersonLogin;
 import com.lh.sms.client.work.user.service.UserService;
 
 import java.io.IOException;
+import java.sql.SQLData;
 import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -240,8 +244,18 @@ public class HttpClientUtil {
             builder.addHeader("tk",tk);
         }else if(callback!=null&&callback.getConfig().isLogin()){
             //未登陆
+            if(sweetAlertDialog!=null){
+                //关闭动画
+                AlertUtil.close(sweetAlertDialog);
+            }
+            if(callback.getConfig().getContext()!=null) {
+                Intent intent = new Intent(callback.getConfig().getContext(), PersonLogin.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                callback.getConfig().getContext().startActivity(intent);
+            }
             return null;
         }
+        setSessionId(builder);
         //post请求
         if (RequestTypeEnum.POST.equals(requestTypeEnum)) {
             builder.post(formBody);
@@ -251,6 +265,8 @@ public class HttpClientUtil {
             try {
                 //同步调用
                 Response response = okHttpClient.newCall(request).execute();
+                //保存sessionId
+                saveSessionId(response);
                 if(sweetAlertDialog!=null){
                     //关闭动画
                     AlertUtil.close(sweetAlertDialog);
@@ -296,6 +312,8 @@ public class HttpClientUtil {
                     //关闭动画
                     AlertUtil.close(finalSweetAlertDialog);
                 }
+                //保存sessionId
+                saveSessionId(response);
                 HttpResult httpResult = null;
                 if (!response.isSuccessful()) {
                     //请求错误
@@ -332,5 +350,30 @@ public class HttpClientUtil {
             }
         });
         return null;
+    }
+    /**
+     * @do 保存sessionId
+     * @author liuhua
+     * @date 2020/5/13 9:35 PM
+     */
+    private static void saveSessionId(Response response){
+        String sessionId = response.header("Set-Cookie");
+        if(sessionId==null){
+            return;
+        }
+        sessionId = sessionId.replaceAll(".*(JSESSIONID=[0-9A-F]{32}).*","$1");
+        System.out.println(sessionId);
+        ObjectFactory.get(SqlData.class).saveObject(DataConstant.SESSION_ID,sessionId);
+    }
+    /**
+     * @do 设置sessionId
+     * @author liuhua
+     * @date 2020/5/13 9:38 PM
+     */
+    private static void setSessionId(Request.Builder builder){
+        String sessionId = ObjectFactory.get(SqlData.class).getObject(DataConstant.SESSION_ID, String.class);
+        if(sessionId!=null) {
+            builder.addHeader("cookie", sessionId);
+        }
     }
 }

@@ -7,8 +7,8 @@
     <string name="default_nickname">默认昵称</string>
     <string name="default_phone">18888888888</string>
     <string name="set">设置</string>
-    <string name="send_set">短信服务配置</string>
-    <string name="safe_set">安全设置</string>
+    <string name="send_set">服务配置</string>
+    <string name="app_set">应用配置</string>
     <string name="system_set">系统设置</string>
     <string name="help">帮助与反馈</string>
     <string name="about">关于六画短信</string>
@@ -39,4 +39,5 @@
     <string name="click_login">点我登陆</string>
     <string name="click_login_notice">免费发验证码不求人,赶快来体验</string>
     <string name="look_detail"><u>查看详情</u></string>
+    <string name="template_manager">模板管理</string>
 </resources>

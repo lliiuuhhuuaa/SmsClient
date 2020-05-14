@@ -40,6 +40,7 @@ import com.lh.sms.client.ui.person.user.PersonFindPass;
 import com.lh.sms.client.work.sms.entity.SmsProvide;
 import com.lh.sms.client.work.sms.enums.SmStateEnum;
 import com.lh.sms.client.work.sms.service.SmsProvideService;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 import java.util.List;
 
@@ -67,6 +68,21 @@ public class PersonSmsConfig extends AppCompatActivity {
     private void bindEvent() {
         findViewById(R.id.close_intent).setOnClickListener(v->{
             finish();
+        });
+        RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(layout -> {
+            //刷新注册状态
+            layout.finishRefresh(1000,true,true);
+            ObjectFactory.get(SmsProvideService.class).refreshSm(() -> {
+                HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                message.obj = new Object[]{PersonSmsConfig.this};
+                message.getData().putString(handleMessage.METHOD_KEY,isLocal? "showLocalSimInfo":"showAllSimInfo");
+                handleMessage.sendMessage(message);
+            });
+        });
+        refreshLayout.setOnLoadMoreListener(layout -> {
+            layout.setNoMoreData(true);
         });
         //tab切换
         TextView local = findViewById(R.id.person_sms_config_local);

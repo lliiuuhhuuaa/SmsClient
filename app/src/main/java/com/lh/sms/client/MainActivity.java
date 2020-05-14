@@ -1,22 +1,33 @@
 package com.lh.sms.client;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lh.sms.client.config.service.ConfigService;
+import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.exceptions.MsgException;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.AlertUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
+import com.lh.sms.client.work.sms.constant.SmsConstant;
+import com.lh.sms.client.work.socket.service.SocketService;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -77,7 +88,22 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFinish() {
-
+                        SubscriptionManager sManager = (SubscriptionManager) MainActivity.this.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+                        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                            throw new MsgException(SmsConstant.NO_PERMISSION_SEND_SMS);
+                        }
+                        StringBuilder sb = new StringBuilder();
+                        List<SubscriptionInfo> mList = sManager.getActiveSubscriptionInfoList();
+                        for (SubscriptionInfo subscriptionInfo : mList) {
+                            if(StringUtils.isNotBlank(subscriptionInfo.getIccId())){
+                                sb.append(subscriptionInfo.getIccId());
+                            }
+                        }
+                        if(sb.length()>0){
+                            ObjectFactory.get(SqlData.class).saveObject(DataConstant.LOCAL_ICC_ID,sb.toString());
+                            //连接socket
+                            ObjectFactory.get(SocketService.class).connect();
+                        }
                     }
 
                     @Override

@@ -207,14 +207,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:textSize="16sp"
-                android:text="每日最大发送数"
-                android:background="@color/colorLine"/>
+                android:text="每日最大发送数" />
             <EditText
                 android:id="@+id/sms_config_detail_input"
                 android:layout_width="0dp"
@@ -230,6 +234,52 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_save_32dp"
                     android:padding="2dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:text="开放个人服务(为自己提供服务)"/>
+            <Switch
+                android:id="@+id/sms_config_detail_private"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:track="@drawable/switch_off_style"
+                android:thumb="@drawable/switch_on_style"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:text="开放公共服务(为他人提供服务)"/>
+            <Switch
+                android:id="@+id/sms_config_detail_public"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:track="@drawable/switch_off_style"
+                android:thumb="@drawable/switch_on_style"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

@@ -24,8 +24,7 @@ public class UserService {
      */
     public void unLogin(){
         SqlData sqlData = ObjectFactory.get(SqlData.class);
-        sqlData.deleteObject(DataConstant.KEY_USER_TK);
-        sqlData.deleteObject(DataConstant.KEY_IS_LOGIN);
+        sqlData.deleteAll();
         //清除用户登陆信息
         HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
         Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());

@@ -23,10 +23,18 @@ import androidx.appcompat.widget.AppCompatButton;
 public class SelectDialog extends Dialog {
     private List<String[]> items = null;
     private Context context;
+    private Object object;
     public SelectDialog(Context context, List<String[]>items) {
         super(context, R.style.SelectDialog);
         this.items = items;
         this.context = context;
+        this.object = context;
+    }
+    public SelectDialog(Context context,Object object, List<String[]>items) {
+        super(context, R.style.SelectDialog);
+        this.items = items;
+        this.context = context;
+        this.object = object;
     }
 
     public SelectDialog(Context context, int theme) {
@@ -49,8 +57,8 @@ public class SelectDialog extends Dialog {
             button.setTextSize(18f);
             button.setOnClickListener(v->{
                 try {
-                    Method method = context.getClass().getMethod("searchByType", View.class);
-                    method.invoke(context,v);
+                    Method method = object.getClass().getMethod("searchByType", View.class);
+                    method.invoke(object,v);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

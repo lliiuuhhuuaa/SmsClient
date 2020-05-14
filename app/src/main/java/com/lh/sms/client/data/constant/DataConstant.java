@@ -9,6 +9,14 @@ public class DataConstant {
     public static final String KEY_IS_LOGIN ="is_login" ;
     //服务地址
     public static final String KEY_SERVICE_URL = "service_url";
+    //服务域名
+    public static final String KEY_SERVICE_DOMAIN = "service_domain";
+    //socket服务
+    public static final String KEY_SOCKET_DOMAIN = "socket_domain";
     //用户余额
-    public static final String KYE_USER_BALANCE = "user_balance";
+    public static final String KEY_USER_BALANCE = "user_balance";
+    //未读消息数
+    public static final String KEY_MSG_UN_READ_COUNT = "msg_un_read_count";
+    public static final String LOCAL_ICC_ID = "local_icc_id";
+    public static final String SESSION_ID = "session_id";
 }

@@ -67,36 +67,11 @@
                 android:gravity="center"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/person_user_msg_detail_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/list_item_un_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:layout_margin="5dp"
-                    android:text="取消注册"
-                    android:textStyle="bold"
-                    android:background="@drawable/button_style_black"
-                    />
-                <Button
-                    android:id="@+id/list_item_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:text="已禁用"
-                    android:textStyle="bold"
-                    android:background="@drawable/button_style_black"
-                    />
-            </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center">
         </LinearLayout>
 
     </LinearLayout>

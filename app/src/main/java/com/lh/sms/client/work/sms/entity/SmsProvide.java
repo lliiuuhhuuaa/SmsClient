@@ -30,6 +30,14 @@ public class SmsProvide {
      */
     private Integer monthMax;
     /**
+     * 个人服务
+     */
+    private Integer servicePrivate;
+    /**
+     * 公共服务
+     */
+    private Integer servicePublic;
+    /**
      * 更新时间
      */
     private Long updateDate;

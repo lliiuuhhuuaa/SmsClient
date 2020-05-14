@@ -1,14 +1,15 @@
 package com.lh.sms.client;
 
-import android.content.Context;
-
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import com.lh.sms.client.data.enums.TablesEnum;
+import com.lh.sms.client.data.service.SqlData;
+import com.lh.sms.client.work.msg.entity.Message;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import java.util.List;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -19,9 +20,8 @@ import static org.junit.Assert.*;
 public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-        assertEquals("com.lh.sms.client", appContext.getPackageName());
+        SqlData sqlData = new SqlData();
+        List<Message> key = sqlData.listObject(TablesEnum.MSG_LIST.getTable(), Message.class, 1, "key");
+        System.out.println(key);
     }
 }

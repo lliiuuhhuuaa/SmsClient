@@ -103,6 +103,7 @@ public class PersonLogin extends AppCompatActivity {
                         @Override
                         public void callback(HttpResult httpResult) {
                             SqlData sqlData = ObjectFactory.get(SqlData.class);
+                            sqlData.deleteAll();
                             sqlData.saveObject(DataConstant.KEY_USER_TK,httpResult.getData());
                             sqlData.saveObject(DataConstant.KEY_IS_LOGIN,YesNoEnum.YES.getValue());
                             finish();

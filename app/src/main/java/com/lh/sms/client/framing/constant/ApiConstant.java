@@ -20,4 +20,16 @@ public class ApiConstant {
     public static final String CONFIG_LIST = "/open/config/listConfig";
     //消息列表
     public static final String MSG_LIST = "/message/listMessage";
+    //更新消息
+    public static final String MSG_UPDATE = "/message/updateMessage";
+    //未读消息数
+    public static final String MSG_UN_READ_COUNT = "/message/getWaitMessageCount";
+    //添加或更新应用配置
+    public static final String APP_CONFIG_UPDATE = "/sms/app/config/update";
+    //应用列表
+    public static final String APP_CONFIG_LIST = "/sms/app/config/list";
+    //添加或更新模板配置
+    public static final String TEMPLATE_CONFIG_UPDATE = "/sms/template/update";
+    //模板列表
+    public static final String TEMPLATE_CONFIG_LIST = "/sms/template/list";
 }

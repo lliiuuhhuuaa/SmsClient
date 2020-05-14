@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,10 +71,16 @@ public class PersonSmsConfigDetail extends AppCompatActivity {
         stateButton.setOnClickListener(v -> {
             int state = (int) v.getTag();
             Integer newState = YesNoEnum.YES.getValue().equals(state) ? YesNoEnum.NO.getValue() : YesNoEnum.YES.getValue();
-            updateSm(iccId,newState,null);
+            SmsProvide updateSmsProvide = new SmsProvide();
+            updateSmsProvide.setIccId(iccId);
+            updateSmsProvide.setState(newState);
+            updateSm(updateSmsProvide);
         });
         findViewById(R.id.list_item_un_register).setOnClickListener(v->{
-            updateSm(iccId,SmStateEnum.DELETE.getValue(),null);
+            SmsProvide updateSmsProvide = new SmsProvide();
+            updateSmsProvide.setIccId(iccId);
+            updateSmsProvide.setState(SmStateEnum.DELETE.getValue());
+            updateSm(updateSmsProvide);
         });
         //更新最大发送数
         EditText editText = findViewById(R.id.sms_config_detail_input);
@@ -85,7 +92,28 @@ public class PersonSmsConfigDetail extends AppCompatActivity {
             }
             Integer max = Integer.valueOf(editText.getText().toString());
             editText.setText("");
-            updateSm(iccId,null,max);
+            SmsProvide updateSmsProvide = new SmsProvide();
+            updateSmsProvide.setIccId(iccId);
+            updateSmsProvide.setMonthMax(max);
+            updateSm(updateSmsProvide);
+        });
+        //个人服务
+        Switch privateSwitch = findViewById(R.id.sms_config_detail_private);
+        privateSwitch.setChecked(YesNoEnum.isYes(smsProvide.getServicePrivate()));
+        privateSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SmsProvide updateSmsProvide = new SmsProvide();
+            updateSmsProvide.setIccId(iccId);
+            updateSmsProvide.setServicePrivate(isChecked?YesNoEnum.YES.getValue():YesNoEnum.NO.getValue());
+            updateSm(updateSmsProvide);
+        });
+        //公共服务
+        Switch publicSwitch = findViewById(R.id.sms_config_detail_public);
+        publicSwitch.setChecked(YesNoEnum.isYes(smsProvide.getServicePublic()));
+        publicSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SmsProvide updateSmsProvide = new SmsProvide();
+            updateSmsProvide.setIccId(iccId);
+            updateSmsProvide.setServicePublic(isChecked?YesNoEnum.YES.getValue():YesNoEnum.NO.getValue());
+            updateSm(updateSmsProvide);
         });
     }
 
@@ -94,35 +122,37 @@ public class PersonSmsConfigDetail extends AppCompatActivity {
      * @author liuhua
      * @date 2020/5/9 10:36 PM
      */
-    public void updateSm(String iccId, Integer state, Integer monthMax) {
-        FormBody.Builder param = new FormBody.Builder().add("iccId", iccId);
-        if (monthMax != null) {
-            param.add("monthMax", monthMax.toString());
+    public void updateSm(SmsProvide updateSmsProvide) {
+        FormBody.Builder param = new FormBody.Builder().add("iccId", updateSmsProvide.getIccId());
+        if (updateSmsProvide.getMonthMax() != null) {
+            param.add("monthMax", updateSmsProvide.getMonthMax().toString());
         }
-        if (state != null) {
-            param.add("state", state.toString());
+        if (updateSmsProvide.getState() != null) {
+            param.add("state", updateSmsProvide.getState().toString());
+        }
+        if (updateSmsProvide.getServicePrivate() != null) {
+            param.add("servicePrivate", updateSmsProvide.getServicePrivate().toString());
+        }
+        if (updateSmsProvide.getServicePublic() != null) {
+            param.add("servicePublic", updateSmsProvide.getServicePublic().toString());
         }
         HttpClientUtil.post(ApiConstant.PROVIDE_UPDATE, param.build(),
                 new HttpAsynResult(HttpAsynResult.Config.builder().login(true).context(PersonSmsConfigDetail.this)) {
                     @Override
                     public void callback(HttpResult httpResult) {
                         AlertUtil.toast(PersonSmsConfigDetail.this, "操作成功", Toast.LENGTH_SHORT);
-                        if(SmStateEnum.DELETE.getValue().equals(state)){
+                        if(SmStateEnum.DELETE.getValue().equals(updateSmsProvide.getState())){
                             //取消注册
-                            ObjectFactory.get(SqlData.class).deleteObject(TablesEnum.SM_LIST.getTable(),iccId);
+                            ObjectFactory.get(SqlData.class).deleteObject(TablesEnum.SM_LIST.getTable(),updateSmsProvide.getIccId());
                             finish();
                             return;
                         }
-                        SmsProvide smsProvide = new SmsProvide();
-                        smsProvide.setIccId(iccId);
-                        smsProvide.setState(state);
-                        smsProvide.setMonthMax(monthMax);
                         //保存状态
-                        ObjectFactory.get(SmsProvideService.class).cacheSmsProvide(smsProvide);
+                        ObjectFactory.get(SmsProvideService.class).cacheSmsProvide(updateSmsProvide);
 
                         HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
                         Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
-                        message.obj = new Object[]{PersonSmsConfigDetail.this, iccId};
+                        message.obj = new Object[]{PersonSmsConfigDetail.this, updateSmsProvide.getIccId()};
                         message.getData().putString(handleMessage.METHOD_KEY, "refreshShow");
                         handleMessage.sendMessage(message);
                     }

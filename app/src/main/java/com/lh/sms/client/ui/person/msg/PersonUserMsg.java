@@ -24,14 +24,13 @@ import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.dialog.person.balance.SelectDialog;
-import com.lh.sms.client.ui.person.sms.PersonSmsConfig;
-import com.lh.sms.client.ui.person.sms.PersonSmsConfigDetail;
 import com.lh.sms.client.work.msg.entity.Message;
+import com.lh.sms.client.work.msg.enums.MessageStateEnum;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,6 +92,9 @@ public class PersonUserMsg extends AppCompatActivity {
                 View view = convertView == null ? inflater.inflate(R.layout.user_msg_list_item, null) : convertView;
                 Message message = messages.get(position);
                 TextView textView = view.findViewById(R.id.list_item_title);
+                if(!MessageStateEnum.WAIT.getValue().equals(message.getState())){
+                    textView.setCompoundDrawables(null,null,null,null);
+                }
                 textView.setText(message.getTitle());
                 textView = view.findViewById(R.id.list_item_text);
                 textView.setText(message.getText());
@@ -152,6 +154,11 @@ public class PersonUserMsg extends AppCompatActivity {
     private void initData(RefreshLayout layout){
         int page = getIntent().getIntExtra("page", 0);
         int pages = getIntent().getIntExtra("pages", 1);
+        String state = getIntent().getStringExtra("state");
+        Integer stateInt = StringUtils.isBlank(state)?null:Integer.valueOf(state);
+        if(pages<1){
+            pages = 1;
+        }
         if(page>=pages){
             //全部加载完毕
             if(layout!=null)
@@ -162,8 +169,14 @@ public class PersonUserMsg extends AppCompatActivity {
         page++;
         HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
         List<Message> list = ObjectFactory.get(SqlData.class).listObject(TablesEnum.MSG_LIST.getTable(), Message.class, page, "`key` desc");
+        if(page==1){
+            messages.clear();
+        }
         for (Message message : list) {
-            if(!messages.contains(message)){
+            if(stateInt!=null&&!message.getState().equals(stateInt)){
+                continue;
+            }
+            if (!messages.contains(message)) {
                 messages.add(message);
             }
         }
@@ -179,7 +192,10 @@ public class PersonUserMsg extends AppCompatActivity {
             layout.finishLoadMore(true);//传入false表示加载失败
         }
         //再从服务器请求并刷新
-        FormBody.Builder param = new FormBody.Builder().add("page",String.valueOf(page)).add("state","").add("rows","20");
+        FormBody.Builder param = new FormBody.Builder().add("page",String.valueOf(page)).add("rows","20");
+        if(StringUtils.isNotBlank(state)){
+            param.add("state",state);
+        }
         HttpClientUtil.post(ApiConstant.MSG_LIST,param.build(),
                 new HttpAsynResult(HttpAsynResult.Config.builder().animation(false)) {
                     @Override
@@ -197,12 +213,20 @@ public class PersonUserMsg extends AppCompatActivity {
                             layout.finishLoadMore(true);//传入false表示加载失败
                         }
                         JSONObject jsonObject = httpResult.getJSONObject();
+                        int page = jsonObject.getIntValue("page");
                         getIntent().putExtra("pages",jsonObject.getIntValue("pages"));
-                        getIntent().putExtra("page",jsonObject.getIntValue("page"));
+                        getIntent().putExtra("page",page);
                         JSONArray rows = jsonObject.getJSONArray("rows");
+                        if(page==1){
+                            messages.clear();
+                            if(rows.size()<20){
+                                //不足分页,清除本地所有
+                                sqlData.deleteAll(TablesEnum.MSG_LIST.getTable());
+                            }
+                        }
                         for (int i = 0; i < rows.size(); i++) {
                             Message message = rows.getObject(i, Message.class);
-                            if(!messages.contains(message)) {
+                            if (!messages.contains(message)) {
                                 messages.add(message);
                             }
                             sqlData.saveObject(TablesEnum.MSG_LIST.getTable(), message.getId().toString(), message);
@@ -227,7 +251,10 @@ public class PersonUserMsg extends AppCompatActivity {
         String type = (String) view.getTag();
         viewById.setTag(type);
         Log.d(TAG, "searchByType: "+type);
+        getIntent().putExtra("state",type);
+        getIntent().putExtra("page", 0);
         selectDialog.cancel();
+        initData(null);
     }
     @Override
     protected void onDestroy() {
