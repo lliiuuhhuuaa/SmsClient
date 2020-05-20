@@ -111,4 +111,9 @@ public class PersonLogin extends AppCompatActivity {
                     });
         });
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ObjectFactory.remove(this.getClass());
+    }
 }

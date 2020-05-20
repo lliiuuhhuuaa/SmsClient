@@ -251,7 +251,7 @@ public class PersonFragment extends Fragment {
         BigDecimal balance = sqlData.getObject(DataConstant.KEY_USER_BALANCE,BigDecimal.class);
         if(balance!=null) {
             TextView textView = root.findViewById(R.id.person_user_balance);
-            textView.setText(balance.toString());
+            textView.setText(balance.toString()+"元");
         }
     }
 

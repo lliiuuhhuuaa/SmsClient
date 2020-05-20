@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -88,14 +89,6 @@ public class RecordFragment extends Fragment {
                 TextView textView = view.findViewById(R.id.record_list_item_text);
                 textView.setText(log.getText());
                 textView = view.findViewById(R.id.record_list_item_time);
-                Drawable drawable = null;
-                if(LogLevelEnum.SUCCESS.getValue().equals(log.getLevel())){
-                    drawable = getResources().getDrawable(R.drawable.ic_success_16dp, null);
-                }else if(LogLevelEnum.WARN.getValue().equals(log.getLevel())){
-                    drawable = getResources().getDrawable(R.drawable.ic_warn_16dp, null);
-                }else if(LogLevelEnum.ERROR.getValue().equals(log.getLevel())){
-                    drawable = getResources().getDrawable(R.drawable.ic_error_16dp, null);
-                }
                 LocalDateTime localDateTime = LocalDateTime.fromDateFields(new Date(log.getTime()));
                 if(localDateTime.toLocalDate().equals(LocalDate.now())){
                     textView.setText(localDateTime.toString("今天HH:mm:ss"));
@@ -106,7 +99,16 @@ public class RecordFragment extends Fragment {
                 }else{
                     textView.setText(localDateTime.toString("yyyy-MM-dd HH:mm"));
                 }
-                textView.setCompoundDrawablesWithIntrinsicBounds(drawable,null,null,null);
+                Drawable drawable = null;
+                if(LogLevelEnum.SUCCESS.getValue().equals(log.getLevel())){
+                    drawable = getResources().getDrawable(R.drawable.ic_success_16dp, null);
+                }else if(LogLevelEnum.WARN.getValue().equals(log.getLevel())){
+                    drawable = getResources().getDrawable(R.drawable.ic_warn_16dp, null);
+                }else if(LogLevelEnum.ERROR.getValue().equals(log.getLevel())){
+                    drawable = getResources().getDrawable(R.drawable.ic_error_16dp, null);
+                }
+                ImageView imageView = view.findViewById(R.id.record_list_item_ico);
+                imageView.setImageDrawable(drawable);
                 return view;
             }
         };
@@ -181,6 +183,14 @@ public class RecordFragment extends Fragment {
         getActivity().getIntent().putExtra("level",level);
         getActivity().getIntent().putExtra("page", 0);
         selectDialog.cancel();
+        initData(null);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        //初始化数据
+        getActivity().getIntent().putExtra("page", 0);
+        getActivity().getIntent().removeExtra("level");
         initData(null);
     }
 }

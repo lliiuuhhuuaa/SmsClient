@@ -168,6 +168,7 @@
                         android:id="@+id/person_template_button"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/button_style_black"
                         android:gravity="center"

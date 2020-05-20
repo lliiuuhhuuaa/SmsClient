@@ -81,5 +81,9 @@ public class PersonRegister extends AppCompatActivity {
 
         });
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ObjectFactory.remove(this.getClass());
+    }
 }

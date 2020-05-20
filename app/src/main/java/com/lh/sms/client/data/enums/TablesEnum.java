@@ -10,6 +10,7 @@ public enum TablesEnum {
     LOG_LIST("log_list","create table if not exists log_list (`id` integer primary key autoincrement,`text` varchar not null,`level` integer not null,`time` integer not null)"),
     APP_LIST("app_list","create table if not exists app_list (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
     TEMPLATE_LIST("template_list","create table if not exists template_list (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
+    WALLET_DETAIL_LIST("wallet_detail_list","create table if not exists wallet_detail_list (`key` varchar primary key,`value` varchar not null,`sign` varchar not null)"),
     ;
     private String table;
     private String sql;

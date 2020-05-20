@@ -5,41 +5,8 @@
             <solid android:color="@color/colorMoneyRed"/>
             <corners android:radius="5dp" />
             <stroke android:width="2sp"
-                android:color="@color/colorPrimary"/>
+                android:color="@color/colorWhite"/>
         </shape>
-        <item>
-            <shape android:shape="rectangle">
-                <padding
-                    android:bottom="2dp"
-                    android:left="2dp"
-                    android:right="2dp"
-                    android:top="2dp" />
-                <solid android:color="#000" />
-                <corners android:radius="8dp" />
-            </shape>
-        </item>
-        <item>
-            <shape android:shape="rectangle">
-                <padding
-                    android:bottom="2dp"
-                    android:left="2dp"
-                    android:right="2dp"
-                    android:top="2dp" />
-                <solid android:color="#000" />
-                <corners android:radius="8dp" />
-            </shape>
-        </item>
-        <item>
-            <shape android:shape="rectangle">
-                <padding
-                    android:bottom="2dp"
-                    android:left="2dp"
-                    android:right="2dp"
-                    android:top="2dp" />
-                <solid android:color="#000" />
-                <corners android:radius="8dp" />
-            </shape>
-        </item>
     </item>
     <item>
         <shape android:shape="rectangle">
@@ -47,7 +14,7 @@
             <corners android:radius="5dp" />
             <size android:width="80dp" android:height="30dp"/>
             <stroke android:width="2sp"
-                android:color="@color/colorLine"/>
+                android:color="@color/colorMoneyRed"/>
         </shape>
     </item>
 </selector>

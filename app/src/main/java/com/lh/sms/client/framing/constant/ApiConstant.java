@@ -10,6 +10,8 @@ public class ApiConstant {
     public static final String USER_GET_INFO = "/web/user/getUserInfo";
     //获取用户钱包
     public static final String USER_WALLET = "/web/wallet/getUserWallet";
+    //获取用户钱包明细
+    public static final String USER_WALLET_DETAIL = "/web/wallet/listWalletDetail";
     //登陆
     public static final String USER_LOGIN = "/user/login";
     //注册与更新SM卡

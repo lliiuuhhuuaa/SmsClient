@@ -233,4 +233,9 @@ public class VerifySmsCode extends AppCompatActivity {
             handleMessage.sendMessage(message);
         },1);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ObjectFactory.remove(this.getClass());
+    }
 }

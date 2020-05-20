@@ -176,4 +176,9 @@ public class ConfigPassword extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);//得到系统的输入方法服务
         imm.toggleSoftInput(InputMethodManager.RESULT_UNCHANGED_SHOWN, InputMethodManager.HIDE_NOT_ALWAYS);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ObjectFactory.remove(this.getClass());
+    }
 }

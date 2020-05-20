@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.lh.sms.client.R;
+import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.YesNoEnum;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,6 +69,11 @@ public class PersonFindPass extends AppCompatActivity {
             }
 
         });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ObjectFactory.remove(this.getClass());
     }
 
 }

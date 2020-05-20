@@ -51,7 +51,7 @@ public class SocketService {
                 return;
             }
             String domain = sqlData.getObject(DataConstant.KEY_SOCKET_DOMAIN, String.class);
-            socket = IO.socket(String.format("%s?iccId=%s&tk=%s&type=sms",domain,tk,iccId));
+            socket = IO.socket(String.format("%s?iccId=%s&tk=%s&type=sms",domain,iccId,tk));
             //连接超时事件
             socket.on(Socket.EVENT_CONNECT_TIMEOUT, args -> {
                 ObjectFactory.get(LogService.class).error("SM服务:连接超时");

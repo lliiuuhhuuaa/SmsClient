@@ -69,6 +69,7 @@
                 android:paddingTop="3dp">
 
                 <TextView
+                    android:id="@+id/person_balance_user_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"

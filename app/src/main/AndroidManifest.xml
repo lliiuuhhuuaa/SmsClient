@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.person.balance.PersonBalanceTransactionRecord" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.balance.PersonBalanceDetail" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.balance.PersonBalanceDetailDetail" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.balance.PersonBalance" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.bill.PersonBillRecord" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.sms.PersonSmsConfig" android:launchMode="singleTask"/>

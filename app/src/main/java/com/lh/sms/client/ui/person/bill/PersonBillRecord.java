@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lh.sms.client.R;
+import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.ui.dialog.person.balance.SelectDialog;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
@@ -66,5 +67,10 @@ public class PersonBillRecord extends AppCompatActivity {
         viewById.setTag(type);
         Log.d(TAG, "searchByType: "+type);
         selectDialog.cancel();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ObjectFactory.remove(this.getClass());
     }
 }
