@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.lh.sms.client.R;
 import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.YesNoEnum;
@@ -64,8 +65,8 @@ public class PersonRegister extends AppCompatActivity {
             if(YesNoEnum.YES.getValue().equals(v.getTag())){
                 //请求后台发送验证码
                 FormBody param = new FormBody.Builder().add("phone", phoneEdit.getText().toString()).add("type", SmsTypeEnum.REGISTER.getValue()).build();
-                HttpClientUtil.post("/show/sms/sendSmsCode", param,
-                        new HttpAsynResult(HttpAsynResult.Config.builder().context(PersonRegister.this).onlyOk(true)) {
+                HttpClientUtil.post(ApiConstant.SEND_SMS_CODE, param,
+                        new HttpAsynResult(HttpAsynResult.Config.builder().context(PersonRegister.this).onlyOk(true).login(false)) {
                     @Override
                     public void callback(HttpResult httpResult) {
                         Intent intent=new Intent(PersonRegister.this, VerifySmsCode.class);

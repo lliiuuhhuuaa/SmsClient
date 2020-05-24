@@ -26,6 +26,7 @@ import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
 import com.lh.sms.client.ui.util.UiUtil;
+import com.lh.sms.client.work.socket.service.SocketService;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -132,7 +133,7 @@ public class ConfigPassword extends AppCompatActivity {
             FormBody param = new FormBody.Builder().add("phone", phone).add("code", code)
                     .add("password",password.getText().toString()).build();
             HttpClientUtil.post(smsTypeEnum.getApi(), param,
-                    new HttpAsynResult(ConfigPassword.this) {
+                    new HttpAsynResult(HttpAsynResult.Config.builder().context(ConfigPassword.this).login(false)) {
                         @Override
                         public void callback(HttpResult httpResult) {
                             if (!ResultCodeEnum.OK.getValue().equals(httpResult.getCode())) {
@@ -145,8 +146,11 @@ public class ConfigPassword extends AppCompatActivity {
                             }
                             if(SmsTypeEnum.REGISTER.getValue().equals(smsTypeEnum.getValue())){
                                 SqlData sqlData = ObjectFactory.get(SqlData.class);
+                                sqlData.deleteAll();
                                 sqlData.saveObject(DataConstant.KEY_USER_TK,httpResult.getData());
                                 sqlData.saveObject(DataConstant.KEY_IS_LOGIN,YesNoEnum.YES.getValue());
+                                //连接socket
+                                ObjectFactory.get(SocketService.class).connect();
                             }
                             Intent intent = new Intent(ConfigPassword.this, MainActivity.class);
                             intent.putExtras(getIntent());

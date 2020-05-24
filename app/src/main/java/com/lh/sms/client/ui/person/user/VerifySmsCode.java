@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.lh.sms.client.R;
 import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
@@ -175,8 +176,8 @@ public class VerifySmsCode extends AppCompatActivity {
         //请求后台发送验证码
         String phone = getIntent().getStringExtra("phone");
         FormBody param = new FormBody.Builder().add("phone", phone).add("code", code).build();
-        HttpClientUtil.post("/show/sms/verifySmsCode", param,
-                new HttpAsynResult(VerifySmsCode.this) {
+        HttpClientUtil.post(ApiConstant.VERIFY_SMS_CODE, param,
+                new HttpAsynResult(HttpAsynResult.Config.builder().context(VerifySmsCode.this).login(false)) {
                     @Override
                     public void callback(HttpResult httpResult) {
                         if (!ResultCodeEnum.OK.getValue().equals(httpResult.getCode()) || Boolean.FALSE.equals(httpResult.getData())) {

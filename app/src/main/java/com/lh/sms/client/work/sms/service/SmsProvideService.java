@@ -10,13 +10,13 @@ import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.data.enums.TablesEnum;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
-import com.lh.sms.client.framing.constant.SystemConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.YesNoEnum;
@@ -27,6 +27,7 @@ import com.lh.sms.client.work.sms.constant.SmsConstant;
 import com.lh.sms.client.work.sms.entity.SmsProvide;
 import com.lh.sms.client.work.sms.enums.SmStateEnum;
 import com.lh.sms.client.work.socket.entity.SendSmsBySocket;
+import com.lh.sms.client.work.socket.util.SmsUtil;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class SmsProvideService {
                         }
                         if(runnable!=null){
                             //回调
-                            ThreadPool.createNewThread(runnable);
+                            ThreadPool.exec(runnable);
                         }
                     }
                 });
@@ -123,13 +124,20 @@ public class SmsProvideService {
      */
     public boolean sendSms(SendSmsBySocket sendSmsBySocket) {
         //检查签名
-
+        if(SmsUtil.checkSign(sendSmsBySocket)){
+            throw new MsgException(SmsConstant.SIGN_ERROR);
+        }
+        //检查手机号格式
+        if(!sendSmsBySocket.getPhone().matches("^1[3-9][0-9]{9}$")){
+            throw new MsgException(SmsConstant.PHONE_ERROR,sendSmsBySocket.getPhone());
+        }
         //注册消息通知
         //必须先注册广播接收器,否则接收不到发送结果
         Context context = ObjectFactory.get(MainActivity.class);
         SendReceiver receiver = new SendReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(SendReceiver.ACTION);
+        filter.addAction(SendReceiver.SMS_SEND);
+        filter.addAction(SendReceiver.SMS_DELIVERED);
         context.registerReceiver(receiver, filter);
         SubscriptionManager sManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -146,17 +154,17 @@ public class SmsProvideService {
             throw new MsgException(SmsConstant.NO_GET_SM_INFO);
         }
         SmsManager smsManager = SmsManager.getSmsManagerForSubscriptionId(subscriptionId);
-        Intent intent = new Intent();
-        intent.putExtra("phone",sendSmsBySocket.getPhone());
-        intent.putExtra("text",sendSmsBySocket.getText());
-        intent.putExtra("iccId",sendSmsBySocket.getIccId());
-        intent.putExtra("orderId",sendSmsBySocket.getOrderId());
-        intent.putExtra("appId",sendSmsBySocket.getAppId());
-        intent.setAction(SendReceiver.ACTION);
-        PendingIntent sentIntent = PendingIntent.getBroadcast(context, 1, intent,
+        String sendSms = JSON.toJSONString(sendSmsBySocket);
+        Intent itSend = new Intent(SendReceiver.SMS_SEND);
+        itSend.putExtra("sendSmsBySocket", sendSms);
+        Intent itDeliver = new Intent(SendReceiver.SMS_DELIVERED);
+        itDeliver.putExtra("sendSmsBySocket", sendSms);
+        PendingIntent sentIntent = PendingIntent.getBroadcast(context, 1, itSend,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent deliverIntent = PendingIntent.getBroadcast(context, 1, itDeliver,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         try {
-            smsManager.sendTextMessage(sendSmsBySocket.getPhone(),null,sendSmsBySocket.getText(),sentIntent,sentIntent);
+            smsManager.sendTextMessage(sendSmsBySocket.getPhone(),null,sendSmsBySocket.getText(),sentIntent,deliverIntent);
             return true;
         } catch (Exception e) {
             throw new MsgException(e.getMessage());

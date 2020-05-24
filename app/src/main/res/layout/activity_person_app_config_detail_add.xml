@@ -8,13 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -25,7 +25,7 @@
                 android:drawableLeft="@drawable/ic_left_white_24dp"
                 android:drawablePadding="10dp"
                 android:text="添加应用"
-                android:textColor="@color/colorWhite"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
         </LinearLayout>
         <LinearLayout
@@ -44,12 +44,13 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="应用ID(AppID)"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="API发送短信时使用"/>
             </LinearLayout>
             <LinearLayout
@@ -84,12 +85,13 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="密钥(SecurityKey)"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="API发送短信时参数签名使用"/>
             </LinearLayout>
             <LinearLayout
@@ -124,12 +126,13 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="使用公共服务"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="如使用公共服务,API发送短信时无个人服务可用时,则会使用公共服务,需余额充足"/>
             </LinearLayout>
             <LinearLayout
@@ -162,12 +165,13 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="状态"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="启用时才能API接入"/>
             </LinearLayout>
             <LinearLayout
@@ -198,7 +202,7 @@
                     android:id="@+id/person_app_config_button"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:gravity="center"
                     android:text="确认添加"

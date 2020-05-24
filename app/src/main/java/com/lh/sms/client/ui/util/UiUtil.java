@@ -3,6 +3,7 @@ package com.lh.sms.client.ui.util;
 import android.widget.Button;
 
 import com.lh.sms.client.R;
+import com.lh.sms.client.framing.enums.YesNoEnum;
 
 public class UiUtil {
     /**
@@ -14,9 +15,11 @@ public class UiUtil {
         if(bool) {
             button.setBackgroundResource(R.color.colorPrimary);
             button.setEnabled(true);
+            button.setTag(YesNoEnum.YES.getValue());
         }else{
-            button.setBackgroundResource(R.color.primary_tran_5);
+            button.setBackgroundResource(R.color.colorPrimaryGray);
             button.setEnabled(false);
+            button.setTag(YesNoEnum.NO.getValue());
         }
     }
 }

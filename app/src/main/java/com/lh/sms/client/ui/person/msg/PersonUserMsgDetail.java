@@ -1,52 +1,31 @@
 package com.lh.sms.client.ui.person.msg;
 
-import android.graphics.Paint;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.textclassifier.TextClassifier;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.lh.sms.client.R;
-import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.enums.TablesEnum;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
-import com.lh.sms.client.framing.constant.ApiConstant;
-import com.lh.sms.client.framing.entity.HttpAsynResult;
-import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
-import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
-import com.lh.sms.client.framing.util.HttpClientUtil;
-import com.lh.sms.client.ui.dialog.person.balance.SelectDialog;
-import com.lh.sms.client.ui.person.sms.PersonSmsConfigDetail;
 import com.lh.sms.client.work.msg.entity.Message;
 import com.lh.sms.client.work.msg.enums.MessageStateEnum;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.lh.sms.client.work.msg.service.MessageService;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
-import okhttp3.FormBody;
 
 public class PersonUserMsgDetail extends AppCompatActivity {
     private static final String TAG = "PersonUserMsgDetail";
@@ -103,29 +82,17 @@ public class PersonUserMsgDetail extends AppCompatActivity {
             button.getPaint().setFakeBoldText(true);
             button.setLayoutParams(lp);
             button.setTag(new Object[]{message.getId(),map.getKey()});
+            button.setTextColor(Color.WHITE);
             button.setBackgroundResource(R.drawable.button_style_black);
             button.setOnClickListener(v->{
                 Object[] objects = (Object[]) v.getTag();
-                FormBody.Builder param = new FormBody.Builder().add("id",objects[0].toString()).add("state",objects[1].toString());
-                HttpClientUtil.post(ApiConstant.MSG_UPDATE,param.build(),
-                        new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).context(PersonUserMsgDetail.this)) {
-                            @Override
-                            public void callback(HttpResult httpResult) {
-                                SqlData sqlData = ObjectFactory.get(SqlData.class);
-                                Message saveMsg = sqlData.getObject(TablesEnum.MSG_LIST.getTable(), objects[0].toString(), Message.class);
-                                saveMsg.setState(Integer.valueOf(objects[1].toString()));
-                                sqlData.saveObject(TablesEnum.MSG_LIST.getTable(), objects[0].toString(), saveMsg);
-                                HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
-                                android.os.Message message = android.os.Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
-                                message.obj = new Object[]{PersonUserMsgDetail.this, saveMsg.getId()};
-                                message.getData().putString(handleMessage.METHOD_KEY, "refreshShow");
-                                handleMessage.sendMessage(message);
-                                Integer count = sqlData.getObject(DataConstant.KEY_MSG_UN_READ_COUNT, Integer.class);
-                                if(count!=null&&count>0) {
-                                    sqlData.saveObject(DataConstant.KEY_MSG_UN_READ_COUNT, count-1);
-                                }
-                            }
-                        });
+                ObjectFactory.get(MessageService.class).updateState((Long)objects[0],Integer.valueOf(objects[1].toString()),PersonUserMsgDetail.this,() -> {
+                    HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                    android.os.Message hm = android.os.Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                    hm.obj = new Object[]{PersonUserMsgDetail.this, objects[0]};
+                    hm.getData().putString(handleMessage.METHOD_KEY, "refreshShow");
+                    handleMessage.sendMessage(hm);
+                });
             });
             linearLayout.addView(button);
         }

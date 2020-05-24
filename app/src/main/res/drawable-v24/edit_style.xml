@@ -10,7 +10,7 @@
     <item
         android:bottom="1dp">
         <shape>
-            <solid android:color="@color/colorWhite" />
+            <solid android:color="@android:color/white" />
         </shape>
     </item>
 </shape>

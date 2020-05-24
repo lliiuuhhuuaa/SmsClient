@@ -9,13 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -26,14 +26,14 @@
                 android:drawableLeft="@drawable/ic_left_white_24dp"
                 android:drawablePadding="10dp"
                 android:text="@string/send_set"
-                android:textColor="@color/colorWhite"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/person_menu_item"
+            android:background="@drawable/person_menu_item"
             android:orientation="horizontal">
 
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="0.5"
-                android:background="@color/colorWhite"
+                android:background="@android:color/white"
                 android:gravity="center"
                 android:tag="local"
                 android:text="本机服务" />
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="0.5"
-                android:background="@color/colorLine"
+                android:background="@color/gray"
                 android:gravity="center"
                 android:tag="all"
                 android:text="所有服务" />
@@ -67,7 +67,8 @@
                 android:id="@+id/person_sms_config_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@null" />
+                android:divider="@null"
+                android:scrollbars="none"/>
 
             <com.scwang.smart.refresh.header.ClassicsHeader
                 android:layout_width="match_parent"

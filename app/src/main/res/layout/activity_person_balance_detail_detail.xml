@@ -9,13 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -26,7 +26,7 @@
                 android:drawableLeft="@drawable/ic_left_white_24dp"
                 android:drawablePadding="10dp"
                 android:text="交易详情"
-                android:textColor="@color/colorWhite"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -45,7 +45,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                         android:id="@+id/person_balance_detail_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -83,7 +83,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                         android:id="@+id/person_balance_detail_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -111,13 +111,13 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
             </LinearLayout>
             <!--分割线-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -128,7 +128,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                         android:id="@+id/person_balance_detail_before"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -156,7 +156,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -176,7 +176,7 @@
                         android:id="@+id/person_balance_detail_after"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -184,19 +184,19 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
             </LinearLayout>
             <!--分割线-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
 
             <!--分割线-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -206,7 +206,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -226,7 +226,7 @@
                         android:id="@+id/person_balance_detail_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -234,19 +234,19 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
             </LinearLayout>
             <!--分割线-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
 
             <!--分割线-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -256,7 +256,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -276,7 +276,7 @@
                         android:id="@+id/person_balance_detail_remark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -284,13 +284,13 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
             </LinearLayout>
             <!--分割线-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

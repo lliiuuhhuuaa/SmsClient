@@ -28,4 +28,8 @@ public class UserInfo {
      * 手机号
      */
     private String phone;
+    /**
+     * 客户端密钥
+     */
+    private String smsClientKey;
 }

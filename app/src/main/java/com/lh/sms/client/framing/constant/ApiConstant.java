@@ -34,4 +34,8 @@ public class ApiConstant {
     public static final String TEMPLATE_CONFIG_UPDATE = "/sms/template/update";
     //模板列表
     public static final String TEMPLATE_CONFIG_LIST = "/sms/template/list";
+    //发送验证码
+    public static final String SEND_SMS_CODE = "/open/sms/sendSmsCode";
+    //检查验证码
+    public static final String VERIFY_SMS_CODE = "/open/sms/verifySmsCode";
 }

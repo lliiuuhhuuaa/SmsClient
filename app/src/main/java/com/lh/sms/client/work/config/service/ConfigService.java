@@ -1,4 +1,4 @@
-package com.lh.sms.client.config.service;
+package com.lh.sms.client.work.config.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -8,6 +8,7 @@ import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.util.HttpClientUtil;
+import com.lh.sms.client.framing.util.ThreadPool;
 
 /**
  * @do 配置
@@ -20,7 +21,7 @@ public class ConfigService {
      * @author liuhua
      * @date 2020/4/25 4:25 PM
      */
-    public void updateConfig(){
+    public void updateConfig(Runnable runnable){
         HttpClientUtil.post(ApiConstant.CONFIG_LIST,
                 new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).alertError(false).animation(false)) {
             @Override
@@ -33,8 +34,9 @@ public class ConfigService {
                         sqlData.saveObject(jsonObject.getString("configKey"),jsonObject.getString("configValue"));
                     }
                 }
-
-
+                if(runnable!=null){
+                    ThreadPool.exec(runnable);
+                }
             }
         });
     }

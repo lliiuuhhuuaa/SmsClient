@@ -1,7 +1,5 @@
 package com.lh.sms.client.framing;
 
-import com.lh.sms.client.ui.person.user.PersonLogin;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

@@ -35,7 +35,7 @@ public class TemplateService {
                         }
                         if(runnable!=null){
                             //回调
-                            ThreadPool.createNewThread(runnable);
+                            ThreadPool.exec(runnable);
                         }
                     }
                 });

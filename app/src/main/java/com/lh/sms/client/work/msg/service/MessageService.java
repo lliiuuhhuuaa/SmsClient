@@ -1,7 +1,10 @@
 package com.lh.sms.client.work.msg.service;
 
+import android.content.Context;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.enums.TablesEnum;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
@@ -65,5 +68,31 @@ public class MessageService {
         updateMessage.setState(state);
         updateMessage.setUpdateDate(System.currentTimeMillis());
         ObjectFactory.get(SqlData.class).saveObject(TablesEnum.SM_LIST.getTable(),id.toString(),updateMessage);
+    }
+
+    public void updateState(Long id, Integer state, Context context, Runnable runnable) {
+        FormBody.Builder param = new FormBody.Builder().add("id",id.toString()).add("state",state.toString());
+        boolean isDel = state == -1;
+        HttpClientUtil.post(ApiConstant.MSG_UPDATE,param.build(),
+                new HttpAsynResult(HttpAsynResult.Config.builder().alertError(!isDel).animation(!isDel).onlyOk(true).context(context)) {
+                    @Override
+                    public void callback(HttpResult httpResult) {
+                        SqlData sqlData = ObjectFactory.get(SqlData.class);
+                        if(isDel){
+                            sqlData.deleteObject(TablesEnum.MSG_LIST.getTable(), id.toString());
+                        }else {
+                            Message saveMsg = sqlData.getObject(TablesEnum.MSG_LIST.getTable(), id.toString(), Message.class);
+                            saveMsg.setState(Integer.valueOf(state));
+                            sqlData.saveObject(TablesEnum.MSG_LIST.getTable(), id.toString(), saveMsg);
+                        }
+                        Integer count = sqlData.getObject(DataConstant.KEY_MSG_UN_READ_COUNT, Integer.class);
+                        if(count!=null&&count>0) {
+                            sqlData.saveObject(DataConstant.KEY_MSG_UN_READ_COUNT, count-1);
+                        }
+                        if(runnable!=null){
+                            ThreadPool.exec(runnable);
+                        }
+                    }
+                });
     }
 }

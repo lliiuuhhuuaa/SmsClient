@@ -17,6 +17,7 @@ import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.util.UiUtil;
+import com.lh.sms.client.work.socket.service.SocketService;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -106,6 +107,8 @@ public class PersonLogin extends AppCompatActivity {
                             sqlData.deleteAll();
                             sqlData.saveObject(DataConstant.KEY_USER_TK,httpResult.getData());
                             sqlData.saveObject(DataConstant.KEY_IS_LOGIN,YesNoEnum.YES.getValue());
+                            //连接socket
+                            ObjectFactory.get(SocketService.class).connect();
                             finish();
                         }
                     });

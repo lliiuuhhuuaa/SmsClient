@@ -51,7 +51,7 @@ public class ThreadPool {
 	}
 	});
 
-	public static boolean createNewThread(Runnable runnable) {
+	public static boolean exec(Runnable runnable) {
 		executor.execute(runnable);
 		int wait = executor.getQueue().size();
 		if (wait >= MAX_WAIT_INLINE * WAIT_FULL) {

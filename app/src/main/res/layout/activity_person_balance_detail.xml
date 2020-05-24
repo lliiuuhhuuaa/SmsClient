@@ -9,13 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorLine"
+        android:background="@color/gray"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:padding="20dp">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
                     android:drawableLeft="@drawable/ic_left_white_24dp"
                     android:drawablePadding="10dp"
                     android:text="@string/money_detail"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -43,7 +43,7 @@
                     android:id="@+id/person_balance_transaction_record_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:text="全部"
                     android:textSize="18sp"
                     android:tag=""/>
@@ -65,7 +65,8 @@
                 android:id="@+id/person_balance_detail_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@null">
+                android:divider="@null"
+                android:scrollbars="none">
 
             </ListView>
 

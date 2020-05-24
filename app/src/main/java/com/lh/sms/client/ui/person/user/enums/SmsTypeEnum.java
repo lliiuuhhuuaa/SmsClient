@@ -1,17 +1,13 @@
 package com.lh.sms.client.ui.person.user.enums;
 
-import com.lh.sms.client.framing.enums.YesNoEnum;
-
-import org.apache.commons.lang3.StringUtils;
-
 /***
  * 短信验证状态
  */
 public enum SmsTypeEnum {
     //回调
-    REGISTER("register","/show/user/register"),
+    REGISTER("register","/open/user/register"),
     //弹Sweet消息
-    FIND("find","/show/user/resetPassword"),
+    FIND("find","/open/user/resetPassword"),
     ;
     private String value;
     private String api;

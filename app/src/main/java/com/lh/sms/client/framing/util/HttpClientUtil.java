@@ -362,7 +362,6 @@ public class HttpClientUtil {
             return;
         }
         sessionId = sessionId.replaceAll(".*(JSESSIONID=[0-9A-F]{32}).*","$1");
-        System.out.println(sessionId);
         ObjectFactory.get(SqlData.class).saveObject(DataConstant.SESSION_ID,sessionId);
     }
     /**

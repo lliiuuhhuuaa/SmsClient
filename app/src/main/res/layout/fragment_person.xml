@@ -10,13 +10,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
             android:paddingTop="20dp"
@@ -39,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -48,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -80,29 +79,31 @@
         </LinearLayout>
 
         <ScrollView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
             android:fadingEdge="vertical"
-            android:scrollbars="vertical">
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/gray">
 
                 <!--        账单-->
                 <LinearLayout
                     android:id="@+id/person_bill_menu_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="2dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -142,14 +143,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="15dp"
-                    android:id="@+id/person_balance_menu_item">
+                    android:id="@+id/person_balance_menu_item"
+                    android:layout_marginBottom="10dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -205,23 +207,19 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/colorLine" />
                 <!--短信设置-->
                 <LinearLayout
                     android:id="@+id/person_sms_config_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="2dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -262,13 +260,14 @@
                     android:id="@+id/person_app_config"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="2dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -309,13 +308,14 @@
                     android:id="@+id/person_template_config"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="2dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -356,13 +356,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="10dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -398,22 +399,18 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/colorLine" />
                 <!--帮助-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="2dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -451,15 +448,17 @@
                 </LinearLayout>
                 <!--        关于-->
                 <LinearLayout
+                    android:id="@+id/person_about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="2dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -500,7 +499,7 @@
                     android:id="@+id/person_exit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/person_menu_item"
+                    android:background="@drawable/person_menu_item"
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="20dp"

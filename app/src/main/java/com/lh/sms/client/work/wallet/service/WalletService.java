@@ -10,11 +10,8 @@ import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
-import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
-import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
-import com.lh.sms.client.ui.person.balance.PersonBalance;
 import com.lh.sms.client.work.msg.entity.Message;
 
 import java.math.BigDecimal;
@@ -41,7 +38,7 @@ public class WalletService {
                             return;
                         }
                         ObjectFactory.get(SqlData.class).saveObject(DataConstant.KEY_USER_BALANCE, balance);
-                        ThreadPool.createNewThread(runnable);
+                        ThreadPool.exec(runnable);
                     }
                 });
     }

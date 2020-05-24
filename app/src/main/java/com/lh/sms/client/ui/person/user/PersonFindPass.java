@@ -52,7 +52,7 @@ public class PersonFindPass extends AppCompatActivity {
                     register.setBackgroundResource(R.color.colorPrimary);
                     register.setTag(YesNoEnum.YES.getValue());
                 }else{
-                    register.setBackgroundResource(R.color.primary_tran_5);
+                    register.setBackgroundResource(R.color.colorPrimaryGray);
                     register.setTag(YesNoEnum.NO.getValue());
                 }
             }

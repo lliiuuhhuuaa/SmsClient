@@ -1,6 +1,5 @@
 package com.lh.sms.client.ui.record;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,17 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lh.sms.client.R;
+import com.lh.sms.client.data.enums.TablesEnum;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.ui.dialog.person.balance.SelectDialog;
+import com.lh.sms.client.ui.plug.HorizontalScroll;
 import com.lh.sms.client.work.log.entity.Logs;
 import com.lh.sms.client.work.log.enums.LogLevelEnum;
 import com.lh.sms.client.work.log.service.LogService;
-import com.lh.sms.client.work.socket.service.SocketService;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +63,18 @@ public class RecordFragment extends Fragment {
      */
     private BaseAdapter baseAdapter = null;
     private void bindEvent() {
+        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(layout -> {
+            getActivity().getIntent().putExtra("page", 0);
+            initData(layout);
+        });
+        refreshLayout.setOnLoadMoreListener(layout -> {
+            layout.finishLoadMore();
+            initData(layout);
+        });
+        //初始化左划插件
+        ListView listView = root.findViewById(R.id.record_list);
+        HorizontalScroll horizontalScroll = new HorizontalScroll(listView);
         baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -81,11 +96,14 @@ public class RecordFragment extends Fragment {
                 LayoutInflater inflater = RecordFragment.this.getLayoutInflater();
                 View view = convertView == null ? inflater.inflate(R.layout.record_list_item, null) : convertView;
                 Logs log = logs.get(position);
-//                TextView textView = view.findViewById(R.id.record_list_item_time);
-//                if(!MessageStateEnum.WAIT.getValue().equals(message.getState())){
-//                    textView.setCompoundDrawables(null,null,null,null);
-//                }
-//                textView.setText(message.getTitle());
+                //左划删除操作,并绑定item点击事件
+                HorizontalScrollView horizontalScrollView = horizontalScroll.initScroll(view);
+                view.findViewById(R.id.right_delete).setOnClickListener(v->{
+                    horizontalScrollView.fullScroll(ScrollView.FOCUS_LEFT);
+                    logs.remove(position);
+                    baseAdapter.notifyDataSetChanged();
+                    ObjectFactory.get(SqlData.class).deleteObject(TablesEnum.LOG_LIST.getTable(),log.getId().toString(),"id");
+                });
                 TextView textView = view.findViewById(R.id.record_list_item_text);
                 textView.setText(log.getText());
                 textView = view.findViewById(R.id.record_list_item_time);
@@ -112,20 +130,10 @@ public class RecordFragment extends Fragment {
                 return view;
             }
         };
-        RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
-        refreshLayout.setOnRefreshListener(layout -> {
-            getActivity().getIntent().putExtra("page", 0);
-            initData(layout);
-        });
-        refreshLayout.setOnLoadMoreListener(layout -> {
-            layout.finishLoadMore();
-            initData(layout);
-        });
         //打开选择
         root.findViewById(R.id.record_select_type).setOnClickListener(v->{
             selectDialog.show();
         });
-        ListView listView = root.findViewById(R.id.record_list);
         listView.setAdapter(baseAdapter);
         //显示数据
         initData(null);

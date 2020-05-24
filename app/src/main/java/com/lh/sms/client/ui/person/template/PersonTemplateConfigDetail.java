@@ -21,6 +21,8 @@ import com.lh.sms.client.framing.util.AlertUtil;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.work.template.entity.SmsTemplate;
 
+import org.apache.commons.lang3.StringUtils;
+
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.FormBody;
 
@@ -72,6 +74,17 @@ public class PersonTemplateConfigDetail extends AppCompatActivity {
         textView.setText(smsTemplate.getAuthResult());
         EditText editTextText = findViewById(R.id.person_template_text);
         editTextText.setText(smsTemplate.getText());
+        EditText paramEditText = findViewById(R.id.person_template_param);
+        //插入变量事件
+        findViewById(R.id.person_template_param_add).setOnClickListener(v->{
+            String s = paramEditText.getText().toString();
+            if(StringUtils.isBlank(s)){
+                AlertUtil.toast(PersonTemplateConfigDetail.this,"参数名称不能为空哦",Toast.LENGTH_SHORT);
+                return;
+            }
+            editTextText.setText(editTextText.getText().append("${").append(s).append("}"));
+            paramEditText.setText("");
+        });
         findViewById(R.id.person_template_button).setOnClickListener(v->{
             SmsTemplate updateSmsTemplate = new SmsTemplate();
             updateSmsTemplate.setCode(smsTemplate.getCode());

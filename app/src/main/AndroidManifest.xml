@@ -42,6 +42,7 @@
         <activity android:name=".ui.person.template.PersonTemplateConfig" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.template.PersonTemplateConfigDetail" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.template.PersonTemplateConfigDetailAdd" android:launchMode="singleTask"/>
+        <activity android:name=".ui.about.AboutUs" android:launchMode="singleTask"/>
     </application>
 
 </manifest>

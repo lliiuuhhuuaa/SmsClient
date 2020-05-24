@@ -6,7 +6,6 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +25,7 @@ import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
+import com.lh.sms.client.ui.about.AboutUs;
 import com.lh.sms.client.ui.constant.UiConstant;
 import com.lh.sms.client.ui.person.app.PersonAppConfig;
 import com.lh.sms.client.ui.person.balance.PersonBalance;
@@ -112,6 +112,12 @@ public class PersonFragment extends Fragment {
             ObjectFactory.get(UserService.class).unLogin();
             clearUserInfo();
         });
+        //关于
+        root.findViewById(R.id.person_about).setOnClickListener(v->{
+            Intent intent = new Intent(root.getContext(), AboutUs.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
     }
     /**
      * @do 初始化用户数据
@@ -135,7 +141,7 @@ public class PersonFragment extends Fragment {
                 return;
             }
             intent.putExtra(UiConstant.TIME_QUICK_TAP,System.currentTimeMillis());
-            ThreadPool.createNewThread(() -> {
+            ThreadPool.exec(() -> {
                 HttpClientUtil.post(ApiConstant.USER_GET_INFO,
                         new HttpAsynResult(HttpAsynResult.Config.builder().context(ObjectFactory.get(MainActivity.class)).onlyOk(true).alertError(true).animation(false)) {
                     @Override

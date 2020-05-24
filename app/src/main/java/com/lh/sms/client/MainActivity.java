@@ -8,9 +8,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.lh.sms.client.config.service.ConfigService;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
@@ -18,6 +16,7 @@ import com.lh.sms.client.framing.exceptions.MsgException;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.AlertUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
+import com.lh.sms.client.work.config.service.ConfigService;
 import com.lh.sms.client.work.sms.constant.SmsConstant;
 import com.lh.sms.client.work.socket.service.SocketService;
 
@@ -36,6 +35,8 @@ import me.weyye.hipermission.PermissionCallback;
 import me.weyye.hipermission.PermissionItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
         //初始化消息处理器
         ObjectFactory.push(new HandleMsg());
         //线程处理
-        ThreadPool.createNewThread(() -> {
+        ThreadPool.exec(() -> {
             //更新本地配置
-            ObjectFactory.get(ConfigService.class).updateConfig();
+            ObjectFactory.get(ConfigService.class).updateConfig(null);
         });
 
     }
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
                         List<SubscriptionInfo> mList = sManager.getActiveSubscriptionInfoList();
                         for (SubscriptionInfo subscriptionInfo : mList) {
                             if(StringUtils.isNotBlank(subscriptionInfo.getIccId())){
+                                if(sb.length()>0){
+                                    sb.append(",");
+                                }
                                 sb.append(subscriptionInfo.getIccId());
                             }
                         }

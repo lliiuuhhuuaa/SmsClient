@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -90,15 +91,15 @@ public class PersonSmsConfig extends AppCompatActivity {
         showLocalSimInfo();
         isLocal = true;
         local.setOnClickListener(v->{
-            local.setBackgroundResource(R.color.colorWhite);
-           all.setBackgroundResource(R.color.colorLine);
+            local.setBackgroundColor(Color.WHITE);
+           all.setBackgroundResource(R.color.gray);
            //显示本机
             showLocalSimInfo();
             isLocal = true;
         });
         all.setOnClickListener(v->{
-            all.setBackgroundResource(R.color.colorWhite);
-            local.setBackgroundResource(R.color.colorLine);
+            all.setBackgroundColor(Color.WHITE);
+            local.setBackgroundResource(R.color.gray);
             showAllSimInfo();
             isLocal = false;
         });
@@ -300,7 +301,7 @@ public class PersonSmsConfig extends AppCompatActivity {
     public void showBindWarn(String iccId){
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(PersonSmsConfig.this, SweetAlertDialog.NORMAL_TYPE)
                 .setTitleText("SM卡正在被其它账户使用")
-                .setContentText("SM卡已经被其它账户绑定,点击[确认]向绑定者申请转移使用权限(供卡在60天内有活动)");
+                .setContentText("SM卡已经被其它账户绑定,点击[确认]向绑定者申请转移使用权限(SM卡在60天内有活动)");
         sweetAlertDialog.setCancelable(false);
         sweetAlertDialog.setConfirmText("确认");
         sweetAlertDialog.setCancelText("取消");

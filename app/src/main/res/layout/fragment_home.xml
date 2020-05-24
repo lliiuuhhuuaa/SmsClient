@@ -9,37 +9,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorLine"
+        android:background="@color/gray"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal"
             android:padding="20dp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="TODO"
-                android:src="@mipmap/ic_launcher" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="晚上好呀"
-                android:textColor="@color/colorLine"
-                android:textSize="16dp" />
+                android:layout_height="wrap_content">
+                <com.lh.sms.client.ui.view.CircleImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@mipmap/ic_launcher"
+                    />
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="六画"
-                android:textColor="@color/colorWhite"
-                android:textSize="20dp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="晚上好呀"
+                    android:textColor="@color/gray"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="六画"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <ScrollView
@@ -77,14 +85,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="我的资产"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="18dp" />
                     </LinearLayout>
                     <!--分割线-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/colorLine" />
+                        android:background="@color/gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -109,7 +117,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0.00"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -117,7 +125,7 @@
                         <LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/colorLine" />
+                            android:background="@color/gray" />
                         <!--                昨日收益-->
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -137,7 +145,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0.00"
-                                android:textColor="@color/colorMoneyRed"
+                                android:textColor="@color/red"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -147,7 +155,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/colorLine" />
+                        android:background="@color/gray" />
                     <!--            余额与收益-->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -172,7 +180,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0.00"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -180,7 +188,7 @@
                         <LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/colorLine" />
+                            android:background="@color/gray" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -200,7 +208,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0.00"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -234,14 +242,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="短信统计"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="18dp" />
                     </LinearLayout>
                     <!--分割线-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/colorLine" />
+                        android:background="@color/gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -266,7 +274,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -274,7 +282,7 @@
                         <LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/colorLine" />
+                            android:background="@color/gray" />
                         <!--                昨日发送-->
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -294,7 +302,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -304,7 +312,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/colorLine" />
+                        android:background="@color/gray" />
                     <!--            使用共享，提供共享-->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -329,7 +337,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -337,7 +345,7 @@
                         <LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/colorLine" />
+                            android:background="@color/gray" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -357,7 +365,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -367,7 +375,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/colorLine" />
+                        android:background="@color/gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -392,7 +400,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -400,7 +408,7 @@
                         <LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/colorLine" />
+                            android:background="@color/gray" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -420,7 +428,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -453,14 +461,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="在线统计"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="18dp" />
                     </LinearLayout>
                     <!--分割线-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/colorLine" />
+                        android:background="@color/gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -485,7 +493,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -493,7 +501,7 @@
                         <LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/colorLine" />
+                            android:background="@color/gray" />
                         <!--                昨日收益-->
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -513,7 +521,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/colorMoneyBlack"
+                                android:textColor="@android:color/black"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -525,7 +533,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

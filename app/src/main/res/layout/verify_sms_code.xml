@@ -7,14 +7,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:padding="20dp">
 
             <TextView
@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_left_white_24dp"
                 android:drawablePadding="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@android:color/white"
                 android:textSize="20sp"/>
         </LinearLayout>
 
@@ -31,7 +31,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/person_menu_item"
+            android:background="@drawable/person_menu_item"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                     android:text="输入验证码"
                     android:textSize="40sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorBlack"/>
+                    android:textColor="@android:color/black"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,7 +161,7 @@
                     android:id="@+id/show_error_msg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorMoneyRed"
+                    android:textColor="@color/red"
                     android:textSize="18sp"
                     android:gravity="center"/>
                 <TextView

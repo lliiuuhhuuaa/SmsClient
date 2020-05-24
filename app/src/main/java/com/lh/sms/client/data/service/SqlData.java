@@ -163,7 +163,15 @@ public class SqlData {
      * @date 2020-04-15 15:54
      */
     public boolean deleteObject(String table,String key){
-        return database.delete(table,"`key`=?",new String[]{key})==1;
+        return deleteObject(table,key,"key");
+    }
+    /**
+     * @do 删除对象
+     * @author lh
+     * @date 2020-04-15 15:54
+     */
+    public boolean deleteObject(String table,String key,String column){
+        return database.delete(table,String.format("`%s`=?",column),new String[]{key})==1;
     }
     /**
      * @do 获取list全部对象

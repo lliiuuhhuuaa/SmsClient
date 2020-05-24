@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -24,8 +26,10 @@ import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.dialog.person.balance.SelectDialog;
+import com.lh.sms.client.ui.plug.HorizontalScroll;
 import com.lh.sms.client.work.msg.entity.Message;
 import com.lh.sms.client.work.msg.enums.MessageStateEnum;
+import com.lh.sms.client.work.msg.service.MessageService;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 
 import org.apache.commons.lang3.StringUtils;
@@ -70,6 +74,9 @@ public class PersonUserMsg extends AppCompatActivity {
         findViewById(R.id.close_intent).setOnClickListener(v->{
             finish();
         });
+        ListView listView = findViewById(R.id.person_user_msg_list);
+        //初始化左划插件
+        HorizontalScroll horizontalScroll = new HorizontalScroll(listView);
         baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -95,6 +102,20 @@ public class PersonUserMsg extends AppCompatActivity {
                 if(!MessageStateEnum.WAIT.getValue().equals(message.getState())){
                     textView.setCompoundDrawables(null,null,null,null);
                 }
+                //左划删除操作,并绑定item点击事件
+                HorizontalScrollView horizontalScrollView = horizontalScroll.initScroll(view, v -> {
+                    //查看消息详情
+                    Intent intent=new Intent(PersonUserMsg.this, PersonUserMsgDetail.class);
+                    intent.putExtra("id",message.getId().toString());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                });
+                view.findViewById(R.id.right_delete).setOnClickListener(v->{
+                    horizontalScrollView.fullScroll(ScrollView.FOCUS_LEFT);
+                    messages.remove(position);
+                    refreshList();
+                    ObjectFactory.get(MessageService.class).updateState(message.getId(),-1,PersonUserMsg.this,null);
+                });
                 textView.setText(message.getTitle());
                 textView = view.findViewById(R.id.list_item_text);
                 textView.setText(message.getText());
@@ -110,16 +131,10 @@ public class PersonUserMsg extends AppCompatActivity {
                 }else{
                     textView.setText(localDateTime.toString("yyyy-MM-dd HH:mm"));
                 }
-                view.setOnClickListener(v->{
-                    //查看消息详情
-                    Intent intent=new Intent(PersonUserMsg.this, PersonUserMsgDetail.class);
-                    intent.putExtra("id",message.getId().toString());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
-                });
                 return view;
             }
         };
+        listView.setAdapter(baseAdapter);
         RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(layout -> {
             getIntent().putExtra("page", 0);
@@ -133,8 +148,7 @@ public class PersonUserMsg extends AppCompatActivity {
         findViewById(R.id.person_user_msg_select_type).setOnClickListener(v->{
             selectDialog.show();
         });
-        ListView listView = findViewById(R.id.person_user_msg_list);
-        listView.setAdapter(baseAdapter);
+
         //显示数据
         initData(null);
     }

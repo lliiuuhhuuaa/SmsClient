@@ -19,4 +19,6 @@ public class DataConstant {
     public static final String KEY_MSG_UN_READ_COUNT = "msg_un_read_count";
     public static final String LOCAL_ICC_ID = "local_icc_id";
     public static final String SESSION_ID = "session_id";
+    //app版本
+    public static final String KEY_APP_VERSION = "app_version";
 }

@@ -8,13 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -25,7 +25,7 @@
                 android:drawableLeft="@drawable/ic_left_white_24dp"
                 android:drawablePadding="10dp"
                 android:text="SM卡详情"
-                android:textColor="@color/colorWhite"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
         </LinearLayout>
         <LinearLayout
@@ -64,7 +64,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                         android:id="@+id/sms_config_detail_total_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -101,7 +101,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
                 <!--                昨日发送-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,20 +121,20 @@
                         android:id="@+id/sms_config_detail_month_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
             </LinearLayout>
             <!--分割线-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
             <!--            使用共享，提供共享-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,7 +143,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                         android:id="@+id/sms_config_detail_month_max"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25dp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -170,7 +170,7 @@
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -190,19 +190,19 @@
                         android:id="@+id/sms_config_detail_create_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorMoneyBlack"
+                        android:textColor="@android:color/black"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorLine" />
+                    android:background="@color/gray" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorLine" />
+                android:background="@color/gray" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -296,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:gravity="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:text="取消注册"
                     android:textStyle="bold"
                     android:background="@drawable/button_style_danger"
@@ -313,7 +313,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:gravity="center"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     android:text="已禁用"
                     android:textStyle="bold"
                     android:background="@drawable/button_style_black"

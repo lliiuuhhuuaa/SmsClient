@@ -9,13 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/holo_blue_light"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -26,7 +26,7 @@
                 android:drawableLeft="@drawable/ic_left_white_24dp"
                 android:drawablePadding="10dp"
                 android:text="模板详情"
-                android:textColor="@color/colorWhite"
+                android:textColor="@android:color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -57,7 +57,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="模板Code"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -94,7 +94,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="模板名称(最多20字)"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -128,13 +128,14 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="短信内容(最多100字)"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -155,7 +156,33 @@
                             android:textCursorDrawable="@null"
                             android:textSize="16sp" />
                     </LinearLayout>
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp">
+                        <EditText
+                            android:id="@+id/person_template_param"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_solid_4_bule"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:maxLength="20"
+                            android:padding="10dp"
+                            android:textCursorDrawable="@null"
+                            android:hint="向短信内容中插入参数变量"
+                            android:textSize="16sp" />
+                        <Button
+                            android:id="@+id/person_template_param_add"
+                            android:layout_marginLeft="1dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:textColor="@android:color/white"
+                            android:background="@drawable/button_style_black"
+                            android:text="插入参数"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -175,7 +202,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="状态(启用时才能API接入)"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -211,7 +238,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="审核状态"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -242,7 +269,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_style_danger"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@android:color/white"
                         android:gravity="center"
                         android:text="删除模板"
                         android:textSize="16sp"
@@ -252,7 +279,7 @@
                         android:id="@+id/person_template_button"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@android:color/white"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/button_style_black"
                         android:gravity="center"
