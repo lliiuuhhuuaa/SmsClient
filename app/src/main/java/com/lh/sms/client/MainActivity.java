@@ -2,8 +2,11 @@ package com.lh.sms.client;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.widget.Toast;
@@ -12,10 +15,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.enums.AuthRequestCodeEnum;
+import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 import com.lh.sms.client.framing.exceptions.MsgException;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.AlertUtil;
+import com.lh.sms.client.framing.util.ApplicationUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
+import com.lh.sms.client.ui.about.AboutUs;
+import com.lh.sms.client.work.app.entity.AppVersion;
+import com.lh.sms.client.work.app.service.AppUpdateService;
+import com.lh.sms.client.work.app.service.AppVersionService;
 import com.lh.sms.client.work.config.service.ConfigService;
 import com.lh.sms.client.work.sms.constant.SmsConstant;
 import com.lh.sms.client.work.socket.service.SocketService;
@@ -50,7 +60,11 @@ public class MainActivity extends AppCompatActivity {
         init();
         //请求权限
         requestPermission();
+        //检查新版本
+        checkNewVersion();
     }
+
+
     /**
      * @do 初始化
      * @author liuhua
@@ -120,5 +134,25 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+    /**
+     * @do 检查新版本
+     * @author liuhua
+     * @date 2020/5/27 9:48 PM
+     */
+    private void checkNewVersion() {
+
+        //检查是否有新版本
+        ObjectFactory.get(AppVersionService.class).checkNewVersion(()->{
+            //弹窗app更新提示
+            AppUpdateService appUpdateService = ObjectFactory.get(AppUpdateService.class);
+            if(!appUpdateService.isNotPrompt()&&appUpdateService.startCheckUpdate()){
+                HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                message.obj = new Object[]{appUpdateService};
+                message.getData().putString(handleMessage.METHOD_KEY,"alert");
+                handleMessage.sendMessage(message);
+            }
+        });
     }
 }

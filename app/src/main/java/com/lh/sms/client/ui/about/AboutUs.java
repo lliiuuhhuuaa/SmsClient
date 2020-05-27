@@ -5,15 +5,16 @@ import android.os.Bundle;
 import android.os.Message;
 import android.widget.TextView;
 
+import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
-import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.ApplicationUtil;
-import com.lh.sms.client.ui.person.app.PersonAppConfigDetail;
-import com.lh.sms.client.work.config.service.ConfigService;
+import com.lh.sms.client.work.app.entity.AppVersion;
+import com.lh.sms.client.work.app.service.AppUpdateService;
+import com.lh.sms.client.work.app.service.AppVersionService;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,14 +42,21 @@ public class AboutUs extends AppCompatActivity {
         String versionName = ApplicationUtil.getVersionName(this);
         TextView textView = findViewById(R.id.about_version_name);
         textView.setText("版本号 "+versionName);
+        //显示版本
+        refreshInfo(false);
         //检查是否有新版本
-        ObjectFactory.get(ConfigService.class).updateConfig(()->{
+        ObjectFactory.get(AppVersionService.class).checkNewVersion(()->{
             HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
             Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
-            message.obj = new Object[]{AboutUs.this};
+            message.obj = new Object[]{AboutUs.this,false};
             message.getData().putString(handleMessage.METHOD_KEY,"refreshInfo");
             handleMessage.sendMessage(message);
         });
+        findViewById(R.id.about_version_install).setOnClickListener(v->{
+            //显示版本
+            refreshInfo(true);
+        });
+
 
     }
     /**
@@ -56,20 +64,27 @@ public class AboutUs extends AppCompatActivity {
      * @author liuhua
      * @date 2020/5/24 10:48 PM
      */
-    public void refreshInfo(){
+    public void refreshInfo(Boolean showAlert){
         TextView versionCheck = findViewById(R.id.about_version_check);
         long currVersion = ApplicationUtil.getVersion(this);
-        String version = ObjectFactory.get(SqlData.class).getObject(DataConstant.KEY_APP_VERSION, String.class);
-        if(version==null){
+        AppVersion appVersion = ObjectFactory.get(SqlData.class).getObject(AppVersion.class);
+        if(appVersion==null){
             return;
         }
-        String[] split = version.split(",");
-        if(Integer.valueOf(split[0])<=currVersion){
+        if(appVersion.getVersion()<=currVersion){
             versionCheck.setText("已是最新版本");
             versionCheck.setTextColor(Color.GRAY);
         }else{
-            versionCheck.setText("发现新版本:"+split[1]);
+            versionCheck.setText(String.format("发现新版本:%s",appVersion.getVersionName()));
             versionCheck.setTextColor(getResources().getColor(R.color.colorPrimary,null));
+        }
+        if(showAlert){
+            //弹窗app更新提示
+            AppUpdateService appUpdateService = ObjectFactory.get(AppUpdateService.class);
+            if(appUpdateService.startCheckUpdate()){
+                appUpdateService.alert();
+            }
+
         }
     }
     @Override

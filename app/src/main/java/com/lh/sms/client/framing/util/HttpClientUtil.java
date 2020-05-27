@@ -83,7 +83,14 @@ public class HttpClientUtil {
         }
         return execute(url, formBody, null, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
     }
-
+    /**
+     * @do get请求
+     * @author lh
+     * @date 2020-01-02 11:36
+     */
+    public static HttpResult get(String url, HttpAsynResult callback) {
+        return execute(url, null, callback, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+    }
     /**
      * @do get请求
      * @author lh
@@ -329,9 +336,15 @@ public class HttpClientUtil {
                     httpResult.setMsg(response.message());
                     callback.callback(httpResult);
                 }
+                //如果是文件下载,直接返回响应对象
+                if(callback.getConfig().isFile()) {
+                    callback.callback(response);
+                    return;
+                }
                 try {
                     //转为返回对象
                     httpResult = JSONObject.parseObject(response.body().string(), HttpResult.class);
+                    httpResult.setResponse(response);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

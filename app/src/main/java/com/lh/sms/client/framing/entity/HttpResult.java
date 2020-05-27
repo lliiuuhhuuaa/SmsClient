@@ -7,9 +7,10 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.Data;
+import okhttp3.Response;
 
 @Data
-public class HttpResult<T extends Object> {
+public class HttpResult {
     /**
      * 状态码
      */
@@ -22,7 +23,11 @@ public class HttpResult<T extends Object> {
     /**
      * 数据对象
      */
-    private T data;
+    private Object data;
+    /**
+     * 响应
+     */
+    private Response response;
     /**
      * @do data转为对象
      * @author liuhua

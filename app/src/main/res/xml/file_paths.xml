@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--代表app 私有的存储区域 Context.getFilesDir()目录下的images目录 /data/user/0/com.lh.sms.client/files/-->
+<!--    <files-path name="my_private_files" path="images" />-->
+    <!--代表app 私有的存储区域 Context.getCacheDir()目录下的images目录 /data/user/0/com.lh.sms.client/cache/app-->
+    <cache-path name="my_private_cache" path="app" />
+</paths>

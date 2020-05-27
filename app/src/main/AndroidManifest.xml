@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <application
+        android:name=".framing.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -43,6 +45,15 @@
         <activity android:name=".ui.person.template.PersonTemplateConfigDetail" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.template.PersonTemplateConfigDetailAdd" android:launchMode="singleTask"/>
         <activity android:name=".ui.about.AboutUs" android:launchMode="singleTask"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.lh.sms.client.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -51,7 +51,6 @@ public class SqlData {
         for (TablesEnum tablesEnum : TablesEnum.values()) {
             database.execSQL(tablesEnum.getSql());
         }
-
     }
     //初始化数据
     private void initData(){

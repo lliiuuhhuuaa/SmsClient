@@ -38,4 +38,8 @@ public class ApiConstant {
     public static final String SEND_SMS_CODE = "/open/sms/sendSmsCode";
     //检查验证码
     public static final String VERIFY_SMS_CODE = "/open/sms/verifySmsCode";
+    //检查新版本
+    public static final String CHECK_NEW_VERSION = "/open/app/version/getNewVersion";
+    //下载版本
+    public static final String DOWNLOAD_VERSION = "/open/app/version/download/{version}";
 }

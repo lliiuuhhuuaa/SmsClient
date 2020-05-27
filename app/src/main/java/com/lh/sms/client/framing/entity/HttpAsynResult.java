@@ -2,6 +2,8 @@ package com.lh.sms.client.framing.entity;
 
 import android.content.Context;
 
+import okhttp3.Response;
+
 /**
  * @do 异步返回结果
  * @author liuhua
@@ -28,6 +30,9 @@ public abstract class HttpAsynResult{
     public void callback(HttpResult httpResult) {
 
     }
+    public void callback(Response response) {
+
+    }
     /**
      * @do 配置类
      * @author liuhua
@@ -44,6 +49,8 @@ public abstract class HttpAsynResult{
         private Context context;
         //是否显示动画
         private boolean animation = true;
+
+        private boolean file = false;
 
         public Context getContext() {
             return context;
@@ -64,6 +71,11 @@ public abstract class HttpAsynResult{
         public boolean isOnlyOk() {
             return onlyOk;
         }
+
+        public boolean isFile() {
+            return file;
+        }
+
         public static Config builder(){
             return new Config();
         }
@@ -88,6 +100,11 @@ public abstract class HttpAsynResult{
 
         public Config animation(boolean animation) {
             this.animation = animation;
+            return this;
+        }
+
+        public Config file(boolean file){
+            this.file = file;
             return this;
         }
     }
