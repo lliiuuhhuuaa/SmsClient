@@ -3,10 +3,19 @@ package com.lh.sms.client.work.log.service;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Message;
+import android.util.Log;
 
+import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.data.enums.TablesEnum;
 import com.lh.sms.client.data.service.SqlData;
+import com.lh.sms.client.framing.ActivityManager;
 import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
+import com.lh.sms.client.framing.enums.YesNoEnum;
+import com.lh.sms.client.framing.handle.HandleMsg;
+import com.lh.sms.client.ui.person.sms.PersonSmsConfig;
+import com.lh.sms.client.ui.record.RecordFragment;
 import com.lh.sms.client.work.log.entity.Logs;
 import com.lh.sms.client.work.log.enums.LogLevelEnum;
 
@@ -59,10 +68,26 @@ public class LogService {
         //只保存1个月记录
         database.delete(TablesEnum.LOG_LIST.getTable(),"time<?",new String[]{String.valueOf(LocalDateTime.now().minusMonths(1).toDate().getTime())});
         ContentValues values = new ContentValues();
+        long time = System.currentTimeMillis();
         values.put("text", text);
-        values.put("time", System.currentTimeMillis());
+        values.put("time",time );
         values.put("level", level);
-        return Long.valueOf(database.insert(TablesEnum.LOG_LIST.getTable(),null,values)).intValue();
+        int count = Long.valueOf(database.insert(TablesEnum.LOG_LIST.getTable(),null,values)).intValue();
+        if(ActivityManager.getInstance().getCurrentActivity().getClass().equals(MainActivity.class)){
+            Logs log = new Logs();
+            log.setText(text);
+            log.setLevel(level);
+            log.setTime(time);
+            RecordFragment recordFragment = ObjectFactory.get(RecordFragment.class);
+            if(recordFragment!=null){
+                HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                message.obj = new Object[]{recordFragment,log};
+                message.getData().putString(handleMessage.METHOD_KEY, "addLog");
+                handleMessage.sendMessage(message);
+            }
+        }
+        return count;
     }
     /**
      * @do 获取日志列表

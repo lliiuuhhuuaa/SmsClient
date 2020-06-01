@@ -45,6 +45,7 @@ public class RecordFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_record, container, false);
         this.root = root;
+        ObjectFactory.push(this);
         //绑定事件
         bindEvent();
         List<String[]> param = new ArrayList<>();
@@ -177,6 +178,17 @@ public class RecordFragment extends Fragment {
         }
     }
     /**
+     * @do 动态加入日志
+     * @author liuhua
+     * @date 2020/6/1 8:44 PM
+     */
+    public void addLog(Logs log){
+        logs.add(0,log);
+        if(baseAdapter!=null) {
+            baseAdapter.notifyDataSetChanged();
+        }
+    }
+    /**
      * 选择类型
      * @param view
      */
@@ -201,4 +213,10 @@ public class RecordFragment extends Fragment {
         getActivity().getIntent().removeExtra("level");
         initData(null);
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ObjectFactory.remove(this.getClass());
+    }
+
 }

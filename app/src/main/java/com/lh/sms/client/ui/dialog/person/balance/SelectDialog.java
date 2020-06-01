@@ -11,27 +11,22 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.lh.sms.client.R;
-import com.lh.sms.client.framing.entity.HttpAsynResult;
 
 import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import androidx.appcompat.widget.AppCompatButton;
 
 public class SelectDialog extends Dialog {
     private List<String[]> items = null;
     private Context context;
     private Object object;
     public SelectDialog(Context context, List<String[]>items) {
-        super(context, R.style.SelectDialog);
+        super(context, R.style.CustomDialog);
         this.items = items;
         this.context = context;
         this.object = context;
     }
     public SelectDialog(Context context,Object object, List<String[]>items) {
-        super(context, R.style.SelectDialog);
+        super(context, R.style.CustomDialog);
         this.items = items;
         this.context = context;
         this.object = object;

@@ -82,7 +82,7 @@ public class VerifySmsCode extends AppCompatActivity {
             handleMessage.sendMessage(message);
             //请求后台发送验证码
             FormBody param = new FormBody.Builder().add("phone", phone).add("type", type).build();
-            HttpClientUtil.post("/show/sms/sendSmsCode", param,
+            HttpClientUtil.post(ApiConstant.SEND_SMS_CODE, param,
                 new HttpAsynResult(VerifySmsCode.this) {
                     @Override
                     public void callback(HttpResult httpResult) {

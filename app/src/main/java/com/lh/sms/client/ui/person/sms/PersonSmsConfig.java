@@ -10,13 +10,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +24,6 @@ import com.lh.sms.client.data.enums.TablesEnum;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
-import com.lh.sms.client.framing.constant.SystemConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.ExceptionCodeEnum;
@@ -37,7 +34,7 @@ import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.AlertUtil;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.constant.UiConstant;
-import com.lh.sms.client.ui.person.user.PersonFindPass;
+import com.lh.sms.client.ui.dialog.SmAlertDialog;
 import com.lh.sms.client.work.sms.entity.SmsProvide;
 import com.lh.sms.client.work.sms.enums.SmStateEnum;
 import com.lh.sms.client.work.sms.service.SmsProvideService;
@@ -47,8 +44,6 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.Person;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.FormBody;
 
 public class PersonSmsConfig extends AppCompatActivity {
@@ -299,21 +294,21 @@ public class PersonSmsConfig extends AppCompatActivity {
      * @date 2020/5/9 11:12 PM
      */
     public void showBindWarn(String iccId){
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(PersonSmsConfig.this, SweetAlertDialog.NORMAL_TYPE)
+        SmAlertDialog smAlertDialog = new SmAlertDialog(PersonSmsConfig.this)
                 .setTitleText("SM卡正在被其它账户使用")
                 .setContentText("SM卡已经被其它账户绑定,点击[确认]向绑定者申请转移使用权限(SM卡在60天内有活动)");
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setConfirmText("确认");
-        sweetAlertDialog.setCancelText("取消");
-        sweetAlertDialog.setConfirmClickListener(v->{
-            sweetAlertDialog.cancel();
+        smAlertDialog.setCancelable(false);
+        smAlertDialog.setConfirmText("确认");
+        smAlertDialog.setCancelText("取消");
+        smAlertDialog.setConfirmListener(v->{
+            smAlertDialog.cancel();
             HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
             Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
             message.obj = new Object[]{PersonSmsConfig.this, iccId, YesNoEnum.YES.getValue(),0};
             message.getData().putString(handleMessage.METHOD_KEY, "register");
             handleMessage.sendMessage(message);
         });
-        AlertUtil.alertOther(PersonSmsConfig.this,sweetAlertDialog);
+        AlertUtil.alertOther(smAlertDialog);
     }
     @Override
     protected void onDestroy() {

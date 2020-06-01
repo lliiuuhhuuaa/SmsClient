@@ -5,7 +5,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
@@ -27,6 +26,7 @@ import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.AlertUtil;
 import com.lh.sms.client.framing.util.ApplicationUtil;
 import com.lh.sms.client.framing.util.HttpClientUtil;
+import com.lh.sms.client.ui.dialog.SmAlertDialog;
 import com.lh.sms.client.work.app.entity.AppVersion;
 
 import java.io.File;
@@ -39,7 +39,6 @@ import java.math.RoundingMode;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.FileProvider;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import lombok.Getter;
 import okhttp3.Response;
 /**
@@ -64,9 +63,6 @@ public class AppUpdateService {
      * @date 2020/5/27 8:50 PM
      */
     public boolean startCheckUpdate() {
-        if(isUpdate){
-            return false;
-        }
         this.appPath = new File(ActivityManager.getInstance().getCurrentActivity().getCacheDir(),"app");
         if(!this.appPath.exists()){
             this.appPath.mkdirs();
@@ -87,7 +83,6 @@ public class AppUpdateService {
         if(appVersion.getVersion()<=currVersion){
             return;
         }
-        isUpdate = true;
         this.appVersion = appVersion;
         File file = new File(appPath,String.format("smsApp_%s.apk",appVersion.getVersion()));
         if(file.exists()){
@@ -96,30 +91,25 @@ public class AppUpdateService {
             return;
         }
         //显示更新弹窗
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ActivityManager.getInstance().getCurrentActivity(), SweetAlertDialog.NORMAL_TYPE)
+        SmAlertDialog smAlertDialog = new SmAlertDialog(ActivityManager.getInstance().getCurrentActivity())
                 .setTitleText("更新提示");
-        sweetAlertDialog.setContentTextSize(18);
         View view = ActivityManager.getInstance().getCurrentActivity().getLayoutInflater().inflate(R.layout.activity_app_version_alert, null);
         TextView textView = view.findViewById(R.id.app_version_notice);
         textView.setText(appVersion.getNotice());
         textView = view.findViewById(R.id.app_version_size);
         textView.setText(String.format("更新包大小: %sMB", BigDecimal.valueOf(appVersion.getSize()/1024f/1024f).setScale(2, RoundingMode.FLOOR).toString()));
-        sweetAlertDialog.setCustomView(view);
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setConfirmButtonBackgroundColor(ActivityManager.getInstance().getCurrentActivity().getColor(R.color.colorPrimary));
-        sweetAlertDialog.setConfirmButtonTextColor(Color.WHITE);
-        sweetAlertDialog.setCancelButtonBackgroundColor(Color.GRAY);
-        sweetAlertDialog.setConfirmText("立即下载");
-        sweetAlertDialog.setCancelText("取消");
-        sweetAlertDialog.setConfirmClickListener(v->{
-            sweetAlertDialog.cancel();
+        smAlertDialog.setContentView(view);
+        smAlertDialog.setCancelable(false);
+        smAlertDialog.setConfirmText("立即下载");
+        smAlertDialog.setCancelText("取消");
+        smAlertDialog.setConfirmListener(v->{
+            smAlertDialog.cancel();
             download();
         });
-        sweetAlertDialog.setCancelClickListener(v->{
-            isUpdate = false;
-            sweetAlertDialog.cancel();
+        smAlertDialog.setCancelListener(v->{
+            smAlertDialog.cancel();
         });
-        AlertUtil.alertOther(ActivityManager.getInstance().getCurrentActivity(),sweetAlertDialog);
+        AlertUtil.alertOther(smAlertDialog);
     }
     //初始化通知
     private void initNotification() {
@@ -159,6 +149,11 @@ public class AppUpdateService {
             hintInstallApk();
             return;
         }
+        if(isUpdate){
+            AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),"正在下载中...", Toast.LENGTH_SHORT);
+            return;
+        }
+        isUpdate = true;
         initNotification();
         HttpClientUtil.get(ApiConstant.DOWNLOAD_VERSION.replace("{version}", appVersion.getVersion().toString()),
                 new HttpAsynResult(HttpAsynResult.Config.builder().context(ActivityManager.getInstance().getCurrentActivity()).onlyOk(true).alertError(true).login(false).animation(false).file(true)) {
@@ -207,9 +202,9 @@ public class AppUpdateService {
                             }
                         }
                         notificationManager.cancel(manageId);
+                        isUpdate = false;
                         if(!isDone||!file.exists()){
                             AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),"下载新版App失败,请重试", Toast.LENGTH_SHORT);
-                            isUpdate = false;
                             return;
                         }
                         //提示用户安装
@@ -228,26 +223,22 @@ public class AppUpdateService {
      */
     public void hintInstallApk() {
         //显示更新弹窗
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ActivityManager.getInstance().getCurrentActivity(), SweetAlertDialog.NORMAL_TYPE)
+        SmAlertDialog smAlertDialog = new SmAlertDialog(ActivityManager.getInstance().getCurrentActivity())
                 .setTitleText("安装提示");
-        sweetAlertDialog.setContentTextSize(18);
-        sweetAlertDialog.setContentText("六画短信客户端下载完成");
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setConfirmButtonBackgroundColor(ActivityManager.getInstance().getCurrentActivity().getColor(R.color.colorPrimary));
-        sweetAlertDialog.setConfirmButtonTextColor(Color.WHITE);
-        sweetAlertDialog.setCancelButtonBackgroundColor(Color.GRAY);
-        sweetAlertDialog.setConfirmText("立即安装");
-        sweetAlertDialog.setCancelText("取消");
-        sweetAlertDialog.setConfirmClickListener(v -> {
+        smAlertDialog.setContentText("六画短信客户端下载完成");
+        smAlertDialog.setCancelable(false);
+        smAlertDialog.setConfirmText("立即安装");
+        smAlertDialog.setCancelText("取消");
+        smAlertDialog.setConfirmListener(v -> {
             readyInstallApk();
         });
-        sweetAlertDialog.setCanceledOnTouchOutside(false);
-        sweetAlertDialog.setCancelClickListener(v->{
+        smAlertDialog.setCanceledOnTouchOutside(false);
+        smAlertDialog.setCancelListener(v->{
             isUpdate = false;
             notPrompt = true;
-            sweetAlertDialog.cancel();
+            smAlertDialog.cancel();
         });
-        AlertUtil.alertOther(ActivityManager.getInstance().getCurrentActivity(),sweetAlertDialog);
+        AlertUtil.alertOther(smAlertDialog);
     }
    /**
     * @do 准备安装
@@ -255,13 +246,13 @@ public class AppUpdateService {
     * @date 2020/5/27 7:13 PM
     */
     public void readyInstallApk() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !ActivityManager.getInstance().getCurrentActivity().getPackageManager().canRequestPackageInstalls()) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !ActivityManager.getInstance().getCurrentActivity().getPackageManager().canRequestPackageInstalls()) {
             //是否有安装位置来源的权限
             Uri packageUri = Uri.parse("package:"+ ActivityManager.getInstance().getCurrentActivity().getPackageName());
             Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageUri);
             ObjectFactory.get(MainActivity.class).startActivityForResult(intent, AuthRequestCodeEnum.INSTALL_APK.getValue());
             return;
-        }
+        }*/
         installApk();
 
     }

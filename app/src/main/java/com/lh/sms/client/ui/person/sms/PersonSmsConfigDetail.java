@@ -137,7 +137,7 @@ public class PersonSmsConfigDetail extends AppCompatActivity {
             param.add("servicePublic", updateSmsProvide.getServicePublic().toString());
         }
         HttpClientUtil.post(ApiConstant.PROVIDE_UPDATE, param.build(),
-                new HttpAsynResult(HttpAsynResult.Config.builder().login(true).context(PersonSmsConfigDetail.this)) {
+                new HttpAsynResult(HttpAsynResult.Config.builder().login(true).onlyOk(true).context(PersonSmsConfigDetail.this)) {
                     @Override
                     public void callback(HttpResult httpResult) {
                         AlertUtil.toast(PersonSmsConfigDetail.this, "操作成功", Toast.LENGTH_SHORT);

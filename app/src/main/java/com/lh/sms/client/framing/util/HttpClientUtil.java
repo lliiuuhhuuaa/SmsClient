@@ -4,22 +4,20 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.SystemConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.ResultCodeEnum;
-import com.lh.sms.client.ui.person.msg.PersonUserMsg;
+import com.lh.sms.client.ui.dialog.SmAlertDialog;
 import com.lh.sms.client.ui.person.user.PersonLogin;
 import com.lh.sms.client.work.user.service.UserService;
 
 import java.io.IOException;
-import java.sql.SQLData;
 import java.util.Map;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import lombok.Getter;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -232,10 +230,10 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:04
      */
     public static HttpResult execute(String url, FormBody formBody, HttpAsynResult callback, RequestTypeEnum requestTypeEnum, MediaType mediaType) {
-        SweetAlertDialog sweetAlertDialog = null;
+        SmAlertDialog loadingDialog = null;
         if(callback!=null&&callback.getConfig().isAnimation()){
             //显示动画
-            sweetAlertDialog = AlertUtil.alertProcess(callback.getConfig().getContext());
+            loadingDialog = AlertUtil.alertProcess("正在处理中...");
         }
         SqlData sqlData = ObjectFactory.get(SqlData.class);
         if(!url.startsWith("http:")&&!url.startsWith("https:")) {
@@ -251,9 +249,9 @@ public class HttpClientUtil {
             builder.addHeader("tk",tk);
         }else if(callback!=null&&callback.getConfig().isLogin()){
             //未登陆
-            if(sweetAlertDialog!=null){
+            if(loadingDialog!=null){
                 //关闭动画
-                AlertUtil.close(sweetAlertDialog);
+                AlertUtil.close(loadingDialog);
             }
             if(callback.getConfig().getContext()!=null) {
                 Intent intent = new Intent(callback.getConfig().getContext(), PersonLogin.class);
@@ -274,9 +272,9 @@ public class HttpClientUtil {
                 Response response = okHttpClient.newCall(request).execute();
                 //保存sessionId
                 saveSessionId(response);
-                if(sweetAlertDialog!=null){
+                if(loadingDialog!=null){
                     //关闭动画
-                    AlertUtil.close(sweetAlertDialog);
+                    AlertUtil.close(loadingDialog);
                 }
                 if (!response.isSuccessful()) {
                     //请求错误
@@ -293,13 +291,13 @@ public class HttpClientUtil {
             }
         }
         //异步调用
-        SweetAlertDialog finalSweetAlertDialog = sweetAlertDialog;
+        SmAlertDialog finalLoadingDialog = loadingDialog;
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                if(finalSweetAlertDialog !=null){
+                if(finalLoadingDialog !=null){
                     //关闭动画
-                    AlertUtil.close(finalSweetAlertDialog);
+                    AlertUtil.close(finalLoadingDialog);
                 }
                 if(callback.getConfig().isOnlyOk()){
                     if(callback.getConfig().isAlertError()) {
@@ -315,9 +313,9 @@ public class HttpClientUtil {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(finalSweetAlertDialog !=null){
+                if(finalLoadingDialog !=null){
                     //关闭动画
-                    AlertUtil.close(finalSweetAlertDialog);
+                    AlertUtil.close(finalLoadingDialog);
                 }
                 //保存sessionId
                 saveSessionId(response);

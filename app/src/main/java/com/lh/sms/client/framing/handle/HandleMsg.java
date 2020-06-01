@@ -7,13 +7,10 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.lh.sms.client.MainActivity;
-import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
+import com.lh.sms.client.ui.dialog.SmAlertDialog;
 
 import java.lang.reflect.Method;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class HandleMsg extends Handler {
     private final static String TAG = "HandleMsg";
@@ -53,7 +50,7 @@ public class HandleMsg extends Handler {
         //弹消息提示框
         if(message.what==HandleMsgTypeEnum.ALERT_MSG.getValue()){
             Bundle data = message.getData();
-            new SweetAlertDialog((Context) message.obj, data.getInt("type"))
+            new SmAlertDialog((Context) message.obj)
                     .setTitleText(data.getString("title"))
                     .setContentText(data.getString("msg"))
                     .setConfirmText("我知道了")
@@ -62,13 +59,13 @@ public class HandleMsg extends Handler {
         }
         //弹自定义提示框
         if(message.what==HandleMsgTypeEnum.ALERT_SWEET.getValue()){
-            ((SweetAlertDialog)message.obj).show();
+            ((SmAlertDialog)message.obj).show();
             return;
         }
         //关闭弹框
         if(message.what==HandleMsgTypeEnum.CLOSE_ALERT.getValue()){
             try {
-                ((SweetAlertDialog) message.obj).cancel();
+                ((SmAlertDialog) message.obj).cancel();
             }catch (Exception e){
                 Log.d(TAG, "handleMessage: "+e.getMessage());
             }

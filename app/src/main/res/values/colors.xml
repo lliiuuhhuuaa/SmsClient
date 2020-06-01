@@ -5,5 +5,6 @@
     <color name="gray">#FFEEEEEE</color>
     <color name="ccc">#FFCCCCCC</color>
     <color name="red">#ff6666</color>
+    <color name="green">@android:color/holo_green_light</color>
     <color name="colorPrimaryGray">#5533b5e5</color>
 </resources>

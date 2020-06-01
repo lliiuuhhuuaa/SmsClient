@@ -56,8 +56,8 @@ public class SocketService {
             String domain = sqlData.getObject(DataConstant.KEY_SOCKET_DOMAIN, String.class);
             IO.Options opts = new IO.Options();
             //最大重连50次
-            opts.reconnectionDelayMax = 50;
-            socket = IO.socket(String.format("%s?iccId=%s&tk=%s&type=sms&model=%s",domain,iccId,tk, URLEncoder.encode(Build.MODEL, "UTF-8")));
+            opts.reconnectionAttempts = 50;
+            socket = IO.socket(String.format("%s?iccId=%s&tk=%s&type=sms&model=%s",domain,iccId,tk, URLEncoder.encode(Build.MODEL, "UTF-8")),opts);
             //连接超时事件
             socket.on(Socket.EVENT_CONNECT_TIMEOUT, args -> {
                 ObjectFactory.get(LogService.class).error("SM服务:连接超时");
@@ -78,7 +78,7 @@ public class SocketService {
                 ObjectFactory.get(LogService.class).warn("SM服务:重接错误");
             });
             socket.on(Socket.EVENT_RECONNECT_FAILED,args->{
-                ObjectFactory.get(LogService.class).warn("SM服务:重接失败");
+                ObjectFactory.get(LogService.class).warn("SM服务:重接失败,不再尝试重连,请检查网络状态后重启程序");
             });
             socket.on("connect_failed", args -> {
                 if(!(args[0] instanceof Exception)){
