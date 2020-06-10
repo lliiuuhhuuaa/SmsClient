@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lh.sms.client.R;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
@@ -24,10 +25,13 @@ import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 import com.lh.sms.client.framing.enums.ResultCodeEnum;
+import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
 import com.lh.sms.client.ui.constant.UiConstant;
+import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
+import com.lh.sms.client.work.user.entity.UserInfoByUpdate;
 
 import org.apache.commons.lang3.RandomUtils;
 
@@ -175,6 +179,7 @@ public class VerifySmsCode extends AppCompatActivity {
         message.getData().putString(HandleMsg.METHOD_KEY, "showErrorMsg");
         //请求后台发送验证码
         String phone = getIntent().getStringExtra("phone");
+        String type = getIntent().getStringExtra("type");
         FormBody param = new FormBody.Builder().add("phone", phone).add("code", code).build();
         HttpClientUtil.post(ApiConstant.VERIFY_SMS_CODE, param,
                 new HttpAsynResult(HttpAsynResult.Config.builder().context(VerifySmsCode.this).login(false)) {
@@ -183,6 +188,17 @@ public class VerifySmsCode extends AppCompatActivity {
                         if (!ResultCodeEnum.OK.getValue().equals(httpResult.getCode()) || Boolean.FALSE.equals(httpResult.getData())) {
                             ((Object[])message.obj)[1] = Boolean.FALSE.equals(httpResult.getData()) ? "验证码错误" : httpResult.getMsg();
                             handleMessage.sendMessage(message);
+                            return;
+                        }
+                        //返回
+                        if(SmsTypeEnum.VERIFY_OLD.getValue().equals(type)||SmsTypeEnum.VERIFY_NEW.getValue().equals(type)){
+                            //设置返回数据
+                            Intent intent = new Intent();
+                            intent.putExtra("code", code);
+                            intent.putExtra("type", type);
+                            //设置返回数据
+                            VerifySmsCode.this.setResult(RESULT_OK, intent);
+                            finish();
                             return;
                         }
                         Intent intent = new Intent(VerifySmsCode.this, ConfigPassword.class);

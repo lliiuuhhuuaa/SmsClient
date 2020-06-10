@@ -12,6 +12,7 @@ import android.telephony.SubscriptionManager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.data.enums.TablesEnum;
 import com.lh.sms.client.data.service.SqlData;
@@ -30,8 +31,12 @@ import com.lh.sms.client.work.socket.entity.SendSmsBySocket;
 import com.lh.sms.client.work.socket.util.SmsUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @do sms
@@ -169,5 +174,31 @@ public class SmsProvideService {
         } catch (Exception e) {
             throw new MsgException(e.getMessage());
         }
+    }
+    /**
+     * @do 刷新统计
+     * @author liuhua
+     * @date 2020/5/10 9:51 AM
+     */
+    public void refreshStat(Runnable runnable){
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),
+                JSON.toJSONString(new String[]{"totalEarnings", "monthEarnings", "totalExpense", "monthExpense", "sendCount", "useCount","onlineTime"}));
+        HttpClientUtil.post(ApiConstant.STAT_LIST,requestBody,
+                new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).alertError(false).animation(false)) {
+                    @Override
+                    public void callback(HttpResult httpResult) {
+                        Map<String,Object> result = httpResult.getObject(Map.class);
+                        if(result!=null&&result.size()>0){
+                            SqlData sqlData = ObjectFactory.get(SqlData.class);
+                            for (Map.Entry<String, Object> entry : result.entrySet()) {
+                                sqlData.saveObject("stat_"+entry.getKey(),entry.getValue());
+                            }
+                        }
+                        if(runnable!=null){
+                            //回调
+                            ThreadPool.exec(runnable);
+                        }
+                    }
+                });
     }
 }

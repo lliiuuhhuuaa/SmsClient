@@ -46,7 +46,9 @@ public class CircleImageView extends AppCompatImageView {
 
         mPaint = new Paint();
         Bitmap bitmap = drawableToBitmap(getDrawable());
-
+        if(bitmap==null){
+            return;
+        }
         //初始化BitmapShader，传入bitmap对象
         BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
@@ -66,6 +68,9 @@ public class CircleImageView extends AppCompatImageView {
 
     //写一个drawble转BitMap的方法
     private Bitmap drawableToBitmap(Drawable drawable) {
+        if(drawable==null){
+            return null;
+        }
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bd = (BitmapDrawable) drawable;
             return bd.getBitmap();

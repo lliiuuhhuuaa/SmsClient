@@ -10,6 +10,8 @@ import android.widget.EditText;
 import com.lh.sms.client.R;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.YesNoEnum;
+import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
+import com.lh.sms.client.work.user.service.UserService;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,11 +63,14 @@ public class PersonFindPass extends AppCompatActivity {
         register.setOnClickListener(v->{
             if(YesNoEnum.YES.getValue().equals(v.getTag())){
                 //请求后台发送验证码
-                Intent intent=new Intent(this, VerifySmsCode.class);
-                intent.putExtra("title","找回密码");
-                intent.putExtra("phone",phoneEdit.getText().toString().replaceAll("^([0-9]{3}).*([0-9]{4})","$1****$2"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                ObjectFactory.get(UserService.class).sendCode(phoneEdit.getText().toString(), SmsTypeEnum.FIND.getValue(), o -> {
+                    Intent intent=new Intent(this, VerifySmsCode.class);
+                    intent.putExtra("title","找回密码");
+                    intent.putExtra("phone",phoneEdit.getText().toString());
+                    intent.putExtra("type",SmsTypeEnum.FIND.getValue());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                });
             }
 
         });

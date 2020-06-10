@@ -32,4 +32,8 @@ public class UserInfo {
      * 客户端密钥
      */
     private String smsClientKey;
+    /**
+     * 头像
+     */
+    private String photo;
 }

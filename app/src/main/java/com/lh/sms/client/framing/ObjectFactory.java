@@ -57,4 +57,12 @@ public class ObjectFactory {
             appCompatActivity.finish();
         }
     }
+    /**
+     * @do 清除所有
+     * @author liuhua
+     * @date 2020/6/6 5:24 PM
+     */
+    public static void removeAll() {
+        classObjectMap.clear();
+    }
 }

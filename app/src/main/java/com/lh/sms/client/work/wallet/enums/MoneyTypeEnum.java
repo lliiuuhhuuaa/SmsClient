@@ -6,7 +6,9 @@ public enum MoneyTypeEnum {
 	BALANCE_MINUS("balance_minus","余额减少"),//余额减少
 	RECHARGE("recharge","充值"),
 	WITHDRAW("withdraw","提现"),
-	SEND_SMS("send_sms","发送公共消息");
+	SEND_SMS("send_sms","发送公共消息"),
+	OFFER_SEND_SMS("offer_send_sms","公共消息服务"),
+	;
 	private String value;
 	private String notice;
 

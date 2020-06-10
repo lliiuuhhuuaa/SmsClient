@@ -20,6 +20,7 @@ import com.lh.sms.client.framing.ActivityManager;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
+import com.lh.sms.client.framing.entity.HttpResult;
 import com.lh.sms.client.framing.enums.AuthRequestCodeEnum;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
@@ -28,6 +29,7 @@ import com.lh.sms.client.framing.util.ApplicationUtil;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.dialog.SmAlertDialog;
 import com.lh.sms.client.work.app.entity.AppVersion;
+import com.lh.sms.client.work.app.util.VersionUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -156,7 +158,13 @@ public class AppUpdateService {
         isUpdate = true;
         initNotification();
         HttpClientUtil.get(ApiConstant.DOWNLOAD_VERSION.replace("{version}", appVersion.getVersion().toString()),
-                new HttpAsynResult(HttpAsynResult.Config.builder().context(ActivityManager.getInstance().getCurrentActivity()).onlyOk(true).alertError(true).login(false).animation(false).file(true)) {
+                new HttpAsynResult(HttpAsynResult.Config.builder().context(ActivityManager.getInstance().getCurrentActivity()).login(false).animation(false).file(true)) {
+                    @Override
+                    public void callback(HttpResult httpResult) {
+                        isUpdate = true;
+                        AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),httpResult.getMsg(),Toast.LENGTH_LONG);
+                    }
+
                     @Override
                     public void callback(Response response) {
                         OutputStream outputStream = null;
@@ -167,7 +175,7 @@ public class AppUpdateService {
                             inputStream = response.body().byteStream();
                             double totalSize = Double.valueOf(response.header("content-length"));
                             long ingSize = 0;
-                            byte[] bytes = new byte[2048];
+                            byte[] bytes = new byte[1024];
                             int len = 0;
                             while ((len =inputStream.read(bytes))>0){
                                 outputStream.write(bytes,0,len);
@@ -205,6 +213,14 @@ public class AppUpdateService {
                         isUpdate = false;
                         if(!isDone||!file.exists()){
                             AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),"下载新版App失败,请重试", Toast.LENGTH_SHORT);
+                            file.delete();
+                            return;
+                        }
+                        //检查安装包完整性
+                        String fileMd5 = VersionUtil.getFileMd5(file);
+                        if(fileMd5 == null||!fileMd5.equals(appVersion.getMd5())){
+                            AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),"下载新版App失败,请重试", Toast.LENGTH_SHORT);
+                            file.delete();
                             return;
                         }
                         //提示用户安装

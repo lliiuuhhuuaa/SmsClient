@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
+import com.lh.sms.client.SmRunningService;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.framing.ObjectFactory;
@@ -150,7 +151,8 @@ public class ConfigPassword extends AppCompatActivity {
                                 sqlData.saveObject(DataConstant.KEY_USER_TK,httpResult.getData());
                                 sqlData.saveObject(DataConstant.KEY_IS_LOGIN,YesNoEnum.YES.getValue());
                                 //连接socket
-                                ObjectFactory.get(SocketService.class).connect();
+                                Intent intent = new Intent(ConfigPassword.this, SmRunningService.class);
+                                startService(intent);
                             }
                             Intent intent = new Intent(ConfigPassword.this, MainActivity.class);
                             intent.putExtras(getIntent());

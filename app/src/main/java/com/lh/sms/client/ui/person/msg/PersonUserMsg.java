@@ -1,6 +1,7 @@
 package com.lh.sms.client.ui.person.msg;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -99,8 +100,10 @@ public class PersonUserMsg extends AppCompatActivity {
                 View view = convertView == null ? inflater.inflate(R.layout.user_msg_list_item, null) : convertView;
                 Message message = messages.get(position);
                 TextView textView = view.findViewById(R.id.list_item_title);
-                if(!MessageStateEnum.WAIT.getValue().equals(message.getState())){
-                    textView.setCompoundDrawables(null,null,null,null);
+                if(MessageStateEnum.WAIT.getValue().equals(message.getState())){
+                    Drawable drawable = getResources().getDrawable(R.drawable.ic_new_16dp, null);
+                    drawable.setBounds(0, 0, 64,64);
+                    textView.setCompoundDrawables(null,null,drawable,null);
                 }
                 //左划删除操作,并绑定item点击事件
                 HorizontalScrollView horizontalScrollView = horizontalScroll.initScroll(view, v -> {

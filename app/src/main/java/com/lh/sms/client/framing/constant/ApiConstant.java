@@ -8,6 +8,8 @@ package com.lh.sms.client.framing.constant;
 public class ApiConstant {
     //获取用户信息
     public static final String USER_GET_INFO = "/web/user/getUserInfo";
+    //修改登陆密码
+    public static final String UPDATE_LOGIN_PASSWORD = "/web/user/updateLoginPassword";
     //获取用户钱包
     public static final String USER_WALLET = "/web/wallet/getUserWallet";
     //获取用户钱包明细
@@ -42,4 +44,10 @@ public class ApiConstant {
     public static final String CHECK_NEW_VERSION = "/open/app/version/getNewVersion";
     //下载版本
     public static final String DOWNLOAD_VERSION = "/open/app/version/download/{version}";
+    //首页统计数据
+    public static final String STAT_LIST = "/sms/provide/getStat";
+    //上传预处理
+    public static final String STORAGE_PRETREATMENT = "/storage/upload/pretreatment";
+    //更新用户信息
+    public static final String UPDATE_USER_INFO = "/web/user/updateUserInfo";
 }

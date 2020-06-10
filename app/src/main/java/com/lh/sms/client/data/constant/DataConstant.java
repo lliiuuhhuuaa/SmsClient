@@ -21,4 +21,6 @@ public class DataConstant {
     public static final String SESSION_ID = "session_id";
     //app版本
     public static final String KEY_APP_VERSION = "app_version";
+    //三方云存储域名
+    public static final String STORAGE_DOMAIN = "storage_domain";
 }

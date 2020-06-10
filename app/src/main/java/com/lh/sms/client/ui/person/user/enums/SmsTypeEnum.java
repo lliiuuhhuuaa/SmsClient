@@ -4,10 +4,14 @@ package com.lh.sms.client.ui.person.user.enums;
  * 短信验证状态
  */
 public enum SmsTypeEnum {
-    //回调
+    //注册
     REGISTER("register","/open/user/register"),
-    //弹Sweet消息
+    //找回密码
     FIND("find","/open/user/resetPassword"),
+    //验证本人手机号
+    VERIFY_OLD("verify_old",""),
+    //验证新号码
+    VERIFY_NEW("verify_new",""),
     ;
     private String value;
     private String api;

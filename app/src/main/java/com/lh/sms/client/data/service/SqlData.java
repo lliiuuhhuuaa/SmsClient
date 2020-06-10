@@ -56,10 +56,10 @@ public class SqlData {
     private void initData(){
         //保存服务器请求地址
         saveObject(DataConstant.KEY_SERVICE_URL,"http://192.168.1.5:12010/sms/api");
-        saveObject(DataConstant.KEY_SOCKET_DOMAIN,"http://192.168.1.5:12010");
+        saveObject(DataConstant.KEY_SOCKET_DOMAIN,"http://192.168.1.5:3148");
         //保存三方资源请求地址
         String threeServiceUrl = "https://al.lliiuuhhuuaa.cn";
-        saveObject("storage_domain",threeServiceUrl);
+        saveObject(DataConstant.STORAGE_DOMAIN,threeServiceUrl);
         //清除sessionID
         deleteObject(DataConstant.SESSION_ID);
     }

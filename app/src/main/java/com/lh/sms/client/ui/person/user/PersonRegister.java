@@ -16,6 +16,7 @@ import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
 import com.lh.sms.client.ui.util.UiUtil;
+import com.lh.sms.client.work.user.service.UserService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.FormBody;
@@ -64,20 +65,14 @@ public class PersonRegister extends AppCompatActivity {
         register.setOnClickListener(v->{
             if(YesNoEnum.YES.getValue().equals(v.getTag())){
                 //请求后台发送验证码
-                FormBody param = new FormBody.Builder().add("phone", phoneEdit.getText().toString()).add("type", SmsTypeEnum.REGISTER.getValue()).build();
-                HttpClientUtil.post(ApiConstant.SEND_SMS_CODE, param,
-                        new HttpAsynResult(HttpAsynResult.Config.builder().context(PersonRegister.this).onlyOk(true).login(false)) {
-                    @Override
-                    public void callback(HttpResult httpResult) {
-                        Intent intent=new Intent(PersonRegister.this, VerifySmsCode.class);
-                        intent.putExtra("title","注册");
-                        intent.putExtra("phone",phoneEdit.getText().toString());
-                        intent.putExtra("type",SmsTypeEnum.REGISTER.getValue());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(intent);
-                    }
+                ObjectFactory.get(UserService.class).sendCode(phoneEdit.getText().toString(), SmsTypeEnum.REGISTER.getValue(), o -> {
+                    Intent intent=new Intent(PersonRegister.this, VerifySmsCode.class);
+                    intent.putExtra("title","注册");
+                    intent.putExtra("phone",phoneEdit.getText().toString());
+                    intent.putExtra("type",SmsTypeEnum.REGISTER.getValue());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
                 });
-
             }
 
         });

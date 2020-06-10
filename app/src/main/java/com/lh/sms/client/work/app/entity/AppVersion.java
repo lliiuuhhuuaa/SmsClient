@@ -38,5 +38,9 @@ public class AppVersion {
      * 创建时间
      */
     private Long createDate;
+    /**
+     * 文件md5
+     */
+    private String md5;
 
 }

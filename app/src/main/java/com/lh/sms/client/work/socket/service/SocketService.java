@@ -4,21 +4,28 @@ import android.os.Build;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lh.sms.client.SmRunningService;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.service.SqlData;
+import com.lh.sms.client.framing.ActivityManager;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.YesNoEnum;
+import com.lh.sms.client.framing.util.ApplicationUtil;
 import com.lh.sms.client.work.log.service.LogService;
 import com.lh.sms.client.work.sms.service.SmsProvideService;
 import com.lh.sms.client.work.socket.entity.SendSmsBySocket;
 import com.lh.sms.client.work.socket.entity.SocketMessage;
 import com.lh.sms.client.work.socket.enums.MsgHandleTypeEnum;
 import com.lh.sms.client.work.socket.util.SmsUtil;
+import com.lh.sms.client.work.socket.util.SocketUtil;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.Objects;
 
 import io.socket.client.Ack;
 import io.socket.client.IO;
@@ -57,7 +64,7 @@ public class SocketService {
             IO.Options opts = new IO.Options();
             //最大重连50次
             opts.reconnectionAttempts = 50;
-            socket = IO.socket(String.format("%s?iccId=%s&tk=%s&type=sms&model=%s",domain,iccId,tk, URLEncoder.encode(Build.MODEL, "UTF-8")),opts);
+            socket = IO.socket(String.format(Locale.CANADA,"%s?iccId=%s&tk=%s&type=sms&model=%s&v=%d",domain,iccId,tk, URLEncoder.encode(Build.MODEL, "UTF-8"), ApplicationUtil.getVersion(ActivityManager.getInstance().getCurrentActivity())),opts);
             //连接超时事件
             socket.on(Socket.EVENT_CONNECT_TIMEOUT, args -> {
                 ObjectFactory.get(LogService.class).error("SM服务:连接超时");
@@ -91,6 +98,8 @@ public class SocketService {
                 SocketMessage socketMessage = JSONObject.parseObject(args[0].toString(), SocketMessage.class);
                 //获取消息体
                 SendSmsBySocket sendSmsBySocket = JSONObject.parseObject(socketMessage.getBody().toString(),SendSmsBySocket.class);
+                //记录今日接收次数
+                saveTodayCount();
                 //记录日志
                 ObjectFactory.get(LogService.class).info("SM服务:接收到SM服务发送请求,%s",sendSmsBySocket.getPhone().replaceAll("^([0-9]{3}).*([0-9]{4})$","$1****$2"));
                 try {
@@ -106,6 +115,19 @@ public class SocketService {
             ObjectFactory.get(LogService.class).error("SM服务:发生异常,",e.getMessage());
         }
     }
+    /**
+     * @do 记录今日接收次数
+     * @author liuhua
+     * @date 2020/6/6 5:36 PM
+     */
+    private void saveTodayCount() {
+        SqlData sqlData = ObjectFactory.get(SqlData.class);
+        String key = SocketUtil.getTodayCountKey();
+        Integer count = sqlData.getObject(key, Integer.class);
+        sqlData.saveObject(key,count==null?1:count+1);
+        Objects.requireNonNull(ObjectFactory.get(SmRunningService.class)).referNotification();
+    }
+
     /**
      * @do 发送消息
      * @author liuhua

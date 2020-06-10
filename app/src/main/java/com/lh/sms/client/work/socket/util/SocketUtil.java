@@ -1,5 +1,7 @@
 package com.lh.sms.client.work.socket.util;
 
+import org.joda.time.LocalDate;
+
 /**
  * @author: lh
  * @description: socket工具
@@ -13,5 +15,13 @@ public class SocketUtil {
      */
     public static String getSocketMessageHandle(String game){
         return String.format("game_message_%s",game);
+    }
+    /**
+     * @do 今日请求发送次数
+     * @author liuhua
+     * @date 2020/6/6 5:38 PM
+     */
+    public static String getTodayCountKey() {
+        return "send_count_today_"+LocalDate.now().toString("yyyyMMdd");
     }
 }

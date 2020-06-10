@@ -24,5 +24,6 @@ public class ActivityManager {
     public void setCurrentActivity(Activity activity) {
         sCurrentActivityWeakRef = new WeakReference<Activity>(activity);
     }
+
 }
 

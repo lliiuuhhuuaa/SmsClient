@@ -7,7 +7,9 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
+import com.lh.sms.client.SmRunningService;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.framing.ObjectFactory;
@@ -18,6 +20,7 @@ import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.util.UiUtil;
 import com.lh.sms.client.work.socket.service.SocketService;
+import com.lh.sms.client.work.user.service.UserService;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -100,7 +103,7 @@ public class PersonLogin extends AppCompatActivity {
             FormBody param = new FormBody.Builder().add("account",accountEdit.getText().toString() )
                     .add("password",passwordEdit.getText().toString()).build();
             HttpClientUtil.post(ApiConstant.USER_LOGIN, param,
-                    new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).context(PersonLogin.this).login(false)) {
+                    new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).login(false)) {
                         @Override
                         public void callback(HttpResult httpResult) {
                             SqlData sqlData = ObjectFactory.get(SqlData.class);
@@ -108,7 +111,8 @@ public class PersonLogin extends AppCompatActivity {
                             sqlData.saveObject(DataConstant.KEY_USER_TK,httpResult.getData());
                             sqlData.saveObject(DataConstant.KEY_IS_LOGIN,YesNoEnum.YES.getValue());
                             //连接socket
-                            ObjectFactory.get(SocketService.class).connect();
+                            Intent intent = new Intent(PersonLogin.this, SmRunningService.class);
+                            startService(intent);
                             finish();
                         }
                     });

@@ -3,9 +3,11 @@
     package="com.lh.sms.client">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".framing.MyApplication"
         android:allowBackup="true"
@@ -45,6 +47,9 @@
         <activity android:name=".ui.person.template.PersonTemplateConfigDetail" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.template.PersonTemplateConfigDetailAdd" android:launchMode="singleTask"/>
         <activity android:name=".ui.about.AboutUs" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.user.PersonUserInfo" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.user.PersonUserInfoUpdate" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.user.PersonUserInfoUpdatePhone" android:launchMode="singleTask"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.lh.sms.client.fileProvider"
@@ -54,6 +59,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <service android:name=".SmRunningService" />
     </application>
 
 </manifest>

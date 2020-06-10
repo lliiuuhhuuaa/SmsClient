@@ -25,6 +25,7 @@ import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -36,7 +37,8 @@ public class HttpClientUtil {
     private static final String TAG = "HttpClientUtil";
     public enum RequestTypeEnum {
         POST("post"), // post
-        GET("get"); // get
+        GET("get"), // get
+        PUT("put"); // put
         @Getter
         private String value;
 
@@ -50,7 +52,7 @@ public class HttpClientUtil {
      * @author lh
      * @date 2020-01-02 10:50
      */
-    private static FormBody mapToFormBody(Map<String, String> params) {
+    private static RequestBody mapToRequestBody(Map<String, String> params) {
         FormBody.Builder builder = new FormBody.Builder();
         if (params != null && !params.isEmpty()) {
             for (Map.Entry<String, String> stringStringEntry : params.entrySet()) {
@@ -66,7 +68,7 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult get(String url) {
-        return execute(url, null, null, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, null, null, RequestTypeEnum.GET, null);
     }
 
     /**
@@ -75,11 +77,11 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult get(String url, Map<String, String> params) {
-        FormBody formBody = null;
+        RequestBody formBody = null;
         if (params != null && params.size() == 1) {
-            formBody = mapToFormBody(params);
+            formBody = mapToRequestBody(params);
         }
-        return execute(url, formBody, null, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, formBody, null, RequestTypeEnum.GET, null);
     }
     /**
      * @do get请求
@@ -87,7 +89,7 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult get(String url, HttpAsynResult callback) {
-        return execute(url, null, callback, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, null, callback, RequestTypeEnum.GET, null);
     }
     /**
      * @do get请求
@@ -95,11 +97,11 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult get(String url, Map<String, String> params, HttpAsynResult callback) {
-        FormBody formBody = null;
+        RequestBody formBody = null;
         if (params != null && params.size() == 1) {
-            formBody = mapToFormBody(params);
+            formBody = mapToRequestBody(params);
         }
-        return execute(url, formBody, callback, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, formBody, callback, RequestTypeEnum.GET, null);
     }
 
     /**
@@ -107,8 +109,8 @@ public class HttpClientUtil {
      * @author lh
      * @date 2020-01-02 11:36
      */
-    public static HttpResult get(String url, FormBody formBody) {
-        return execute(url, formBody, null, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+    public static HttpResult get(String url, RequestBody formBody) {
+        return execute(url, formBody, null, RequestTypeEnum.GET, null);
     }
 
     /**
@@ -116,8 +118,8 @@ public class HttpClientUtil {
      * @author lh
      * @date 2020-01-02 11:36
      */
-    public static HttpResult get(String url, FormBody formBody, HttpAsynResult httpAsynResult) {
-        return execute(url, formBody, httpAsynResult, RequestTypeEnum.GET, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+    public static HttpResult get(String url, RequestBody formBody, HttpAsynResult httpAsynResult) {
+        return execute(url, formBody, httpAsynResult, RequestTypeEnum.GET, null);
     }
 
     /**
@@ -126,7 +128,7 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult post(String url) {
-        return execute(url, new FormBody.Builder().build(), null, RequestTypeEnum.POST, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, new FormBody.Builder().build(), null, RequestTypeEnum.POST, null);
     }
     /**
      * @do post请求
@@ -134,7 +136,7 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult post(String url, HttpAsynResult callback) {
-        return execute(url, new FormBody.Builder().build(), callback, RequestTypeEnum.POST, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, new FormBody.Builder().build(), callback, RequestTypeEnum.POST, null);
     }
     /**
      * @do post请求
@@ -142,11 +144,11 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult post(String url, Map<String, String> params) {
-        FormBody formBody = null;
+        RequestBody formBody = null;
         if (params != null && params.size() == 1) {
-            formBody = mapToFormBody(params);
+            formBody = mapToRequestBody(params);
         }
-        return execute(url, formBody, null, RequestTypeEnum.POST, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, formBody, null, RequestTypeEnum.POST, null);
     }
 
     /**
@@ -155,11 +157,11 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult post(String url, Map<String, String> params, HttpAsynResult callback) {
-        FormBody formBody = null;
+        RequestBody formBody = null;
         if (params != null && params.size() == 1) {
-            formBody = mapToFormBody(params);
+            formBody = mapToRequestBody(params);
         }
-        return execute(url, formBody, callback, RequestTypeEnum.POST, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+        return execute(url, formBody, callback, RequestTypeEnum.POST, null);
     }
 
     /**
@@ -168,9 +170,9 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult post(String url, Map<String, String> params, MediaType mediaType) {
-        FormBody formBody = null;
+        RequestBody formBody = null;
         if (params != null && params.size() == 1) {
-            formBody = mapToFormBody(params);
+            formBody = mapToRequestBody(params);
         }
         return execute(url, formBody, null, RequestTypeEnum.POST, mediaType);
     }
@@ -181,9 +183,9 @@ public class HttpClientUtil {
      * @date 2020-01-02 11:36
      */
     public static HttpResult post(String url, Map<String, String> params, HttpAsynResult callback, MediaType mediaType) {
-        FormBody formBody = null;
+        RequestBody formBody = null;
         if (params != null && params.size() == 1) {
-            formBody = mapToFormBody(params);
+            formBody = mapToRequestBody(params);
         }
         return execute(url, formBody, callback, RequestTypeEnum.POST, mediaType);
     }
@@ -193,8 +195,8 @@ public class HttpClientUtil {
      * @author lh
      * @date 2020-01-02 11:36
      */
-    public static HttpResult post(String url, FormBody formBody) {
-        return execute(url, formBody, null, RequestTypeEnum.POST, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+    public static HttpResult post(String url, RequestBody formBody) {
+        return execute(url, formBody, null, RequestTypeEnum.POST, null);
     }
 
     /**
@@ -202,16 +204,23 @@ public class HttpClientUtil {
      * @author lh
      * @date 2020-01-02 11:36
      */
-    public static HttpResult post(String url, FormBody formBody, HttpAsynResult callback) {
-        return execute(url, formBody, callback, RequestTypeEnum.POST, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"));
+    public static HttpResult post(String url, RequestBody formBody, HttpAsynResult callback) {
+        return execute(url, formBody, callback, RequestTypeEnum.POST, null);
     }
-
     /**
      * @do post请求
      * @author lh
      * @date 2020-01-02 11:36
      */
-    public static HttpResult post(String url, FormBody formBody, MediaType mediaType) {
+    public static HttpResult put(String url, RequestBody formBody, HttpAsynResult callback) {
+        return execute(url, formBody, callback, RequestTypeEnum.PUT,null);
+    }
+    /**
+     * @do post请求
+     * @author lh
+     * @date 2020-01-02 11:36
+     */
+    public static HttpResult post(String url, RequestBody formBody, MediaType mediaType) {
         return execute(url, formBody, null, RequestTypeEnum.POST, mediaType);
     }
 
@@ -220,7 +229,7 @@ public class HttpClientUtil {
      * @author lh
      * @date 2020-01-02 11:36
      */
-    public static HttpResult post(String url, FormBody formBody, HttpAsynResult callback, MediaType mediaType) {
+    public static HttpResult post(String url, RequestBody formBody, HttpAsynResult callback, MediaType mediaType) {
         return execute(url, formBody, callback, RequestTypeEnum.POST, mediaType);
     }
 
@@ -229,7 +238,7 @@ public class HttpClientUtil {
      * @author lh
      * @date 2020-01-02 11:04
      */
-    public static HttpResult execute(String url, FormBody formBody, HttpAsynResult callback, RequestTypeEnum requestTypeEnum, MediaType mediaType) {
+    public static HttpResult execute(String url, RequestBody formBody, HttpAsynResult callback, RequestTypeEnum requestTypeEnum, MediaType mediaType) {
         SmAlertDialog loadingDialog = null;
         if(callback!=null&&callback.getConfig().isAnimation()){
             //显示动画
@@ -264,6 +273,11 @@ public class HttpClientUtil {
         //post请求
         if (RequestTypeEnum.POST.equals(requestTypeEnum)) {
             builder.post(formBody);
+        }else if (RequestTypeEnum.PUT.equals(requestTypeEnum)) {
+            builder.put(formBody);
+        }
+        if(mediaType!=null) {
+            builder.addHeader("Content-Type", mediaType.toString());
         }
         Request request = builder.build();
         if (callback == null) {
@@ -279,7 +293,6 @@ public class HttpClientUtil {
                 if (!response.isSuccessful()) {
                     //请求错误
                     Log.e(TAG, String.format("请求url:%s,状态码:%s,错误信息:%s", requestUrl, response.code(), response.body() == null ? null : response.body().string()));
-                    System.out.println(response);
                     return null;
                 }
                 //转为返回对象
@@ -333,6 +346,7 @@ public class HttpClientUtil {
                     httpResult.setCode(response.code());
                     httpResult.setMsg(response.message());
                     callback.callback(httpResult);
+                    return;
                 }
                 //如果是文件下载,直接返回响应对象
                 if(callback.getConfig().isFile()) {

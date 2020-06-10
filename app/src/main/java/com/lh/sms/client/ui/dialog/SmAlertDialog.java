@@ -1,5 +1,7 @@
 package com.lh.sms.client.ui.dialog;
 
+import android.app.Activity;
+import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,8 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lh.sms.client.R;
+import com.lh.sms.client.framing.ActivityManager;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.ui.loading.LoadingView;
+
+import java.lang.reflect.Field;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -157,7 +162,9 @@ public class SmAlertDialog extends Dialog {
     }
     @Override
     public void show() {
-        super.show();
+        if (!((Activity)context).isFinishing() && !this.isShowing()) {
+            super.show();
+        }
         if(this.loading){
             if(content!=null) {
                 TextView textView = loadingView.findViewById(R.id.loading_text);

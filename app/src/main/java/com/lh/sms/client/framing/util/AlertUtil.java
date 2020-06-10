@@ -61,13 +61,25 @@ public class AlertUtil {
      * @author liuhua
      * @date 2020/3/12 10:23 PM
      */
-    public static void toast(Context context,String msg, int length) {
+    public static void toast(String msg, int length) {
         Message message = Message.obtain(ObjectFactory.get(HandleMsg.class), HandleMsgTypeEnum.ALERT_TOAST.getValue());
         Bundle data = message.getData();
-        message.obj = context;
+        message.obj = ActivityManager.getInstance().getCurrentActivity();
         data.putString("msg",msg);
         data.putInt("length",length);
         ObjectFactory.get(HandleMsg.class).sendMessage(message);
+    }
+    /**
+     * @do 弹系统提示
+     * @author liuhua
+     * @date 2020/3/12 10:23 PM
+     */
+    public static void toast(Context context,String msg, int length) {
+        if(context==null){
+            toast(msg,length);
+            return;
+        }
+        Toast.makeText(context,msg,length).show();
     }
     /**
      * @do 进度条
