@@ -179,7 +179,7 @@ public class PersonUserInfo extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        File file = new File(getExternalCacheDir(), "image-cropped");
+        File file = new File(getExternalCacheDir(), "image-cropped.jpeg");
         if (requestCode == CHOOSE_PHOTO && resultCode == Activity.RESULT_OK&& null != data) {
             Uri uri = data.getData();//获取路径
             Intent intent = new Intent("com.android.camera.action.CROP");
@@ -219,26 +219,41 @@ public class PersonUserInfo extends AppCompatActivity {
     private void showImage(Uri uri){
         try {
             Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            CircleImageView imageView = findViewById(R.id.person_user_info_photo);
+            ImageView imageView = findViewById(R.id.person_user_info_photo);
             imageView.setImageBitmap(bmp);
-            ObjectFactory.get(StorageService.class).upload(this, bmp, new ThreadCallback<String>(){
-                @Override
-                public void callback(String s) {
-                    UserInfoByUpdate userInfoByUpdate = new UserInfoByUpdate();
-                    userInfoByUpdate.setPhoto(s);
-                    HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
-                    Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
-                    message.obj = new Object[]{ObjectFactory.get(UserService.class), userInfoByUpdate};
-                    message.getData().putString(HandleMsg.METHOD_KEY, "updateUserInfo");
-                    handleMessage.sendMessage(message);
-                }
+            ObjectFactory.get(StorageService.class).upload(this, bmp, (ThreadCallback<String>) s -> {
+                UserInfoByUpdate userInfoByUpdate = new UserInfoByUpdate();
+                userInfoByUpdate.setPhoto(s);
+                HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                message.obj = new Object[]{this, userInfoByUpdate};
+                message.getData().putString(HandleMsg.METHOD_KEY, "updateUserInfo");
+                handleMessage.sendMessage(message);
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+    /**
+     * @do 更新头像
+     * @author liuhua
+     * @date 2020/6/9 7:40 PM
+     */
+    public void updateUserInfo(UserInfoByUpdate userInfoByUpdate){
+        ObjectFactory.get(UserService.class).updateUserInfo(userInfoByUpdate, (ThreadCallback<UserInfo>) userInfo -> {
+            if(userInfo!=null&&userInfo.getPhoto()!=null){
+                ImageUtil.loadImage(this,userInfo.getPhoto(), o -> {
+                    HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                    Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                    message.obj = new Object[]{this, o};
+                    message.getData().putString(HandleMsg.METHOD_KEY, "showUrlImage");
+                    handleMessage.sendMessage(message);
+                });
+            }
+        });
 
+    }
     @Override
     protected void onResume() {
         super.onResume();

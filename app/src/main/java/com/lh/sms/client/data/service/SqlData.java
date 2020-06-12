@@ -16,6 +16,8 @@ import com.lh.sms.client.framing.util.SecurityUtil;
 import com.lh.sms.client.work.msg.entity.Message;
 import com.lh.sms.client.work.sms.entity.SmsProvide;
 
+import org.joda.time.LocalDateTime;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +57,15 @@ public class SqlData {
     //初始化数据
     private void initData(){
         //保存服务器请求地址
-        saveObject(DataConstant.KEY_SERVICE_URL,"http://192.168.1.5:12010/sms/api");
-        saveObject(DataConstant.KEY_SOCKET_DOMAIN,"http://192.168.1.5:3148");
+        saveObject(DataConstant.KEY_SERVICE_URL,"https://sms.lliiuuhhuuaa.cn/sms/api");
+        saveObject(DataConstant.KEY_SOCKET_DOMAIN,"https://sms.lliiuuhhuuaa.cn");
         //保存三方资源请求地址
         String threeServiceUrl = "https://al.lliiuuhhuuaa.cn";
         saveObject(DataConstant.STORAGE_DOMAIN,threeServiceUrl);
         //清除sessionID
         deleteObject(DataConstant.SESSION_ID);
+        //只保存1个月记录
+        database.delete(TablesEnum.LOG_LIST.getTable(),"time<?",new String[]{String.valueOf(LocalDateTime.now().minusMonths(1).toDate().getTime())});
     }
     /**
      * @do 保存对象

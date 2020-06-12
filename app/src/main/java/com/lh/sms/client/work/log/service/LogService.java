@@ -23,6 +23,7 @@ import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LogService {
     /**
@@ -63,17 +64,22 @@ public class LogService {
      * @author liuhua
      * @date 2020/5/12 2:04 PM
      */
+   // private long time = System.currentTimeMillis();
     private int saveLog(String text,Integer level){
+        boolean service = Objects.requireNonNull(ObjectFactory.get(MainActivity.class)).isFinishing();
+        /*if(service&&System.currentTimeMillis()<time){
+            return 0;
+        }
+        //后台一分钟存一次
+        time = System.currentTimeMillis()+60000;*/
         SQLiteDatabase database = ObjectFactory.get(SqlData.class).getDatabase();
-        //只保存1个月记录
-        database.delete(TablesEnum.LOG_LIST.getTable(),"time<?",new String[]{String.valueOf(LocalDateTime.now().minusMonths(1).toDate().getTime())});
         ContentValues values = new ContentValues();
         long time = System.currentTimeMillis();
         values.put("text", text);
         values.put("time",time );
         values.put("level", level);
         int count = Long.valueOf(database.insert(TablesEnum.LOG_LIST.getTable(),null,values)).intValue();
-        if(ActivityManager.getInstance().getCurrentActivity().getClass().equals(MainActivity.class)){
+        if(!service){
             Logs log = new Logs();
             log.setText(text);
             log.setLevel(level);
