@@ -121,7 +121,7 @@ public class PersonTemplateConfigDetail extends AppCompatActivity {
                 new HttpAsynResult(HttpAsynResult.Config.builder().login(true).context(PersonTemplateConfigDetail.this).onlyOk(true)) {
                     @Override
                     public void callback(HttpResult httpResult) {
-                        AlertUtil.toast(PersonTemplateConfigDetail.this, "操作成功", Toast.LENGTH_SHORT);
+                        AlertUtil.toast("操作成功", Toast.LENGTH_SHORT);
                         SqlData sqlData = ObjectFactory.get(SqlData.class);
                         //删除
                         if(smsTemplate.getState()!=null&&smsTemplate.getState()==-1){

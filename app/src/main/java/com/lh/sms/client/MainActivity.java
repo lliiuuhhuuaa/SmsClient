@@ -16,6 +16,7 @@ import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
+import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.AlertUtil;
 import com.lh.sms.client.framing.util.ThreadPool;
@@ -172,7 +173,11 @@ public class MainActivity extends AppCompatActivity {
      * @date 2020/5/27 9:48 PM
      */
     private void checkNewVersion() {
-
+        //自动检测开关
+        Integer state = ObjectFactory.get(SqlData.class).getObject(DataConstant.AUTO_UPDATE, Integer.class);
+        if(state!=null&& !YesNoEnum.isYes(state)){
+            return;
+        }
         //检查是否有新版本
         ObjectFactory.get(AppVersionService.class).checkNewVersion(()->{
             //弹窗app更新提示

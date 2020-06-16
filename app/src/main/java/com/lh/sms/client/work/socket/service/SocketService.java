@@ -125,7 +125,7 @@ public class SocketService {
         String key = SocketUtil.getTodayCountKey();
         Integer count = sqlData.getObject(key, Integer.class);
         sqlData.saveObject(key,count==null?1:count+1);
-        Objects.requireNonNull(ObjectFactory.get(SmRunningService.class)).referNotification();
+        Objects.requireNonNull(ObjectFactory.get(SmRunningService.class)).show();
     }
 
     /**

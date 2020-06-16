@@ -140,7 +140,7 @@ public class PersonSmsConfigDetail extends AppCompatActivity {
                 new HttpAsynResult(HttpAsynResult.Config.builder().login(true).onlyOk(true).context(PersonSmsConfigDetail.this)) {
                     @Override
                     public void callback(HttpResult httpResult) {
-                        AlertUtil.toast(PersonSmsConfigDetail.this, "操作成功", Toast.LENGTH_SHORT);
+                        AlertUtil.toast("操作成功", Toast.LENGTH_SHORT);
                         if(SmStateEnum.DELETE.getValue().equals(updateSmsProvide.getState())){
                             //取消注册
                             ObjectFactory.get(SqlData.class).deleteObject(TablesEnum.SM_LIST.getTable(),updateSmsProvide.getIccId());

@@ -11,8 +11,10 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 
+import com.lh.sms.client.data.constant.DataConstant;
 import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
+import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.work.socket.service.SocketService;
 import com.lh.sms.client.work.socket.util.SocketUtil;
 
@@ -26,7 +28,7 @@ public class SmRunningService extends Service {
     public void onCreate() {
         super.onCreate();
         connectSocket();
-        startFG();
+        show();
         ObjectFactory.push(this);
     }
     /**
@@ -34,7 +36,11 @@ public class SmRunningService extends Service {
      * @author liuhua
      * @date 2020/3/21 5:29 PM
      */
-    private void startFG() {
+    public void show() {
+        Integer state = ObjectFactory.get(SqlData.class).getObject(DataConstant.SHOW_NOTICE, Integer.class);
+        if(state!=null&& !YesNoEnum.isYes(state)){
+            return;
+        }
         String CHANNEL_ONE_ID = "CHANNEL_ONE_ID";
         String CHANNEL_ONE_NAME= "CHANNEL_ONE_ID";
         NotificationChannel notificationChannel= null;
@@ -89,14 +95,6 @@ public class SmRunningService extends Service {
     private void connectSocket() {
         //连接socket
         ObjectFactory.get(SocketService.class).connect();
-    }
-    /**
-     * @do 刷新通知栏
-     * @author liuhua
-     * @date 2020/6/6 5:41 PM
-     */
-    public void referNotification(){
-        startFG();
     }
     /**
      * @do 关闭服务

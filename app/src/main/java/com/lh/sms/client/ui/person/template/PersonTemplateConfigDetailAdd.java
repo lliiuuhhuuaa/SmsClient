@@ -82,7 +82,7 @@ public class PersonTemplateConfigDetailAdd extends AppCompatActivity {
                 new HttpAsynResult(HttpAsynResult.Config.builder().context(PersonTemplateConfigDetailAdd.this).onlyOk(true)) {
                     @Override
                     public void callback(HttpResult httpResult) {
-                        AlertUtil.toast(PersonTemplateConfigDetailAdd.this, "操作成功", Toast.LENGTH_SHORT);
+                        AlertUtil.toast("操作成功", Toast.LENGTH_SHORT);
                         finish();
                     }
                 });

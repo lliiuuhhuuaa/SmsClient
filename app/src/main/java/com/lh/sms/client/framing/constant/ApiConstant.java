@@ -50,4 +50,6 @@ public class ApiConstant {
     public static final String STORAGE_PRETREATMENT = "/storage/upload/pretreatment";
     //更新用户信息
     public static final String UPDATE_USER_INFO = "/web/user/updateUserInfo";
+    //获取用户头像
+    public static final String GET_USER_PHOTO = "/open/user/getUserPhoto";
 }

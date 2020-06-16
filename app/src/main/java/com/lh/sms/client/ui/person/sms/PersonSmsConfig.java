@@ -268,7 +268,7 @@ public class PersonSmsConfig extends AppCompatActivity {
                             SmsProvide smsProvide = new SmsProvide();
                             smsProvide.setIccId(iccId);
                             if ((boolean) httpResult.getData()) {
-                                AlertUtil.toast(PersonSmsConfig.this, "操作成功", Toast.LENGTH_SHORT);
+                                AlertUtil.toast( "操作成功", Toast.LENGTH_SHORT);
                                 //保存已注册
                                 smsProvide.setRegisterState(SmStateEnum.REGISTER.getValue());
                                 ObjectFactory.get(SmsProvideService.class).cacheSmsProvide(smsProvide);
@@ -279,7 +279,7 @@ public class PersonSmsConfig extends AppCompatActivity {
                                 //保存申请中
                                 smsProvide.setRegisterState(SmStateEnum.APPLYING.getValue());
                                 ObjectFactory.get(SmsProvideService.class).cacheSmsProvide(smsProvide);
-                                AlertUtil.toast(PersonSmsConfig.this, "正在向绑定者申请,请耐心等待申请结果", Toast.LENGTH_LONG);
+                                AlertUtil.toast( "正在向绑定者申请,请耐心等待申请结果", Toast.LENGTH_LONG);
                                 message.obj = new Object[]{PersonSmsConfig.this};
                                 message.getData().putString(handleMessage.METHOD_KEY, "showLocalSimInfo");
                                 handleMessage.sendMessage(message);

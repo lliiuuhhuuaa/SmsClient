@@ -24,7 +24,7 @@ public class AlertUtil {
      * @date 2020/3/12 9:19 PM
      */
     public static void alertError(Context context,String msg) {
-        AlertUtil.toast(context,msg, Toast.LENGTH_LONG);
+        AlertUtil.toast(msg, Toast.LENGTH_LONG);
 //        Message message = Message.obtain(ObjectFactory.get(HandleMsg.class), HandleMsgTypeEnum.ALERT_MSG.getValue());
 //        Bundle data = message.getData();
 //        message.obj = context;

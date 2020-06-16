@@ -23,4 +23,8 @@ public class DataConstant {
     public static final String KEY_APP_VERSION = "app_version";
     //三方云存储域名
     public static final String STORAGE_DOMAIN = "storage_domain";
+    //显示通知栏
+    public static final String SHOW_NOTICE = "show_notice";
+    //自动更新
+    public static final String AUTO_UPDATE = "auto_update";
 }

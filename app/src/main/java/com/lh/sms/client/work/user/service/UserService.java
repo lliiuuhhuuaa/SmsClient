@@ -102,4 +102,21 @@ public class UserService {
                     }
                 });
     }
+    /**
+     * @do 获取用户头像
+     * @author liuhua
+     * @date 2020/6/16 8:52 PM
+     */
+    public void getPhoto(String phone, ThreadCallback threadCallback) {
+        FormBody param = new FormBody.Builder().add("phone", phone).build();
+        HttpClientUtil.post(ApiConstant.GET_USER_PHOTO, param,
+                new HttpAsynResult(HttpAsynResult.Config.builder().onlyOk(true).alertError(false).animation(false).login(false)) {
+                    @Override
+                    public void callback(HttpResult httpResult) {
+                        if(httpResult.getData()!=null&&threadCallback!=null){
+                            threadCallback.callback(httpResult.getData());
+                        }
+                    }
+                });
+    }
 }

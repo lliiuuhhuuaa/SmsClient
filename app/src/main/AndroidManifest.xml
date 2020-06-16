@@ -50,6 +50,7 @@
         <activity android:name=".ui.person.user.PersonUserInfo" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.user.PersonUserInfoUpdate" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.user.PersonUserInfoUpdatePhone" android:launchMode="singleTask"/>
+        <activity android:name=".ui.person.sys.PersonSystemConfig" android:launchMode="singleTask"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.lh.sms.client.fileProvider"

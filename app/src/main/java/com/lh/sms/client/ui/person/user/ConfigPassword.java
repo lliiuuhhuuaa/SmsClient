@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
@@ -24,6 +25,7 @@ import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 import com.lh.sms.client.framing.enums.ResultCodeEnum;
 import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
+import com.lh.sms.client.framing.util.AlertUtil;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
 import com.lh.sms.client.ui.util.UiUtil;
@@ -118,9 +120,11 @@ public class ConfigPassword extends AppCompatActivity {
             errorText.setText("");
             if(!password.getText().toString().equals(password2.getText().toString())){
                 errorText.setText("两次输入密码不一致");
+                return;
             }
             if(password.getText().length()<6||password.getText().length()>20){
                 errorText.setText(R.string.pass_format);
+                return;
             }
             //请求服务器
             String phone = getIntent().getStringExtra("phone");
@@ -145,6 +149,7 @@ public class ConfigPassword extends AppCompatActivity {
                                 handleMessage.sendMessage(message);
                                 return;
                             }
+                            AlertUtil.toast("操作成功", Toast.LENGTH_SHORT);
                             if(SmsTypeEnum.REGISTER.getValue().equals(smsTypeEnum.getValue())){
                                 SqlData sqlData = ObjectFactory.get(SqlData.class);
                                 sqlData.deleteAll();
@@ -154,14 +159,13 @@ public class ConfigPassword extends AppCompatActivity {
                                 Intent intent = new Intent(ConfigPassword.this, SmRunningService.class);
                                 startService(intent);
                             }
-                            Intent intent = new Intent(ConfigPassword.this, MainActivity.class);
+                            /*Intent intent = new Intent(ConfigPassword.this, MainActivity.class);
                             intent.putExtras(getIntent());
                             intent.putExtra("code", code);
                             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            startActivity(intent);
+                            startActivity(intent);*/
                             finish();
-                            ObjectFactory.finish(PersonLogin.class);
-                            ObjectFactory.finish(PersonRegister.class);
+
                         }
                     });
         });

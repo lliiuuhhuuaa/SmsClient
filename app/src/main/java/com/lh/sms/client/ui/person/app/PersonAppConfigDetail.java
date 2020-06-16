@@ -134,7 +134,7 @@ public class PersonAppConfigDetail extends AppCompatActivity {
                 new HttpAsynResult(HttpAsynResult.Config.builder().login(true).context(PersonAppConfigDetail.this).onlyOk(true)) {
                     @Override
                     public void callback(HttpResult httpResult) {
-                        AlertUtil.toast(PersonAppConfigDetail.this, "操作成功", Toast.LENGTH_SHORT);
+                        AlertUtil.toast("操作成功", Toast.LENGTH_SHORT);
                         SqlData sqlData = ObjectFactory.get(SqlData.class);
                         if(appConfig.getSecurityKey()!=null){
                             ObjectFactory.get(AppConfigService.class).refreshAppConfig(()->{

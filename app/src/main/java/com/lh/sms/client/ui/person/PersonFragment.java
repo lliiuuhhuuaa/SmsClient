@@ -39,6 +39,7 @@ import com.lh.sms.client.ui.person.app.PersonAppConfig;
 import com.lh.sms.client.ui.person.balance.PersonBalance;
 import com.lh.sms.client.ui.person.bill.PersonBillRecord;
 import com.lh.sms.client.ui.person.sms.PersonSmsConfig;
+import com.lh.sms.client.ui.person.sys.PersonSystemConfig;
 import com.lh.sms.client.ui.person.template.PersonTemplateConfig;
 import com.lh.sms.client.ui.person.user.PersonLogin;
 import com.lh.sms.client.ui.person.msg.PersonUserMsg;
@@ -120,6 +121,12 @@ public class PersonFragment extends Fragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });
+        //系统设置
+        root.findViewById(R.id.person_sys_config).setOnClickListener(v->{
+            Intent intent = new Intent(root.getContext(), PersonSystemConfig.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
         //退出
         /**
          * ObjectFactory.get(UserService.class).unLogin();
@@ -140,7 +147,7 @@ public class PersonFragment extends Fragment {
                //清空所有对象
                 ObjectFactory.removeAll();
                 //关闭当前activity
-                Objects.requireNonNull(PersonFragment.this.getActivity()).finish();
+                PersonFragment.this.requireActivity().finish();
                 try {
                     //延迟2秒退出程序
                     Thread.sleep(2000);
@@ -251,6 +258,8 @@ public class PersonFragment extends Fragment {
         textView.setText(R.string.click_login_notice);
         textView =  root.findViewById(R.id.person_user_balance);
         textView.setText(R.string.default_money);
+        ImageView imageView = root.findViewById(R.id.person_user_photo);
+        imageView.setImageResource(R.drawable.ic_head_black_64dp);
     }
     /**
      * @do 显示用户信息

@@ -70,6 +70,7 @@ public class PersonFindPass extends AppCompatActivity {
                     intent.putExtra("type",SmsTypeEnum.FIND.getValue());
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
+                    finish();
                 });
             }
 

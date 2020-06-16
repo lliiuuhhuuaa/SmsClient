@@ -72,6 +72,7 @@ public class PersonRegister extends AppCompatActivity {
                     intent.putExtra("type",SmsTypeEnum.REGISTER.getValue());
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
+                    finish();
                 });
             }
 

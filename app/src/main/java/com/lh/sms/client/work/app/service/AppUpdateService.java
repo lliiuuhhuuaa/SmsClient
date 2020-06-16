@@ -152,7 +152,7 @@ public class AppUpdateService {
             return;
         }
         if(isUpdate){
-            AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),"正在下载中...", Toast.LENGTH_SHORT);
+            AlertUtil.toast("正在下载中...", Toast.LENGTH_SHORT);
             return;
         }
         isUpdate = true;
@@ -162,7 +162,7 @@ public class AppUpdateService {
                     @Override
                     public void callback(HttpResult httpResult) {
                         isUpdate = true;
-                        AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),httpResult.getMsg(),Toast.LENGTH_LONG);
+                        AlertUtil.toast(httpResult.getMsg(),Toast.LENGTH_LONG);
                     }
 
                     @Override
@@ -212,14 +212,14 @@ public class AppUpdateService {
                         notificationManager.cancel(manageId);
                         isUpdate = false;
                         if(!isDone||!file.exists()){
-                            AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),"下载新版App失败,请重试", Toast.LENGTH_SHORT);
+                            AlertUtil.toast("下载新版App失败,请重试", Toast.LENGTH_SHORT);
                             file.delete();
                             return;
                         }
                         //检查安装包完整性
                         String fileMd5 = VersionUtil.getFileMd5(file);
                         if(fileMd5 == null||!fileMd5.equals(appVersion.getMd5())){
-                            AlertUtil.toast(ActivityManager.getInstance().getCurrentActivity(),"下载新版App失败,请重试", Toast.LENGTH_SHORT);
+                            AlertUtil.toast("下载新版App失败,请重试", Toast.LENGTH_SHORT);
                             file.delete();
                             return;
                         }

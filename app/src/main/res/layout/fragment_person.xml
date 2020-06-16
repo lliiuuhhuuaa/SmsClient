@@ -356,6 +356,7 @@
 
                 <!--系统设置-->
                 <LinearLayout
+                    android:id="@+id/person_sys_config"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/person_menu_item"

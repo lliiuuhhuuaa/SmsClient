@@ -41,10 +41,11 @@
                 android:gravity="center"
                 android:padding="30dp">
 
-               <ImageView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@drawable/ic_head_black_64dp"/>
+                <com.lh.sms.client.ui.view.CircleImageView
+                    android:id="@+id/person_user_photo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_head_black_64dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

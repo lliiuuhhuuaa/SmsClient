@@ -1,11 +1,14 @@
 package com.lh.sms.client.ui.person.user;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
@@ -16,10 +19,14 @@ import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
 import com.lh.sms.client.framing.entity.HttpResult;
+import com.lh.sms.client.framing.entity.ThreadCallback;
+import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 import com.lh.sms.client.framing.enums.YesNoEnum;
+import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.util.UiUtil;
 import com.lh.sms.client.work.socket.service.SocketService;
+import com.lh.sms.client.work.storage.util.ImageUtil;
 import com.lh.sms.client.work.user.service.UserService;
 
 import org.apache.commons.lang3.StringUtils;
@@ -78,8 +85,21 @@ public class PersonLogin extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                pass[0] = StringUtils.isNotBlank(accountEdit.getText().toString());
+                String text = accountEdit.getText().toString();
+                pass[0] = StringUtils.isNotBlank(text);
                 UiUtil.buttonEnable(login,pass[0]&&pass[1]);
+                if(text.matches("^1[0-9]{10}$")){
+                    //请求头像
+                    ObjectFactory.get(UserService.class).getPhoto(text, (ThreadCallback<String>) s1 -> {
+                        ImageUtil.loadImage(PersonLogin.this, s1, s2 -> {
+                                HandleMsg handleMessage = ObjectFactory.get(HandleMsg.class);
+                                Message message = Message.obtain(handleMessage, HandleMsgTypeEnum.CALL_BACK.getValue());
+                                message.obj = new Object[]{PersonLogin.this, s2};
+                                message.getData().putString(HandleMsg.METHOD_KEY, "showUrlImage");
+                                handleMessage.sendMessage(message);
+                        });
+                    });
+                }
             }
         });
         passwordEdit.addTextChangedListener(new TextWatcher() {
@@ -117,6 +137,18 @@ public class PersonLogin extends AppCompatActivity {
                         }
                     });
         });
+    }
+    /**
+     * @do 显示头像
+     * @author liuhua
+     * @date 2020/6/9 7:40 PM
+     */
+    public void showUrlImage(Bitmap bitmap){
+        if(bitmap!=null) {
+            ImageView imageView = findViewById(R.id.person_user_photo);
+            imageView.setImageBitmap(bitmap);
+        }
+
     }
     @Override
     protected void onDestroy() {

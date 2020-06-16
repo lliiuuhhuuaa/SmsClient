@@ -126,12 +126,12 @@ public class HomeFragment extends Fragment {
                 TextView textView1 = view.findViewById(R.id.list_item_icc_id);
                 textView1.setText(jsonObject.getString("iccId"));
                 textView1 = view.findViewById(R.id.list_item_time);
-                Long time = jsonObject.getLong("time");
-                time = time/60;
+                BigDecimal time = jsonObject.getBigDecimal("time");
+                time = time.divide(BigDecimal.valueOf(3600),1,RoundingMode.FLOOR);
                 if(max==null){
-                    max = time.intValue()+60;
+                    max = time.intValue()+100;
                 }
-                textView1.setText(time+"分钟");
+                textView1.setText(time+"小时");
                 ProgressBar progressBar = view.findViewById(R.id.list_item_progress);
                 progressBar.setMax(max);
                 progressBar.setProgress(time.intValue());
