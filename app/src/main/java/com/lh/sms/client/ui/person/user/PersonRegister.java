@@ -16,6 +16,7 @@ import com.lh.sms.client.framing.enums.YesNoEnum;
 import com.lh.sms.client.framing.util.HttpClientUtil;
 import com.lh.sms.client.ui.person.user.enums.SmsTypeEnum;
 import com.lh.sms.client.ui.util.UiUtil;
+import com.lh.sms.client.ui.view.ShowWebView;
 import com.lh.sms.client.work.user.service.UserService;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,23 @@ public class PersonRegister extends AppCompatActivity {
         findViewById(R.id.close_intent).setOnClickListener(v->{
             finish();
         });
+        //服务协议
+        findViewById(R.id.agreement).setOnClickListener(v->{
+            Intent intent = new Intent(this, ShowWebView.class);
+            intent.putExtra("url","file:///android_asset/agreement.html");
+            intent.putExtra("title","服务协议");
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+        //隐私协议
+        findViewById(R.id.privacy).setOnClickListener(v->{
+            Intent intent = new Intent(this, ShowWebView.class);
+            intent.putExtra("url","file:///android_asset/privacy.html");
+            intent.putExtra("title","隐私协议");
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+
         //检测输入内容改变登陆按钮样式
         EditText phoneEdit = findViewById(R.id.phone);
         Button register = findViewById(R.id.person_register_button);

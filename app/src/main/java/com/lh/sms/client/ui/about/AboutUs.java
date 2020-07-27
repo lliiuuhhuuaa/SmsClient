@@ -1,5 +1,6 @@
 package com.lh.sms.client.ui.about;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
@@ -12,6 +13,8 @@ import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.enums.HandleMsgTypeEnum;
 import com.lh.sms.client.framing.handle.HandleMsg;
 import com.lh.sms.client.framing.util.ApplicationUtil;
+import com.lh.sms.client.ui.person.msg.PersonUserMsg;
+import com.lh.sms.client.ui.view.ShowWebView;
 import com.lh.sms.client.work.app.entity.AppVersion;
 import com.lh.sms.client.work.app.service.AppUpdateService;
 import com.lh.sms.client.work.app.service.AppVersionService;
@@ -55,6 +58,22 @@ public class AboutUs extends AppCompatActivity {
         findViewById(R.id.about_version_install).setOnClickListener(v->{
             //显示版本
             refreshInfo(true);
+        });
+        //服务协议
+        findViewById(R.id.agreement).setOnClickListener(v->{
+            Intent intent = new Intent(this, ShowWebView.class);
+            intent.putExtra("url","file:///android_asset/agreement.html");
+            intent.putExtra("title","服务协议");
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+        //隐私协议
+        findViewById(R.id.privacy).setOnClickListener(v->{
+            Intent intent = new Intent(this, ShowWebView.class);
+            intent.putExtra("url","file:///android_asset/privacy.html");
+            intent.putExtra("title","隐私协议");
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
         });
 
 
