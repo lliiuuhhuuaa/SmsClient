@@ -54,6 +54,10 @@ public class PersonLogin extends AppCompatActivity {
         findViewById(R.id.close_intent).setOnClickListener(v->{
             finish();
         });
+        if(YesNoEnum.YES.getValue().equals(ObjectFactory.get(SqlData.class).getObject(DataConstant.KEY_IS_LOGIN, Integer.class))){
+            //已登陆
+            finish();
+        }
         //去注册
         findViewById(R.id.person_login_register).setOnClickListener(v->{
             Intent intent=new Intent(this, PersonRegister.class);

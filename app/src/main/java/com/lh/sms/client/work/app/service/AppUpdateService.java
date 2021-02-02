@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,7 +98,7 @@ public class AppUpdateService {
                 .setTitleText("更新提示");
         View view = ActivityManager.getInstance().getCurrentActivity().getLayoutInflater().inflate(R.layout.activity_app_version_alert, null);
         TextView textView = view.findViewById(R.id.app_version_notice);
-        textView.setText(appVersion.getNotice());
+        textView.setText(Html.fromHtml(appVersion.getNotice()));
         textView = view.findViewById(R.id.app_version_size);
         textView.setText(String.format("更新包大小: %sMB", BigDecimal.valueOf(appVersion.getSize()/1024f/1024f).setScale(2, RoundingMode.FLOOR).toString()));
         smAlertDialog.setContentView(view);
@@ -107,6 +108,7 @@ public class AppUpdateService {
         smAlertDialog.setConfirmListener(v->{
             smAlertDialog.cancel();
             download();
+            AlertUtil.toast("正在下载中...", Toast.LENGTH_SHORT);
         });
         smAlertDialog.setCancelListener(v->{
             smAlertDialog.cancel();

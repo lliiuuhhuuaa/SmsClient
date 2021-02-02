@@ -1,6 +1,5 @@
 package com.lh.sms.client.ui.person;
 
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -11,17 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
 import com.alibaba.fastjson.JSONObject;
 import com.lh.sms.client.MainActivity;
 import com.lh.sms.client.R;
 import com.lh.sms.client.SmRunningService;
-import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.data.constant.DataConstant;
-import com.lh.sms.client.framing.ActivityManager;
+import com.lh.sms.client.data.service.SqlData;
 import com.lh.sms.client.framing.ObjectFactory;
 import com.lh.sms.client.framing.constant.ApiConstant;
 import com.lh.sms.client.framing.entity.HttpAsynResult;
@@ -38,20 +32,22 @@ import com.lh.sms.client.ui.dialog.SmAlertDialog;
 import com.lh.sms.client.ui.person.app.PersonAppConfig;
 import com.lh.sms.client.ui.person.balance.PersonBalance;
 import com.lh.sms.client.ui.person.bill.PersonBillRecord;
+import com.lh.sms.client.ui.person.msg.PersonUserMsg;
 import com.lh.sms.client.ui.person.sms.PersonSmsConfig;
 import com.lh.sms.client.ui.person.sys.PersonSystemConfig;
 import com.lh.sms.client.ui.person.template.PersonTemplateConfig;
 import com.lh.sms.client.ui.person.user.PersonLogin;
-import com.lh.sms.client.ui.person.msg.PersonUserMsg;
 import com.lh.sms.client.ui.person.user.PersonUserInfo;
+import com.lh.sms.client.ui.view.ShowWebView;
 import com.lh.sms.client.work.storage.util.ImageUtil;
 import com.lh.sms.client.work.user.entity.UserInfo;
-import com.lh.sms.client.work.user.service.UserService;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 public class PersonFragment extends Fragment {
     private View root;
@@ -158,6 +154,30 @@ public class PersonFragment extends Fragment {
 
             });
             AlertUtil.alertOther(smAlertDialog);
+        });
+        SqlData sqlData = ObjectFactory.get(SqlData.class);
+        //帮助与反馈
+        root.findViewById(R.id.person_help).setOnClickListener(v->{
+            String domain = sqlData.getObject(DataConstant.KEY_SERVICE_URL, String.class);
+            String tk = sqlData.getObject(DataConstant.KEY_USER_TK,String.class);
+            domain = String.format("%s%s?token=%s",domain,ApiConstant.HELP_CLIENT,tk);
+            Intent intent = new Intent(root.getContext(), ShowWebView.class);
+            intent.putExtra("url",domain);
+            intent.putExtra("title","帮助中心");
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+        //客服中心
+        View viewById = root.findViewById(R.id.person_help_service);
+        viewById.setVisibility(YesNoEnum.isYes(sqlData.getObject(DataConstant.KEY_HIDE_MODE,Integer.class))?View.VISIBLE:View.GONE);
+        viewById.setOnClickListener(v->{
+            String domain = sqlData.getObject(DataConstant.KEY_SERVICE_URL, String.class);
+            domain = String.format("%s%s",domain,ApiConstant.HELP_SERVICE);
+            Intent intent = new Intent(root.getContext(), ShowWebView.class);
+            intent.putExtra("url",domain);
+            intent.putExtra("title","客服中心");
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
         });
         //关于
         root.findViewById(R.id.person_about).setOnClickListener(v->{

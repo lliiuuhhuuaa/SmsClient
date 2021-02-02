@@ -51,7 +51,7 @@
         <activity android:name=".ui.person.user.PersonUserInfoUpdate" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.user.PersonUserInfoUpdatePhone" android:launchMode="singleTask"/>
         <activity android:name=".ui.person.sys.PersonSystemConfig" android:launchMode="singleTask"/>
-        <activity android:name=".ui.view.ShowWebView" android:launchMode="singleTask"/>
+        <activity android:name=".ui.view.ShowWebView" android:launchMode="singleTask" android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

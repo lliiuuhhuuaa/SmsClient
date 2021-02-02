@@ -3,6 +3,7 @@ package com.lh.sms.client.ui.person.msg;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -58,7 +59,7 @@ public class PersonUserMsgDetail extends AppCompatActivity {
         TextView textView = findViewById(R.id.person_user_msg_detail_title);
         textView.setText(message.getTitle());
         textView = findViewById(R.id.person_user_msg_detail_text);
-        textView.setText(message.getText().replace("\\n","\n"));
+        textView.setText(Html.fromHtml(message.getText().replace("\\n","\n")));
         textView = findViewById(R.id.person_user_msg_detail_time);
         textView.setText(LocalDateTime.fromDateFields(new Date(message.getCreateDate())).toString("yyyy-MM-dd HH:mm:ss"));
         LinearLayout linearLayout = findViewById(R.id.person_user_msg_detail_buttons);

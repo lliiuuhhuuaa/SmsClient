@@ -11,6 +11,7 @@
     <string name="app_set">应用配置</string>
     <string name="system_set">系统设置</string>
     <string name="help">帮助与反馈</string>
+    <string name="help_service">客服中心</string>
     <string name="about">关于六画短信</string>
     <string name="title_activity_person_balance">PersonBalance</string>
     <!-- Strings used for fragments for navigation -->

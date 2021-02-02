@@ -52,4 +52,8 @@ public class ApiConstant {
     public static final String UPDATE_USER_INFO = "/web/user/updateUserInfo";
     //获取用户头像
     public static final String GET_USER_PHOTO = "/open/user/getUserPhoto";
+    //帮助中心
+    public static final String HELP_CLIENT = "/open/help/client";
+    //客服中心
+    public static final String HELP_SERVICE = "/open/help/service";
 }

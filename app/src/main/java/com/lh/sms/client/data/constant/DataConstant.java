@@ -27,4 +27,6 @@ public class DataConstant {
     public static final String SHOW_NOTICE = "show_notice";
     //自动更新
     public static final String AUTO_UPDATE = "auto_update";
+    //隐藏模式
+    public static final String KEY_HIDE_MODE = "hide_mode";
 }

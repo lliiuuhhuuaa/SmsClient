@@ -130,7 +130,7 @@
                     android:gravity="center"
                     android:text="注册即表示同意以下协议"/>
                 <TextView
-                    android:id="@+id/agreement"
+                    android:id="@+id/privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/holo_blue_dark"
@@ -138,7 +138,7 @@
                     android:gravity="center"
                     android:text="六画短信隐私权政策"/>
                 <TextView
-                    android:id="@+id/privacy"
+                    android:id="@+id/agreement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/holo_blue_dark"
